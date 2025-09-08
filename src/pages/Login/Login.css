@@ -1,0 +1,75 @@
+/* Login Container with admin image */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Inter', sans-serif;
+  background: url('https://img.freepik.com/free-photo/view-starry-night-sky-with-nature-mountains-landscape_23-2151614765.jpg?semt=ais_hybrid&w=740&q=80');
+  background-size: cover; /* full screen cover */
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Optional: very subtle overlay for readability (almost transparent) */
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2); /* very light */
+  z-index: 1;
+}
+
+/* Login Form */
+.login-form {
+  position: relative; /* above overlay */
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.85); /* slightly transparent */
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+/* Input fields */
+.login-form input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Login Button */
+.login-form button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #3b82f6;
+}

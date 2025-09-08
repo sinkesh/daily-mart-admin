@@ -1,0 +1,109 @@
+/* ---------------- Roles Container ---------------- */
+.roles-container {
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.roles-container h1 {
+  margin-bottom: 1rem;
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ---------------- Header & Search (optional) ---------------- */
+.roles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.role-search {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  width: 200px;
+  transition: all 0.2s;
+}
+
+.role-search:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* ---------------- Table Wrapper ---------------- */
+.roles-table-wrapper {
+  overflow-x: hidden; /* scrollbar remove */
+  width: 100%;
+}
+
+/* ---------------- Table ---------------- */
+.roles-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px; /* spacing between rows */
+}
+
+.roles-table th {
+  background-color: #1e293b;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.roles-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  background-color: #ffffff;
+  border-radius: 8px;
+  transition: transform 0.2s, background-color 0.2s;
+  white-space: normal; /* text wrap */
+}
+
+/* Alternating row colors */
+.roles-table tbody tr:nth-child(even) td {
+  background-color: #f9fafb;
+}
+
+/* Hover effect */
+.roles-table tbody tr:hover td {
+  background-color: #e5e7eb;
+  transform: translateX(2px);
+}
+
+/* ---------------- Actions ---------------- */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  border: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.action-btn.edit {
+  background-color: #facc15;
+  color: #1e293b;
+}
+
+.action-btn.delete {
+  background-color: #ef4444;
+}
