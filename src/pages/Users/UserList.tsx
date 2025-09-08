@@ -27,14 +27,14 @@ const UserList: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Toggle user status
-const toggleStatus = (id: number) => {
-  setUsers(prev =>
-    prev.map(user => ({
-      ...user,
-      status: user.id === id ? (user.status === "Active" ? "Inactive" : "Active") : user.status
-    }))
-  );
-};
+  const toggleStatus = (id: number) => {
+    setUsers(prev =>
+      prev.map(user => ({
+        ...user,
+        status: user.id === id ? (user.status === "Active" ? "Inactive" : "Active") : user.status
+      }))
+    );
+  };
 
 
   // Filter users based on search
