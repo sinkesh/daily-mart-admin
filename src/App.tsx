@@ -43,7 +43,7 @@ const App: React.FC = () => {
           path="/dashboard"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="Dashboard">
                 <Dashboard />
               </MainLayout>
             </PrivateRoute>
@@ -55,7 +55,7 @@ const App: React.FC = () => {
           path="/users/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="User List">
                 <UserList />
               </MainLayout>
             </PrivateRoute>
@@ -67,22 +67,22 @@ const App: React.FC = () => {
           path="/users/roles"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="Role List">
                 <Roles />
               </MainLayout>
             </PrivateRoute>
           }
         />
         <Route
-  path="/products/list"
-  element={
-    <PrivateRoute isAuthenticated={isAuthenticated}>
-      <MainLayout collapsed={collapsed} setCollapsed={setCollapsed}>
-        <ProductList />
-      </MainLayout>
-    </PrivateRoute>
-  }
-/>
+          path="/products/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="Product List">
+                <ProductList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />

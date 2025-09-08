@@ -1,16 +1,25 @@
 .navbar {
-  background-color: #1e40af;
-  color: white;
-  padding: 1rem;
+  background-color: #ffffff;
+  color: #1f2d3d;
+  padding: 1rem 2rem;   /* thoda horizontal padding badha diya */
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.logo {
+  cursor: pointer;
 }
 
 .logout-btn {
   background-color: #ef4444;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background-color: #dc2626;
 }

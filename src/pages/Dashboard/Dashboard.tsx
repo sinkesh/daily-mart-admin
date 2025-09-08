@@ -14,7 +14,6 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard">
       {/* Page Heading */}
-      <h1 className="dashboard-title">📊 Dashboard Overview</h1>
 
       {/* Top Cards */}
       <div className="cards">

@@ -58,7 +58,6 @@ const ProductList: React.FC = () => {
     return (
         <div className="product-container">
             <div className="header-bar">
-                <h2>Product List</h2>
                 <input
                     type="text"
                     placeholder="Search products..."

@@ -8,6 +8,8 @@ import { FaList } from "@react-icons/all-files/fa/FaList";
 import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
 import { FaShieldAlt } from "@react-icons/all-files/fa/FaShieldAlt";
 import "./Sidebar.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 interface SidebarProps {
   collapsed: boolean;
@@ -66,15 +68,31 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
         <div className="menu-item" key={menu.name}>
           {menu.submenu ? (
             <>
-              <div className="menu-parent" onClick={() => toggleMenu(menu.name)}>
+              {/* <div className="menu-parent" onClick={() => toggleMenu(menu.name)}>
                 <span className="icon">{menu.icon}</span>
                 {!collapsed && (
                   <>
                     {menu.name}
-                    <span className="arrow">{openMenu === menu.name ? "▲" : "▼"}</span>
+                    <span className="arrow">{openMenu === menu.name ? "" : "▼"}</span>
                   </>
                 )}
-              </div>
+              </div> */}
+              <div className="menu-parent" onClick={() => toggleMenu(menu.name)}>
+  <span className="icon">{menu.icon}</span>
+  {!collapsed && (
+    <>
+      {menu.name}
+      <span className="arrow">
+        {openMenu === menu.name ? (
+          <i className="fas fa-angle-down"></i> 
+        ) : (
+          <i className="fas fa-angle-left"></i> 
+        )}
+      </span>
+    </>
+  )}
+</div>
+
               {openMenu === menu.name && !collapsed && (
                 <div className="submenu">
                   {menu.submenu.map((sub) => (

@@ -48,7 +48,6 @@ const UserList: React.FC = () => {
   return (
     <div className="userlist-container">
       <div className="userlist-header">
-        <h1>User List</h1>
         <input type="text" placeholder="Search users..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="user-search" />
       </div>
 

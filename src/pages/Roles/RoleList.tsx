@@ -31,7 +31,6 @@ const Roles: React.FC = () => {
   return (
     <div className="roles-container">
       <div className="roles-header">
-        <h1>Roles List</h1>
         <input
           type="text"
           placeholder="Search roles..."
