@@ -38,6 +38,14 @@ const menuData = [
     ]
   },
   {
+    name: "Category",
+    icon: <FaUser />,
+    submenu: [
+      { name: "Category List", path: "/category/list", icon: <FaList /> },
+      { name: "Sub Category List", path: "/subcategory/list", icon: <FaShieldAlt /> }
+    ]
+  },
+  {
     name: "Settings",
     icon: <FaCog />,
     submenu: [

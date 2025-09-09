@@ -7,8 +7,8 @@
 .userlist-container h1 {
   margin-bottom: 1rem;
   color: #1e293b;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 /* ---------------- Header & Search ---------------- */
@@ -20,49 +20,67 @@
 }
 
 .user-search {
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
   border: 1px solid #d1d5db;
   font-size: 0.95rem;
-  width: 200px;
+  width: 220px;
   transition: all 0.2s;
+  background-color: #fff;
 }
 
 .user-search:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 /* ---------------- Table Wrapper ---------------- */
 .userlist-table-wrapper {
-  overflow-x: hidden; /* horizontal scrollbar hide */
+  overflow-x: auto;
   width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 0.5rem;
 }
 
 /* ---------------- Table ---------------- */
 .userlist-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 6px; /* spacing between rows */
+  border-spacing: 0;
+  min-width: 700px;
 }
 
+/* Table Header */
 .userlist-table th {
-  background-color: #1e293b;
+  background-color: #5b6d8b;
   color: white;
   font-weight: 600;
   font-size: 0.95rem;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
+  padding: 1rem;
   text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
+.userlist-table th:first-child {
+  border-top-left-radius: 8px;
+}
+.userlist-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+/* Table Cells */
 .userlist-table td {
-  padding: 0.8rem 1rem;
+  padding: 0.9rem 1rem;
   text-align: left;
   background-color: #ffffff;
-  border-radius: 8px;
-  transition: transform 0.2s, background-color 0.2s;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 /* Alternating row colors */
@@ -72,19 +90,19 @@
 
 /* Hover effect */
 .userlist-table tbody tr:hover td {
-  background-color: #e5e7eb;
+  background-color: #eef2ff;
   transform: translateX(2px);
 }
 
 /* ---------------- Status ---------------- */
 .status-active {
-  color: #16a34a; /* green */
+  color: #16a34a;
   font-weight: 600;
   cursor: pointer;
 }
 
 .status-inactive {
-  color: #dc2626; /* red */
+  color: #dc2626;
   font-weight: 600;
   cursor: pointer;
 }
@@ -97,14 +115,16 @@
 
 .action-btn {
   border: none;
-  padding: 0.3rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
   cursor: pointer;
   color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
 .action-btn:hover {
@@ -115,105 +135,11 @@
 .action-btn.edit { background-color: #facc15; color: #1e293b; }
 .action-btn.delete { background-color: #ef4444; }
 
-/* ---------------- Modal Overlay ---------------- */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeInOverlay 0.3s ease-in-out;
+/* Alternating row colors (striped effect) */
+.userlist-table tbody tr:nth-child(odd) td {
+  background-color: #ffffff;  /* light */
 }
 
-/* ---------------- Modal ---------------- */
-.modal {
-  background: #f9fafb;
-  padding: 1.5rem;
-  border-radius: 12px;
-  width: 450px;
-  max-width: 90%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out;
+.userlist-table tbody tr:nth-child(even) td {
+  background-color: #f3f4f6;  /* thoda dark gray */
 }
-
-/* Modal Header */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.modal-header h2 {
-  margin: 0;
-  color: #1e293b;
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-
-.close-btn {
-  background: #ef4444;
-  border: none;
-  font-size: 1rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  color: white;
-  transition: all 0.2s ease-in-out;
-}
-
-.close-btn:hover {
-  background-color: #dc2626;
-  transform: scale(1.1) rotate(90deg);
-}
-
-/* Modal Body */
-.modal-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.modal-body p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #374151;
-  padding: 0.5rem 0.7rem;
-  background-color: #f1f5f9;
-  border-radius: 6px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-}
-
-/* Modal Footer */
-.modal-footer {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
-.modal-footer button {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease-in-out;
-}
-
-.modal-footer .btn-close { background-color: #6b7280; color: white; }
-.modal-footer .btn-close:hover { background-color: #4b5563; }
-.modal-footer .btn-confirm { background-color: #3b82f6; color: white; }
-.modal-footer .btn-confirm:hover { background-color: #2563eb; }
-
-/* ---------------- Animations ---------------- */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }

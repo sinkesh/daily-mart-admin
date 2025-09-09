@@ -7,12 +7,14 @@ import Roles from "./pages/Roles/RoleList";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import MainLayout from "./layouts/MainLayout";
 import ProductList from "./pages/Products/ProductList";
+import CategoryList from "./pages/Category/category/category";
+import SubCatgeoryList from "./pages/Category/sub_category/sub_category";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
-  // ✅ Page load hone par check kare localStorage
+  // ✅ Check localStorage on load
   useEffect(() => {
     const auth = localStorage.getItem("isAuthenticated");
     if (auth === "true") {
@@ -43,7 +45,7 @@ const App: React.FC = () => {
           path="/dashboard"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="Dashboard">
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📊 Dashboard Overview">
                 <Dashboard />
               </MainLayout>
             </PrivateRoute>
@@ -55,7 +57,7 @@ const App: React.FC = () => {
           path="/users/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="User List">
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="👥 Users List">
                 <UserList />
               </MainLayout>
             </PrivateRoute>
@@ -67,18 +69,43 @@ const App: React.FC = () => {
           path="/users/roles"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="Role List">
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="🔑 Roles Management">
                 <Roles />
               </MainLayout>
             </PrivateRoute>
           }
         />
+
+        {/* Products */}
         <Route
           path="/products/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} pageTitle="Product List">
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📦 Product List">
                 <ProductList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+<Route
+          path="/category/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="👥 Category List">
+                <CategoryList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        {/* Roles */}
+        <Route
+          path="/subcategory/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="🔑 Sub Category List">
+                <SubCatgeoryList />
               </MainLayout>
             </PrivateRoute>
           }
