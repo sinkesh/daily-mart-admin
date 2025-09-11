@@ -9,6 +9,7 @@ const AddProduct: React.FC = () => {
         category: "",
         price: "",
         stock: "",
+        status: "active",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

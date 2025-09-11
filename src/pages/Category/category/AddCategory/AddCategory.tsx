@@ -33,7 +33,7 @@ const AddCategory: React.FC = () => {
       id: stored.length + 1,
       name: categoryName,
       image: preview,
-      status: "active", // 👈 default status save
+      status: "active",
     });
 
     localStorage.setItem("categories", JSON.stringify(stored));
