@@ -1,0 +1,100 @@
+.add-product-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;   /* 🔑 full screen height */
+  padding: 20px;
+  background: linear-gradient(135deg, #eef2ff, #e0f7fa); /* optional */
+}
+
+/* Card */
+.add-product-card {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Title */
+.form-title {
+  text-align: center;
+  font-size: 26px;
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* Form */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Field */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+.form-group input {
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+.form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.4);
+  outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #3b82f6);
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.submit-btn:hover {
+  background: linear-gradient(90deg, #4f46e5, #2563eb);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .add-product-card {
+    padding: 25px 20px;
+  }
+  .form-title {
+    font-size: 22px;
+  }
+}

@@ -4,6 +4,7 @@ import "./Table.css";
 interface Column {
   key: string;      // Data key from row object
   label: string;    // Table header text
+  render?: (value: any, row: any) => React.ReactNode; // 👈 render support
 }
 
 interface CommonTableProps {
@@ -28,15 +29,20 @@ const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actions }) => 
           {data.length > 0 ? (
             data.map((row, i) => (
               <tr key={i}>
-                {columns.map((col) => (
-                  <td key={col.key}>{row[col.key]}</td>
-                ))}
+                {columns.map((col) => {
+                  const value = row[col.key];
+                  return (
+                    <td key={col.key}>
+                      {col.render ? col.render(value, row) : value}
+                    </td>
+                  );
+                })}
                 {actions && <td>{actions(row)}</td>}
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length + 1} style={{ textAlign: "center", padding: "12px" }}>
+              <td colSpan={columns.length + (actions ? 1 : 0)} style={{ textAlign: "center", padding: "12px" }}>
                 No records found
               </td>
             </tr>

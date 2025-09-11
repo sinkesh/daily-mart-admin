@@ -50,8 +50,7 @@ const menuData = [
     icon: <FaCog />,
     submenu: [
       { name: "Profile", path: "/settings/profile", icon: <FaList /> },
-      { name: "Security", path: "/settings/security", icon: <FaShieldAlt /> },
-      { name: "Billing", path: "/settings/billing", icon: <FaPlus /> }
+      { name: "Change Password", path: "/settings/changepassword", icon: <FaPlus /> },
     ]
   }
 ];

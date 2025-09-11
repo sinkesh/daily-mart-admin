@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import CommonTable from "../../components/Table/Table";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import CommonTable from "../../../components/Table/Table";
 
 const ProductList: React.FC = () => {
   const [search, setSearch] = useState("");
+  const [products, setProducts] = useState<any[]>([]);
+  const navigate = useNavigate();
 
-  const products = [
-    { id: 1, name: "Laptop", category: "Electronics", price: 60000, stock: 12 },
-    { id: 2, name: "Shoes", category: "Fashion", price: 3000, stock: 50 },
-    { id: 3, name: "Watch", category: "Accessories", price: 5000, stock: 15 },
-  ];
+  // Load products from localStorage
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("products") || "[]");
+    setProducts(stored);
+  }, []);
 
   const filtered = products.filter(
     (p) =>
@@ -29,11 +32,14 @@ const ProductList: React.FC = () => {
       <div className="header-bar">
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder="Search..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="search-bar"
         />
+        <button className="add-btn" onClick={() => navigate("/add/products")}>
+          + Add Product
+        </button>
       </div>
 
       <CommonTable

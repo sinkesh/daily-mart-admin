@@ -1,73 +1,54 @@
-import React, { useState } from "react";
-import "./RoleList.css";
-import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
-import { FaTrash } from "@react-icons/all-files/fa/FaTrash";
+import React, { useState, useEffect } from "react";
+import CommonTable from "../../components/Table/Table";
 
-interface Role {
-  id: number;
-  name: string;
-  description: string;
-  permissions: string;
-}
+const ProductList: React.FC = () => {
+  const [search, setSearch] = useState("");
+  const [products, setProducts] = useState<any[]>([]);
 
-const initialRoles: Role[] = [
-  { id: 1, name: "Admin", description: "Full access to the system", permissions: "All" },
-  { id: 2, name: "Editor", description: "Can edit content", permissions: "Edit, View" },
-  { id: 3, name: "Viewer", description: "Can view content only", permissions: "View" },
-  { id: 4, name: "Manager", description: "Can manage teams", permissions: "View, Edit, Assign" },
-];
+  // Load products from localStorage
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("products") || "[]");
+    setProducts(stored);
+  }, []);
 
-const Roles: React.FC = () => {
-  const [roles] = useState<Role[]>(initialRoles);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Filter roles based on search
-  const filteredRoles = roles.filter((role) =>
-    role.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    role.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    role.permissions.toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.category.toLowerCase().includes(search.toLowerCase())
   );
 
+  const columns = [
+    { key: "id", label: "#" },
+    { key: "name", label: "Product Name" },
+    { key: "category", label: "Category" },
+    { key: "price", label: "Price (₹)" },
+    { key: "stock", label: "Stock" },
+  ];
+
   return (
-    <div className="roles-container">
-      <div className="roles-header">
+    <div className="product-container">
+      <div className="header-bar">
         <input
           type="text"
-          placeholder="Search roles..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="role-search"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-bar"
         />
       </div>
-      <div className="roles-table-wrapper">
-        <table className="roles-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Role Name</th>
-              <th>Description</th>
-              <th>Permissions</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredRoles.map((role) => (
-              <tr key={role.id}>
-                <td>{role.id}</td>
-                <td>{role.name}</td>
-                <td>{role.description}</td>
-                <td>{role.permissions}</td>
-                <td className="actions">
-                  <button className="action-btn edit"><FaEdit /></button>
-                  <button className="action-btn delete"><FaTrash /></button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+      <CommonTable
+        columns={columns}
+        data={filtered}
+        actions={(row) => (
+          <>
+            <button className="action-btn edit">Edit</button>
+            <button className="action-btn delete">Delete</button>
+          </>
+        )}
+      />
     </div>
   );
 };
 
-export default Roles;
+export default ProductList;

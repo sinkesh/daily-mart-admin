@@ -1,64 +1,86 @@
+/* Table wrapper */
 .table-wrapper {
-    overflow-x: auto;
-    width: 100%;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    padding: 0.5rem;
-  }
-  
-  /* Table */
-  .common-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 700px;
-  }
-  
-  .common-table th {
-    background-color: #5b6d8b;
-    color: white;
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 1rem;
-    text-align: left;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  
-  .common-table td {
-    padding: 0.9rem 1rem;
-    text-align: left;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 0.95rem;
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  /* Striped rows */
-  .common-table tbody tr:nth-child(odd) td { background-color: #ffffff; }
-  .common-table tbody tr:nth-child(even) td { background-color: #f3f4f6; }
-  
-  /* Hover effect */
-  .common-table tbody tr:hover td {
-    background-color: #eef2ff;
-    transform: translateX(2px);
-  }
-  
-  /* Actions buttons */
-  .action-btn {
-    border: none;
-    padding: 0.35rem 0.6rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-right: 0.4rem;
-    transition: transform 0.2s, background-color 0.2s;
-  }
-  
-  .action-btn:hover { transform: scale(1.1); }
-  .action-btn.edit { background-color: #facc15; color: #1e293b; }
-  .action-btn.delete { background-color: #ef4444; color: white; }
-  
+  overflow-x: auto;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 0.5rem;
+}
+
+/* Table */
+.common-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 700px;
+}
+
+/* Table header */
+.common-table th {
+  background-color: #5b6d8b;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 1rem;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Table cells */
+.common-table td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, transform 0.2s;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Striped rows */
+.common-table tbody tr:nth-child(odd) td { background-color: #ffffff; }
+.common-table tbody tr:nth-child(even) td { background-color: #f3f4f6; }
+
+/* Hover effect */
+.common-table tbody tr:hover td {
+  background-color: #eef2ff;
+  transform: translateX(2px);
+}
+
+/* Actions buttons */
+.action-btn {
+  border: none;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-right: 0.4rem;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.action-btn:hover { transform: scale(1.1); }
+.action-btn.edit { background-color: #facc15; color: #1e293b; }
+.action-btn.delete { background-color: #ef4444; color: white; }
+
+/* Fix status column width */
+.common-table td.status-cell {
+  width: 80px; /* Fixed width to prevent table shift */
+  text-align: center;
+}
+
+/* Status badge styling */
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 60px; /* Prevent width change when toggling */
+  text-align: center;
+  transition: background-color 0.2s, color 0.2s;
+}
