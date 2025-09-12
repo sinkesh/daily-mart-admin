@@ -8,12 +8,18 @@ import PrivateRoute from "./components/routes/PrivateRoute";
 import MainLayout from "./layouts/MainLayout";
 import ProductList from "./pages/Products/ProductList/ProductList";
 import CategoryList from "./pages/Category/category/CatgeoryList/CategoryList";
-import SubCatgeoryList from "./pages/Category/sub_category/SubCategoryList/SubCategoryList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
 import AddCategory from "./pages/Category/category/AddCategory/AddCategory";
 import EditCategory from "./pages/Category/category/EditCategory/EditCategory";
+import SubCatgeoryList from "./pages/Category/sub_category/SubCategoryList/SubCategoryList";
 import AddSubCategory from "./pages/Category/sub_category/AddSubCategory/AddSubCategory";
 import EditSubCategory from "./pages/Category/sub_category/EditSubCategory/EditSubCategory";
+import AddStock from "./pages/Stock/AddStock/AddStock";
+import EditStock from "./pages/Stock/EditStock/EditStock";
+import StockList from "./pages/Stock/StockList/StockList";
+import AddBrand from "./pages/Brands/AddBrand/AddBrand";
+import EditBrand from "./pages/Brands/EditBrand/EditBrand";
+import BrandList from "./pages/Brands//BrandList/BrandList";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -161,6 +167,68 @@ const App: React.FC = () => {
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📦 Edit Sub Category" >
                 <EditSubCategory />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        {/* Stock */}
+        <Route
+          path="/stock/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="🔑 Stock List">
+                <StockList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/add/stock"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📦 Add Stock">
+                <AddStock />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit/stock/:id"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📦 Edit Stock" >
+                <EditStock />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        {/* Brand */}
+        <Route
+          path="/brand/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="🔑 Brand List">
+                <BrandList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/add/brand"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📦 Add Brand">
+                <AddBrand />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit/brand/:id"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="📦 Edit Brand" >
+                <EditBrand />
               </MainLayout>
             </PrivateRoute>
           }

@@ -46,6 +46,16 @@ const menuData = [
     ]
   },
   {
+    name: "Stock List",
+    path: "/stock/list",
+    icon: <FaList />
+  },
+  {
+    name: "Brand List",
+    path: "/brand/list",
+    icon: <FaList />
+  },
+  {
     name: "Settings",
     icon: <FaCog />,
     submenu: [
@@ -85,20 +95,20 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
                 )}
               </div> */}
               <div className="menu-parent" onClick={() => toggleMenu(menu.name)}>
-  <span className="icon">{menu.icon}</span>
-  {!collapsed && (
-    <>
-      {menu.name}
-      <span className="arrow">
-        {openMenu === menu.name ? (
-          <i className="fas fa-angle-down"></i> 
-        ) : (
-          <i className="fas fa-angle-left"></i> 
-        )}
-      </span>
-    </>
-  )}
-</div>
+                <span className="icon">{menu.icon}</span>
+                {!collapsed && (
+                  <>
+                    {menu.name}
+                    <span className="arrow">
+                      {openMenu === menu.name ? (
+                        <i className="fas fa-angle-down"></i>
+                      ) : (
+                        <i className="fas fa-angle-left"></i>
+                      )}
+                    </span>
+                  </>
+                )}
+              </div>
 
               {openMenu === menu.name && !collapsed && (
                 <div className="submenu">
