@@ -5,7 +5,7 @@ import "./EditSubCategory.css"; // Use same styles
 const EditCategory: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [categoryName, setCategoryName] = useState("");
+    const [categoryName, setSubCategoryName] = useState("");
     const [preview, setPreview] = useState<string | null>(null);
     const [status, setStatus] = useState("active");
 
@@ -13,7 +13,7 @@ const EditCategory: React.FC = () => {
         const stored = JSON.parse(localStorage.getItem("categories") || "[]");
         const category = stored.find((c: any) => c.id === parseInt(id!));
         if (category) {
-            setCategoryName(category.name);
+            setSubCategoryName(category.name);
             setPreview(category.image);
             setStatus(category.status);
         }
@@ -49,7 +49,7 @@ const EditCategory: React.FC = () => {
                 <input
                     type="text"
                     value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
+                    onChange={(e) => setSubCategoryName(e.target.value)}
                     placeholder="Category Name"
                 />
 

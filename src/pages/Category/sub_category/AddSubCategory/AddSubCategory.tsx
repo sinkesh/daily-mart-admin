@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./AddSubCategory.css";
 
 const AddCategory: React.FC = () => {
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryImage, setCategoryImage] = useState<File | null>(null);
+  const [subCategoryName, setSubCategoryName] = useState("");
+  const [subCategoryImage, setSubCategoryImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    setCategoryImage(file);
+    setSubCategoryImage(file);
 
     if (file) {
       const reader = new FileReader();
@@ -24,21 +24,21 @@ const AddCategory: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!categoryName.trim() || !categoryImage) {
+    if (!subCategoryName.trim() || !subCategoryImage) {
       return;
     }
 
-    const stored = JSON.parse(localStorage.getItem("categories") || "[]");
+    const stored = JSON.parse(localStorage.getItem("subCategories") || "[]");
     stored.push({
       id: stored.length + 1,
-      name: categoryName,
+      name: subCategoryName,
       image: preview,
       status: "active", // 👈 default status save
     });
 
-    localStorage.setItem("categories", JSON.stringify(stored));
+    localStorage.setItem("subCategories", JSON.stringify(stored));
 
-    navigate("/category/list"); // redirect after save
+    navigate("/subcategory/list"); // redirect after save
   };
 
   return (
@@ -48,8 +48,8 @@ const AddCategory: React.FC = () => {
         <input
           type="text"
           placeholder="Enter Category Name"
-          value={categoryName}
-          onChange={(e) => setCategoryName(e.target.value)}
+          value={subCategoryName}
+          onChange={(e) => setSubCategoryName(e.target.value)}
         />
 
         {/* Image Upload Box */}

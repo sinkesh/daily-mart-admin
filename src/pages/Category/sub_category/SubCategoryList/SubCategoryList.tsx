@@ -5,36 +5,36 @@ import "./SubCategoryList.css"; // Make sure modal styles are included
 
 const CategoryList: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [categories, setCategories] = useState<any[]>([]);
+  const [subCategories, setSubCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<any>(null); // For modal
   const navigate = useNavigate();
 
   // Load categories from localStorage
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-    setCategories(stored);
+    const stored = JSON.parse(localStorage.getItem("subCategories") || "[]");
+    setSubCategories(stored);
   }, []);
 
   // Toggle status function
   const toggleStatus = (id: number) => {
-    const updated = categories.map((cat) =>
+    const updated = subCategories.map((cat) =>
       cat.id === id
         ? { ...cat, status: cat.status === "active" ? "inactive" : "active" }
         : cat
     );
-    setCategories(updated);
-    localStorage.setItem("categories", JSON.stringify(updated));
+    setSubCategories(updated);
+    localStorage.setItem("subCategories", JSON.stringify(updated));
   };
 
   // Delete row function
   const deleteCategory = (id: number) => {
-    const updated = categories.filter((cat) => cat.id !== id);
-    setCategories(updated);
-    localStorage.setItem("categories", JSON.stringify(updated));
+    const updated = subCategories.filter((cat) => cat.id !== id);
+    setSubCategories(updated);
+    localStorage.setItem("subCategories", JSON.stringify(updated));
   };
 
   // Search filter
-  const filtered = categories.filter((c) =>
+  const filtered = subCategories.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -133,11 +133,11 @@ const CategoryList: React.FC = () => {
                       onClick={() => {
                         // Toggle status in modal and main table
                         const updatedStatus = selectedCategory.status === "active" ? "inactive" : "active";
-                        const updatedCategories = categories.map((cat) =>
+                        const updatedSubCategories = subCategories.map((cat) =>
                           cat.id === selectedCategory.id ? { ...cat, status: updatedStatus } : cat
                         );
-                        setCategories(updatedCategories);
-                        localStorage.setItem("categories", JSON.stringify(updatedCategories));
+                        setSubCategories(updatedSubCategories);
+                        localStorage.setItem("subCategories", JSON.stringify(updatedSubCategories));
                         setSelectedCategory({ ...selectedCategory, status: updatedStatus });
                       }}
                     >
