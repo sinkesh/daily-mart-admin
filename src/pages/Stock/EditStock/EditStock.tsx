@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditStock.css"; // Use same styles
+import "./EditStock.css";
 
-const EditCategory: React.FC = () => {
+const EditStock: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [categoryName, setCategoryName] = useState("");
-    const [preview, setPreview] = useState<string | null>(null);
-    const [status, setStatus] = useState("active");
 
+    const [stockName, setStockName] = useState("");
+    const [sku, setSku] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [price, setPrice] = useState("");
+    const [preview, setPreview] = useState<string | null>(null);
+
+    // ✅ 1. Load Data
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-        const category = stored.find((c: any) => c.id === parseInt(id!));
-        if (category) {
-            setCategoryName(category.name);
-            setPreview(category.image);
-            setStatus(category.status);
+        const stored = JSON.parse(localStorage.getItem("stock") || "[]");
+        console.log("Stored Stock:", stored); // Debugging
+        console.log("Edit ID:", id);
+
+        const stockItem = stored.find((item: any) => item.id === Number(id));
+        if (!stockItem) {
+            alert("Stock not found!");
+            navigate("/stock/list");
+            return;
         }
-    }, [id]);
+
+        setStockName(stockItem.name);
+        setSku(stockItem.sku);
+        setQuantity(String(stockItem.quantity));
+        setPrice(String(stockItem.price));
+        setPreview(stockItem.image);
+    }, [id, navigate]);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files ? e.target.files[0] : null;
-
+        const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setPreview(reader.result as string);
@@ -32,25 +44,62 @@ const EditCategory: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-        const updated = stored.map((c: any) =>
-            c.id === parseInt(id!)
-                ? { ...c, name: categoryName, image: preview, status }
-                : c
+        if (!stockName.trim() || !sku.trim() || quantity === "" || price === "") {
+            alert("All fields are required!");
+            return;
+        }
+
+        const stored = JSON.parse(localStorage.getItem("stock") || "[]");
+        const updated = stored.map((item: any) =>
+            item.id === Number(id)
+                ? {
+                    ...item,
+                    name: stockName,
+                    sku,
+                    quantity: Number(quantity),
+                    price: Number(price),
+                    image: preview,
+                }
+                : item
         );
-        localStorage.setItem("categories", JSON.stringify(updated));
-        navigate("/category/list");
+
+        localStorage.setItem("stock", JSON.stringify(updated));
+        navigate("/stock/list");
     };
 
     return (
         <div className="add-category-container">
-            <h2>Edit Category</h2>
+            <h2>Edit Stock</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                    placeholder="Category Name"
+                    value={stockName}
+                    onChange={(e) => setStockName(e.target.value)}
+                    placeholder="Enter Stock Name"
+                />
+                <input
+                    type="text"
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
+                    placeholder="Enter SKU"
+                />
+                <input
+                    type="text"
+                    value={quantity}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^\d*$/.test(val)) setQuantity(val);
+                    }}
+                    placeholder="Enter Quantity"
+                />
+                <input
+                    type="text"
+                    value={price}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^\d*\.?\d*$/.test(val)) setPrice(val);
+                    }}
+                    placeholder="Enter Price"
                 />
 
                 <div className="image-upload-box">
@@ -62,18 +111,10 @@ const EditCategory: React.FC = () => {
                     <input type="file" accept="image/*" onChange={handleImageChange} />
                 </div>
 
-                <div style={{ marginBottom: "15px" }}>
-                    <label>Status: </label>
-                    <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
-
-                <button type="submit">Update Category</button>
+                <button type="submit">Update Stock</button>
             </form>
         </div>
     );
 };
 
-export default EditCategory;
+export default EditStock;

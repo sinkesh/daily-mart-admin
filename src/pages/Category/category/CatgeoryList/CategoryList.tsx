@@ -43,6 +43,20 @@ const CategoryList: React.FC = () => {
     { key: "id", label: "#" },
     { key: "name", label: "Category Name" },
     {
+      key: "image",
+      label: "Image",
+      render: (value: string) =>
+        value ? (
+          <img
+            src={value}
+            alt="Category"
+            style={{ width: "50px", height: "50px", objectFit: "contain", borderRadius: "10px", border: "1px solid #ddd" }}
+          />
+        ) : (
+          "No Image"
+        ),
+    },
+    {
       key: "status",
       label: "Status",
       render: (value: string, row: any) => (

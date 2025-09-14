@@ -1,47 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./StockList.css"; // Make sure modal styles are included
+import "./StockList.css";
 
-const CategoryList: React.FC = () => {
+const StockList: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null); // For modal
+  const [stock, setStock] = useState<any[]>([]);
+  const [selectedStock, setSelectedStock] = useState<any>(null);
   const navigate = useNavigate();
 
-  // Load categories from localStorage
+  // ✅ Load stock from localStorage
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-    setCategories(stored);
+    const storedStock = JSON.parse(localStorage.getItem("stock") || "[]");
+    setStock(storedStock);
   }, []);
 
-  // Toggle status function
+  // ✅ Toggle status function
   const toggleStatus = (id: number) => {
-    const updated = categories.map((cat) =>
-      cat.id === id
-        ? { ...cat, status: cat.status === "active" ? "inactive" : "active" }
-        : cat
+    const updated = stock.map((item) =>
+      item.id === id
+        ? { ...item, status: item.status === "active" ? "inactive" : "active" }
+        : item
     );
-    setCategories(updated);
-    localStorage.setItem("categories", JSON.stringify(updated));
+    setStock(updated);
+    localStorage.setItem("stock", JSON.stringify(updated));
   };
 
-  // Delete row function
-  const deleteCategory = (id: number) => {
-    const updated = categories.filter((cat) => cat.id !== id);
-    setCategories(updated);
-    localStorage.setItem("categories", JSON.stringify(updated));
+  // ✅ Delete row function
+  const deleteStock = (id: number) => {
+    const updated = stock.filter((item) => item.id !== id);
+    setStock(updated);
+    localStorage.setItem("stock", JSON.stringify(updated));
   };
 
-  // Search filter
-  const filtered = categories.filter((c) =>
+  // ✅ Search filter
+  const filtered = stock.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Columns for table
   const columns = [
     { key: "id", label: "#" },
-    { key: "name", label: "Category Name" },
+    { key: "name", label: "Stock Name" },
+    { key: "sku", label: "SKU" },
+    { key: "quantity", label: "Quantity" },
+    { key: "price", label: "Price" },
     {
       key: "status",
       label: "Status",
@@ -75,6 +77,7 @@ const CategoryList: React.FC = () => {
         </button>
       </div>
 
+      {/* ✅ Updated Table */}
       <CommonTable
         columns={columns}
         data={filtered}
@@ -82,19 +85,19 @@ const CategoryList: React.FC = () => {
           <>
             <button
               className="action-btn edit"
-              onClick={() => setSelectedCategory(row)}
+              onClick={() => setSelectedStock(row)}
             >
               View
             </button>
             <button
               className="action-btn edit"
-              onClick={() => navigate(`/edit/category/${row.id}`)}
+              onClick={() => navigate(`/edit/stock/${row.id}`)}
             >
               Edit
             </button>
             <button
               className="action-btn delete"
-              onClick={() => deleteCategory(row.id)}
+              onClick={() => deleteStock(row.id)}
             >
               Delete
             </button>
@@ -102,23 +105,32 @@ const CategoryList: React.FC = () => {
         )}
       />
 
-      {/* Modal */}
-      {selectedCategory && (
-        <div className="modal-overlay" onClick={() => setSelectedCategory(null)}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
-          >
-            <h3>Category Details</h3>
+      {/* ✅ Modal */}
+      {selectedStock && (
+        <div className="modal-overlay" onClick={() => setSelectedStock(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Stock Details</h3>
             <table className="details-table">
               <tbody>
                 <tr>
                   <td><strong>ID</strong></td>
-                  <td>{selectedCategory.id}</td>
+                  <td>{selectedStock.id}</td>
                 </tr>
                 <tr>
-                  <td><strong>Name</strong></td>
-                  <td>{selectedCategory.name}</td>
+                  <td><strong>Stock Name</strong></td>
+                  <td>{selectedStock.name}</td>
+                </tr>
+                <tr>
+                  <td><strong>SKU</strong></td>
+                  <td>{selectedStock.sku}</td>
+                </tr>
+                <tr>
+                  <td><strong>Quantity</strong></td>
+                  <td>{selectedStock.quantity}</td>
+                </tr>
+                <tr>
+                  <td><strong>Price</strong></td>
+                  <td>{selectedStock.price}</td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>
@@ -126,33 +138,43 @@ const CategoryList: React.FC = () => {
                     <span
                       className="status-badge"
                       style={{
-                        backgroundColor: selectedCategory.status === "active" ? "#d4f5d4" : "#f5d4d4",
-                        color: selectedCategory.status === "active" ? "green" : "red",
+                        backgroundColor:
+                          selectedStock.status === "active" ? "#d4f5d4" : "#f5d4d4",
+                        color:
+                          selectedStock.status === "active" ? "green" : "red",
                         cursor: "pointer",
                       }}
                       onClick={() => {
-                        // Toggle status in modal and main table
-                        const updatedStatus = selectedCategory.status === "active" ? "inactive" : "active";
-                        const updatedCategories = categories.map((cat) =>
-                          cat.id === selectedCategory.id ? { ...cat, status: updatedStatus } : cat
+                        const updatedStatus =
+                          selectedStock.status === "active"
+                            ? "inactive"
+                            : "active";
+                        const updatedStock = stock.map((item) =>
+                          item.id === selectedStock.id
+                            ? { ...item, status: updatedStatus }
+                            : item
                         );
-                        setCategories(updatedCategories);
-                        localStorage.setItem("categories", JSON.stringify(updatedCategories));
-                        setSelectedCategory({ ...selectedCategory, status: updatedStatus });
+                        setStock(updatedStock);
+                        localStorage.setItem("stock", JSON.stringify(updatedStock));
+                        setSelectedStock({ ...selectedStock, status: updatedStatus });
                       }}
                     >
-                      {selectedCategory.status === "active" ? "Active" : "Inactive"}
+                      {selectedStock.status === "active" ? "Active" : "Inactive"}
                     </span>
                   </td>
                 </tr>
                 <tr>
                   <td><strong>Image</strong></td>
                   <td>
-                    {selectedCategory.image ? (
+                    {selectedStock.image ? (
                       <img
-                        src={selectedCategory.image}
-                        alt={selectedCategory.name}
-                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                        src={selectedStock.image}
+                        alt={selectedStock.name}
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          objectFit: "contain",
+                        }}
                       />
                     ) : (
                       "No Image"
@@ -161,9 +183,10 @@ const CategoryList: React.FC = () => {
                 </tr>
               </tbody>
             </table>
+
             <button
               className="add-btn"
-              onClick={() => setSelectedCategory(null)}
+              onClick={() => setSelectedStock(null)}
               style={{ marginTop: "15px" }}
             >
               Close
@@ -171,9 +194,8 @@ const CategoryList: React.FC = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
 
-export default CategoryList;
+export default StockList;

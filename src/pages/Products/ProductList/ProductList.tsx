@@ -43,6 +43,26 @@ const ProductList: React.FC = () => {
     { key: "price", label: "Price (₹)" },
     { key: "stock", label: "Stock" },
     {
+      key: "image",
+      label: "Image",
+      render: (value: string) =>
+        value ? (
+          <img
+            src={value}
+            alt="Product"
+            style={{
+              width: "50px",
+              height: "50px",
+              objectFit: "contain",
+              borderRadius: "10px",
+              border: "1px solid #ddd",
+            }}
+          />
+        ) : (
+          "No Image"
+        ),
+    },
+    {
       key: "status",
       label: "Status",
       render: (value: string, row: any) => (

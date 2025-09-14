@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./AddBrand.css";
 
 const AddBrand: React.FC = () => {
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryImage, setCategoryImage] = useState<File | null>(null);
+  const [brandName, setbrandName] = useState("");
+  const [brandImage, setbrandImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    setCategoryImage(file);
+    setbrandImage(file);
 
     if (file) {
       const reader = new FileReader();
@@ -24,19 +24,19 @@ const AddBrand: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!categoryName.trim() || !categoryImage) {
+    if (!brandName.trim() || !brandImage) {
       return;
     }
 
-    const stored = JSON.parse(localStorage.getItem("categories") || "[]");
+    const stored = JSON.parse(localStorage.getItem("brand") || "[]");
     stored.push({
       id: stored.length + 1,
-      name: categoryName,
+      name: brandName,
       image: preview,
       status: "active",
     });
 
-    localStorage.setItem("categories", JSON.stringify(stored));
+    localStorage.setItem("brand", JSON.stringify(stored));
 
     navigate("/brand/list"); // redirect after save
   };
@@ -48,8 +48,8 @@ const AddBrand: React.FC = () => {
         <input
           type="text"
           placeholder="Enter Brand Name"
-          value={categoryName}
-          onChange={(e) => setCategoryName(e.target.value)}
+          value={brandName}
+          onChange={(e) => setbrandName(e.target.value)}
         />
 
         {/* Image Upload Box */}

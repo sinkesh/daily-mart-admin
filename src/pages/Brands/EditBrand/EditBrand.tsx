@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./EditBrand.css"; // Use same styles
 
-const EditCategory: React.FC = () => {
+const EditBrand: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [categoryName, setCategoryName] = useState("");
+    const [brandName, setBrandName] = useState("");
     const [preview, setPreview] = useState<string | null>(null);
     const [status, setStatus] = useState("active");
 
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-        const category = stored.find((c: any) => c.id === parseInt(id!));
-        if (category) {
-            setCategoryName(category.name);
-            setPreview(category.image);
-            setStatus(category.status);
+        const stored = JSON.parse(localStorage.getItem("brand") || "[]");
+        const barnd = stored.find((c: any) => c.id === parseInt(id!));
+        if (barnd) {
+            setBrandName(barnd.name);
+            setPreview(barnd.image);
+            setStatus(barnd.status);
         }
     }, [id]);
 
@@ -32,25 +32,25 @@ const EditCategory: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const stored = JSON.parse(localStorage.getItem("categories") || "[]");
+        const stored = JSON.parse(localStorage.getItem("brand") || "[]");
         const updated = stored.map((c: any) =>
             c.id === parseInt(id!)
-                ? { ...c, name: categoryName, image: preview, status }
+                ? { ...c, name: brandName, image: preview, status }
                 : c
         );
-        localStorage.setItem("categories", JSON.stringify(updated));
-        navigate("/category/list");
+        localStorage.setItem("brand", JSON.stringify(updated));
+        navigate("/barnd/list");
     };
 
     return (
         <div className="add-category-container">
-            <h2>Edit Category</h2>
+            <h2>Edit Brand</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                    placeholder="Category Name"
+                    value={brandName}
+                    onChange={(e) => setBrandName(e.target.value)}
+                    placeholder="Brand Name"
                 />
 
                 <div className="image-upload-box">
@@ -70,10 +70,10 @@ const EditCategory: React.FC = () => {
                     </select>
                 </div>
 
-                <button type="submit">Update Category</button>
+                <button type="submit">Update Brand</button>
             </form>
         </div>
     );
 };
 
-export default EditCategory;
+export default EditBrand;
