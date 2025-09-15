@@ -1,44 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../../components/Table/Table";
-import "./CategoryList.css"; // Make sure modal styles are included
+import "./CategoryList.css";
+
+import { getCategories, deleteCategoryApi } from "../../../../services/Category/category.service";
+import { Category } from "../../../../services/Category/category.types";
 
 const CategoryList: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null); // For modal
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const navigate = useNavigate();
 
-  // Load categories from localStorage
+  // ✅ Load categories from API (Safe)
+  const loadCategories = async () => {
+    try {
+      const response = await getCategories();
+      const data = response.data || response; // backend response data
+
+      if (Array.isArray(data)) {
+        const mapped: Category[] = data.map((c: any) => ({
+          id: c.category_id,
+          name: c.category_name,
+          image: c.category_image,
+          status: c.status.toLowerCase() === "active" ? "active" : "inactive",
+        }));
+
+        setCategories(mapped);
+      } else {
+        console.error("Invalid categories response:", data);
+        setCategories([]);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setCategories([]);
+    }
+  };
+
+
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-    setCategories(stored);
+    loadCategories();
   }, []);
 
-  // Toggle status function
+  // ✅ Toggle Status (Local Only)
   const toggleStatus = (id: number) => {
-    const updated = categories.map((cat) =>
-      cat.id === id
-        ? { ...cat, status: cat.status === "active" ? "inactive" : "active" }
-        : cat
+    setCategories((prev) =>
+      prev.map((cat) =>
+        cat.id === id
+          ? { ...cat, status: cat.status === "active" ? "inactive" : "active" }
+          : cat
+      )
     );
-    setCategories(updated);
-    localStorage.setItem("categories", JSON.stringify(updated));
   };
 
-  // Delete row function
-  const deleteCategory = (id: number) => {
-    const updated = categories.filter((cat) => cat.id !== id);
-    setCategories(updated);
-    localStorage.setItem("categories", JSON.stringify(updated));
+  // ✅ Delete row without calling API twice
+  const handleDeleteCategory = async (id: number) => {
+    try {
+      await deleteCategoryApi(id);
+      setCategories(prev => prev.filter(cat => cat.id !== id));
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    }
   };
 
-  // Search filter
-  const filtered = categories.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase())
-  );
 
-  // Columns for table
+  // ✅ Filtered Data
+  const filtered = Array.isArray(categories)
+    ? categories.filter((c) =>
+      c.name?.toLowerCase().includes(search.toLowerCase())
+    )
+    : [];
+
   const columns = [
     { key: "id", label: "#" },
     { key: "name", label: "Category Name" },
@@ -50,7 +82,13 @@ const CategoryList: React.FC = () => {
           <img
             src={value}
             alt="Category"
-            style={{ width: "50px", height: "50px", objectFit: "contain", borderRadius: "10px", border: "1px solid #ddd" }}
+            style={{
+              width: "50px",
+              height: "50px",
+              objectFit: "contain",
+              borderRadius: "10px",
+              border: "1px solid #ddd",
+            }}
           />
         ) : (
           "No Image"
@@ -59,7 +97,7 @@ const CategoryList: React.FC = () => {
     {
       key: "status",
       label: "Status",
-      render: (value: string, row: any) => (
+      render: (value: string, row: Category) => (
         <span
           className="status-badge"
           style={{
@@ -94,10 +132,7 @@ const CategoryList: React.FC = () => {
         data={filtered}
         actions={(row) => (
           <>
-            <button
-              className="action-btn edit"
-              onClick={() => setSelectedCategory(row)}
-            >
+            <button className="action-btn edit" onClick={() => setSelectedCategory(row)}>
               View
             </button>
             <button
@@ -108,7 +143,7 @@ const CategoryList: React.FC = () => {
             </button>
             <button
               className="action-btn delete"
-              onClick={() => deleteCategory(row.id)}
+              onClick={() => handleDeleteCategory(row.id)}
             >
               Delete
             </button>
@@ -116,13 +151,10 @@ const CategoryList: React.FC = () => {
         )}
       />
 
-      {/* Modal */}
+      {/* ✅ Modal */}
       {selectedCategory && (
         <div className="modal-overlay" onClick={() => setSelectedCategory(null)}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
-          >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Category Details</h3>
             <table className="details-table">
               <tbody>
@@ -140,22 +172,25 @@ const CategoryList: React.FC = () => {
                     <span
                       className="status-badge"
                       style={{
-                        backgroundColor: selectedCategory.status === "active" ? "#d4f5d4" : "#f5d4d4",
-                        color: selectedCategory.status === "active" ? "green" : "red",
+                        backgroundColor:
+                          selectedCategory.status === "active" ? "#d4f5d4" : "#f5d4d4",
+                        color:
+                          selectedCategory.status === "active" ? "green" : "red",
                         cursor: "pointer",
                       }}
-                      onClick={() => {
-                        // Toggle status in modal and main table
-                        const updatedStatus = selectedCategory.status === "active" ? "inactive" : "active";
-                        const updatedCategories = categories.map((cat) =>
-                          cat.id === selectedCategory.id ? { ...cat, status: updatedStatus } : cat
-                        );
-                        setCategories(updatedCategories);
-                        localStorage.setItem("categories", JSON.stringify(updatedCategories));
-                        setSelectedCategory({ ...selectedCategory, status: updatedStatus });
-                      }}
+                      onClick={() =>
+                        setSelectedCategory({
+                          ...selectedCategory,
+                          status:
+                            selectedCategory.status === "active"
+                              ? "inactive"
+                              : "active",
+                        })
+                      }
                     >
-                      {selectedCategory.status === "active" ? "Active" : "Inactive"}
+                      {selectedCategory.status === "active"
+                        ? "Active"
+                        : "Inactive"}
                     </span>
                   </td>
                 </tr>
@@ -166,7 +201,11 @@ const CategoryList: React.FC = () => {
                       <img
                         src={selectedCategory.image}
                         alt={selectedCategory.name}
-                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          objectFit: "contain",
+                        }}
                       />
                     ) : (
                       "No Image"
@@ -185,7 +224,6 @@ const CategoryList: React.FC = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

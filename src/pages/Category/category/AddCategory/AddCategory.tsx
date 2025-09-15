@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddCategory.css";
+import { createCategory } from "../../../../services/Category/category.service";
 
 const AddCategory: React.FC = () => {
   const [categoryName, setCategoryName] = useState("");
@@ -14,31 +15,23 @@ const AddCategory: React.FC = () => {
 
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
+      reader.onloadend = () => setPreview(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!categoryName.trim() || !categoryImage) {
-      return;
+    if (!categoryName.trim() || !categoryImage) return;
+
+    try {
+      await createCategory(categoryName, categoryImage); // ✅ API call
+      navigate("/category/list"); // redirect after success
+    } catch (error) {
+      console.error("Error creating category:", error);
+      alert("Failed to create category. Please try again.");
     }
-
-    const stored = JSON.parse(localStorage.getItem("categories") || "[]");
-    stored.push({
-      id: stored.length + 1,
-      name: categoryName,
-      image: preview,
-      status: "active",
-    });
-
-    localStorage.setItem("categories", JSON.stringify(stored));
-
-    navigate("/category/list"); // redirect after save
   };
 
   return (
@@ -52,7 +45,6 @@ const AddCategory: React.FC = () => {
           onChange={(e) => setCategoryName(e.target.value)}
         />
 
-        {/* Image Upload Box */}
         <div className="image-upload-box">
           {preview ? (
             <img src={preview} alt="Preview" className="preview-image" />
