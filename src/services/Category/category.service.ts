@@ -40,6 +40,22 @@ export const getCategoryById = async (id: number): Promise<Category> => {
     };
 };
 
+
+// ✅ Update Category Status
+export const updateCategoryStatusApi = async (id: number, payload: { status: string }): Promise<void> => {
+  try {
+    await axios.put(`${API_BASE}/Update_Category_Status/${id}`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("✅ SubCategory status updated successfully!");
+  } catch (error: any) {
+    console.error("❌ Error updating subcategory status:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 // ✅ Update Category
 export const updateCategoryApi = async (id: number, formData: FormData): Promise<void> => {
     try {

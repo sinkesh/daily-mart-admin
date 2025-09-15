@@ -11,6 +11,7 @@ interface CommonTableProps {
   columns: Column[];
   data: Record<string, any>[];
   actions?: (row: any) => React.ReactNode; // Optional actions column
+  tableClassName?: string; 
 }
 
 const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actions }) => {

@@ -84,3 +84,19 @@
   text-align: center;
   transition: background-color 0.2s, color 0.2s;
 }
+
+.compact-table th,
+.compact-table td {
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.compact-table tr {
+  height: 36px;
+}
+
+.compact-table thead th {
+  font-weight: 600;
+  background: #f4f4f4;
+}
