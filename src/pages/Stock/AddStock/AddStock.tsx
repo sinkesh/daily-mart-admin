@@ -1,68 +1,50 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddStock.css";
+import { createStock } from "../../../services/Stock/Stock.service";
 
 const AddStock: React.FC = () => {
-  const [stockName, setStockName] = useState<string>("");
-  const [sku, setSku] = useState<string>("");
-  const [quantity, setQuantity] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
-  const [stockImage, setStockImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // ✅ Image Change Handler
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setStockImage(file);
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result as string);
-      reader.readAsDataURL(file);
-    } else {
-      setPreview(null);
-    }
-  };
+  // ✅ Form State
+  const [productName, setProductName] = useState("");
+  const [brandName, setBrandName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [stockQuantity, setStockQuantity] = useState("");
+  const [reorderLevel, setReorderLevel] = useState("");
+  const [unitPrice, setUnitPrice] = useState("");
+  const [warehouseLocation, setWarehouseLocation] = useState("");
+  const [status] = useState<"active" | "inactive">("active");
 
   // ✅ Submit Handler
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // --- Validation ---
-    if (!stockName.trim() || !sku.trim() || quantity === "" || price === "" || !stockImage) {
-      alert("All fields are required!");
+    // Simple validation
+    if (!productName || !brandName || !categoryName) {
+      alert("Please fill all required fields!");
       return;
     }
 
-    if (!/^\d+$/.test(quantity)) {
-      alert("Quantity must be a valid number!");
-      return;
-    }
-
-    if (!/^\d*\.?\d+$/.test(price)) {
-      alert("Price must be a valid number!");
-      return;
-    }
-
-    // --- Save in localStorage ---
-    const storedStock = JSON.parse(localStorage.getItem("stock") || "[]");
-
-    const newStock = {
-      id: storedStock.length + 1,
-      name: stockName,
-      sku,
-      quantity: Number(quantity),
-      price: Number(price),
-      image: preview,
-      status: "active",
+    // ✅ Prepare JSON Payload
+    const payload = {
+      product_name: productName,
+      brand_name: brandName,
+      category_name: categoryName,
+      stock_quantity: Number(stockQuantity),
+      reorder_level: Number(reorderLevel),
+      unit_price: Number(unitPrice),
+      warehouse_location: warehouseLocation,
+      status,
     };
 
-    storedStock.push(newStock);
-    localStorage.setItem("stock", JSON.stringify(storedStock));
-
-    // --- Redirect to List ---
-    navigate("/stock/list");
+    try {
+      await createStock(payload);
+      navigate("/stock/list");
+    } catch (error) {
+      console.error("❌ Error creating stock:", error);
+      alert("Failed to create stock");
+    }
   };
 
   return (
@@ -70,58 +52,80 @@ const AddStock: React.FC = () => {
       <h2>Add Stock</h2>
 
       <form onSubmit={handleSubmit}>
-        {/* Stock Name */}
+        {/* Product Name */}
         <input
           type="text"
-          placeholder="Enter Stock Name"
-          value={stockName}
-          onChange={(e) => setStockName(e.target.value)}
+          placeholder="Enter Product Name"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          required
         />
 
-        {/* SKU */}
+        {/* Brand Name */}
         <input
           type="text"
-          placeholder="Enter SKU"
-          value={sku}
-          onChange={(e) => setSku(e.target.value)}
+          placeholder="Enter Brand Name"
+          value={brandName}
+          onChange={(e) => setBrandName(e.target.value)}
+          required
         />
 
-        {/* Quantity */}
+        {/* Category Name */}
         <input
           type="text"
-          placeholder="Enter Quantity"
-          value={quantity}
+          placeholder="Enter Category Name"
+          value={categoryName}
+          onChange={(e) => setCategoryName(e.target.value)}
+          required
+        />
+
+        {/* Stock Quantity - Text but only numbers allowed */}
+        <input
+          type="text"
+          placeholder="Enter Stock Quantity"
+          value={stockQuantity}
           onChange={(e) => {
             const value = e.target.value;
-            if (/^\d*$/.test(value)) setQuantity(value); // ✅ only digits allowed
+            if (/^\d*$/.test(value)) setStockQuantity(value); // allow only digits
           }}
         />
 
-        {/* Price */}
+        {/* Reorder Level - Text but only numbers allowed */}
         <input
           type="text"
-          placeholder="Enter Price"
-          value={price}
+          placeholder="Enter Reorder Level"
+          value={reorderLevel}
           onChange={(e) => {
             const value = e.target.value;
-            if (/^\d*\.?\d*$/.test(value)) setPrice(value); // ✅ allow digits + decimal
+            if (/^\d*$/.test(value)) setReorderLevel(value); // allow only digits
           }}
         />
 
-        {/* Image Upload */}
-        <div className="image-upload-box">
-          {preview ? (
-            <img src={preview} alt="Preview" className="preview-image" />
-          ) : (
-            <span>Click to upload image</span>
-          )}
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </div>
+        {/* Unit Price - Text but allow decimal */}
+        <input
+          type="text"
+          placeholder="Enter Unit Price"
+          value={unitPrice}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (/^\d*\.?\d*$/.test(value)) setUnitPrice(value); // allow digits + optional decimal
+          }}
+        />
 
+        {/* Warehouse Location */}
+        <input
+          type="text"
+          placeholder="Enter Warehouse Location"
+          value={warehouseLocation}
+          onChange={(e) => setWarehouseLocation(e.target.value)}
+        />
+
+        {/* Submit Button */}
         <button type="submit">Save Stock</button>
       </form>
     </div>
   );
+
 };
 
 export default AddStock;
