@@ -15,6 +15,8 @@ import { FaBoxOpen } from "@react-icons/all-files/fa/FaBoxOpen";
 import { FaThLarge } from "@react-icons/all-files/fa/FaThLarge";
 import { FaLayerGroup } from "@react-icons/all-files/fa/FaLayerGroup";
 import { FaShieldAlt } from "@react-icons/all-files/fa/FaShieldAlt";
+import { FaQuestionCircle } from "@react-icons/all-files/fa/FaQuestionCircle";
+
 
 interface SidebarProps {
   collapsed: boolean;
@@ -44,8 +46,9 @@ const menuData = [
       { name: "Sub Category List", path: "/subcategory/list", icon: <FaThLarge /> },
     ],
   },
-  { name: "Stock List", path: "/stock/list", icon: <FaBoxes /> }, // Stock icon
-  { name: "Brand List", path: "/brand/list", icon: <FaTags /> },  // Brand icon
+  { name: "Stock List", path: "/stock/list", icon: <FaBoxes /> },
+  { name: "Brand List", path: "/brand/list", icon: <FaTags /> },
+  { name: "Faq List", path: "/faq/list", icon: <FaQuestionCircle /> },
   {
     name: "Settings",
     icon: <FaCog />, // Settings icon
