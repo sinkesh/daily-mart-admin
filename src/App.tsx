@@ -7,10 +7,10 @@ import Roles from "./pages/Roles/RoleList";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import MainLayout from "./layouts/MainLayout";
 import ProductList from "./pages/Products/ProductList/ProductList";
-import CategoryList from "./pages/Category/category/CatgeoryList/CategoryList";
+import CategoryList from "./pages/Category/Category/CatgeoryList/CategoryList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
-import AddCategory from "./pages/Category/category/AddCategory/AddCategory";
-import EditCategory from "./pages/Category/category/EditCategory/EditCategory";
+import AddCategory from "./pages/Category/Category/AddCategory/AddCategory";
+import EditCategory from "./pages/Category/Category/EditCategory/EditCategory"
 import SubCatgeoryList from "./pages/Category/SubCategory/SubCategoryList/SubCategoryList";
 import AddSubCategory from "./pages/Category/SubCategory/AddSubCategory/AddSubCategory";
 import EditSubCategory from "./pages/Category/SubCategory/EditSubCategory/EditSubCategory";
@@ -263,7 +263,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/edit/faq/:id"
+          path="/edit/faq/:faq_id"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Faq" >

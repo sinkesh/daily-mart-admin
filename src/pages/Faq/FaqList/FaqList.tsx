@@ -83,7 +83,7 @@ const FaqList: React.FC = () => {
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
   const columns = [
-    { key: "id", label: "#" },
+    { key: "faq_id", label: "#" },
     { key: "question", label: "Question" },
     { key: "answer", label: "Answer" },
     {
@@ -130,9 +130,9 @@ const FaqList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedFaq(row)}> View</button>
-            <button className="action-btn edit" onClick={() => navigate(`/edit/faq/${row.id}`)}> Edit </button>
-            <button className="action-btn delete" onClick={() => handleDeleteFaq(row.id)}> Delete</button>
+            <button className="action-btn edit" onClick={() => setSelectedFaq(row.faq_id)}> View</button>
+            <button className="action-btn edit" onClick={() => navigate(`/edit/faq/${row.faq_id}`)}> Edit </button>
+            <button className="action-btn delete" onClick={() => handleDeleteFaq(row.faq_id)}> Delete</button>
           </>
         )}
       />

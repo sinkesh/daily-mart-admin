@@ -21,12 +21,6 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* CategoryList.css */
-
-.category-container {
-  padding: 20px;
-}
-
 /* Table ko compact banane ke liye */
 .category-container table {
   border-collapse: collapse;

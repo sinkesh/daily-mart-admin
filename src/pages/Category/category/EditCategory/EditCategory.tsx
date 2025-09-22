@@ -19,7 +19,7 @@ const EditCategory: React.FC = () => {
       try {
         const data = await getCategoryById(parseInt(id));
         setCategoryName(data.name);
-        setPreview(data.image || null); 
+        setPreview(data.image || null);
         setStatus(data.status);
       } catch (error) {
         console.error("Error fetching category:", error);
@@ -45,20 +45,20 @@ const EditCategory: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!id) return;
-  
+
     try {
       const formData = new FormData();
       formData.append("category_name", categoryName);
       formData.append("status", status.toUpperCase());
       if (imageFile) formData.append("category_image", imageFile);
-  
+
       await updateCategoryApi(parseInt(id), formData);
       navigate("/category/list");
     } catch (error) {
       console.error("Error updating category:", error);
     }
   };
-  
+
 
   if (loading) return <div>Loading...</div>;
 
