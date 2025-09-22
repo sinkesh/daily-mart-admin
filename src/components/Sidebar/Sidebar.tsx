@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import "./Sidebar.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import LogoImg from "../../assets/icon3.jpeg";
 import { FaHome } from "@react-icons/all-files/fa/FaHome";
 import { FaUser } from "@react-icons/all-files/fa/FaUser";
 import { FaCog } from "@react-icons/all-files/fa/FaCog";
-import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { FaList } from "@react-icons/all-files/fa/FaList";
 import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
+import { FaBoxes } from "@react-icons/all-files/fa/FaBoxes";
+import { FaTags } from "@react-icons/all-files/fa/FaTags";
+import { FaUsers } from "@react-icons/all-files/fa/FaUsers";
+import { FaBoxOpen } from "@react-icons/all-files/fa/FaBoxOpen";
+import { FaThLarge } from "@react-icons/all-files/fa/FaThLarge";
+import { FaLayerGroup } from "@react-icons/all-files/fa/FaLayerGroup";
 import { FaShieldAlt } from "@react-icons/all-files/fa/FaShieldAlt";
-import "./Sidebar.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-
 
 interface SidebarProps {
   collapsed: boolean;
@@ -17,122 +22,134 @@ interface SidebarProps {
 }
 
 const menuData = [
-  {
-    name: "Dashboard",
-    icon: <FaHome />,
-    path: "/Dashboard"
-  },
+  { name: "Dashboard", icon: <FaHome />, path: "/Dashboard" },
   {
     name: "Users",
-    icon: <FaUser />,
+    icon: <FaUsers />, // User icon
     submenu: [
       { name: "User List", path: "/users/list", icon: <FaList /> },
-      { name: "Roles", path: "/users/roles", icon: <FaShieldAlt /> }
-    ]
+      { name: "Roles", path: "/users/roles", icon: <FaShieldAlt /> },
+    ],
   },
   {
-    name: "Poducts",
-    icon: <FaUser />,
-    submenu: [
-      { name: "Product List", path: "/products/list", icon: <FaList /> },
-    ]
+    name: "Products",
+    icon: <FaBoxOpen />, // Product icon
+    submenu: [{ name: "Product List", path: "/products/list", icon: <FaList /> }],
   },
   {
     name: "Category",
-    icon: <FaUser />,
+    icon: <FaLayerGroup />, // Category icon
     submenu: [
-      { name: "Category List", path: "/category/list", icon: <FaList /> },
-      { name: "Sub Category List", path: "/subcategory/list", icon: <FaShieldAlt /> }
-    ]
+      { name: "Category List", path: "/category/list", icon: <FaThLarge /> },
+      { name: "Sub Category List", path: "/subcategory/list", icon: <FaThLarge /> },
+    ],
   },
-  {
-    name: "Stock List",
-    path: "/stock/list",
-    icon: <FaList />
-  },
-  {
-    name: "Brand List",
-    path: "/brand/list",
-    icon: <FaList />
-  },
+  { name: "Stock List", path: "/stock/list", icon: <FaBoxes /> }, // Stock icon
+  { name: "Brand List", path: "/brand/list", icon: <FaTags /> },  // Brand icon
   {
     name: "Settings",
-    icon: <FaCog />,
+    icon: <FaCog />, // Settings icon
     submenu: [
-      { name: "Profile", path: "/settings/profile", icon: <FaList /> },
+      { name: "Profile", path: "/settings/profile", icon: <FaUser /> },
       { name: "Change Password", path: "/settings/changepassword", icon: <FaPlus /> },
-    ]
-  }
+    ],
+  },
 ];
 
-const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
+const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const location = useLocation();
 
   const toggleMenu = (name: string) => {
     setOpenMenu(openMenu === name ? null : name);
   };
 
+  const handleDirectLinkClick = () => {
+    // Direct NavLink clicked, close any open submenu
+    setOpenMenu(null);
+  };
+
   return (
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+      {/* Sidebar Header */}
       <div className="sidebar-header">
-        <span className="sidebar-logo">{collapsed ? "D..." : "Daily Mart"}</span>
-        <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
-          <FaBars />
-        </button>
+        {!collapsed ? (
+          <>
+            <img src={LogoImg} alt="Logo" className="sidebar-logo-img" />
+            <span className="sidebar-logo-text">Daily Mart</span>
+          </>
+        ) : (
+          <span className="sidebar-logo-text sidebar-collapsed-text">DM</span>
+        )}
       </div>
 
-      {menuData.map((menu) => (
-        <div className="menu-item" key={menu.name}>
-          {menu.submenu ? (
-            <>
-              {/* <div className="menu-parent" onClick={() => toggleMenu(menu.name)}>
-                <span className="icon">{menu.icon}</span>
-                {!collapsed && (
-                  <>
-                    {menu.name}
-                    <span className="arrow">{openMenu === menu.name ? "" : "▼"}</span>
-                  </>
-                )}
-              </div> */}
-              <div className="menu-parent" onClick={() => toggleMenu(menu.name)}>
-                <span className="icon">{menu.icon}</span>
-                {!collapsed && (
-                  <>
-                    {menu.name}
-                    <span className="arrow">
-                      {openMenu === menu.name ? (
-                        <i className="fas fa-angle-down"></i>
-                      ) : (
-                        <i className="fas fa-angle-left"></i>
-                      )}
-                    </span>
-                  </>
-                )}
-              </div>
+      {menuData.map((menu) => {
+        const isMenuOpen = openMenu === menu.name;
+        const isActiveParent =
+          menu.submenu?.some((sub) => location.pathname.startsWith(sub.path)) ||
+          location.pathname === menu.path;
 
-              {openMenu === menu.name && !collapsed && (
-                <div className="submenu">
-                  {menu.submenu.map((sub) => (
-                    <NavLink
-                      key={sub.name}
-                      to={sub.path}
-                      className={({ isActive }) => isActive ? "active-submenu" : ""}
-                    >
-                      <span className="icon">{sub.icon}</span>
-                      {sub.name}
-                    </NavLink>
-                  ))}
+        return (
+          <div
+            className={`menu-group ${isMenuOpen || isActiveParent ? "menu-active-group" : ""}`}
+            key={menu.name}
+          >
+            {/* Menu with submenu */}
+            {menu.submenu ? (
+              <>
+                <div
+                  className={`menu-parent ${isMenuOpen ? "menu-parent-open" : ""}`}
+                  onClick={() => toggleMenu(menu.name)}
+                >
+                  <span className="icon">{menu.icon}</span>
+                  {!collapsed && (
+                    <>
+                      <span className="menu-text">{menu.name}</span>
+                      <span className="arrow">
+                        {isMenuOpen ? (
+                          <i className="fas fa-angle-down"></i>
+                        ) : (
+                          <i className="fas fa-angle-left"></i>
+                        )}
+                      </span>
+                    </>
+                  )}
                 </div>
-              )}
-            </>
-          ) : (
-            <NavLink to={menu.path!} className={({ isActive }) => isActive ? "active" : ""}>
-              <span className="icon">{menu.icon}</span>
-              {!collapsed && menu.name}
-            </NavLink>
-          )}
-        </div>
-      ))}
+
+                {isMenuOpen && !collapsed && (
+                  <div className="submenu submenu-open">
+                    {menu.submenu.map((sub) => (
+                      <NavLink
+                        key={sub.name}
+                        to={sub.path}
+                        className={({ isActive }) =>
+                          isActive ? "active-submenu" : ""
+                        }
+                      >
+                        <span className="icon">{sub.icon}</span>
+                        {sub.name}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              // Menu without submenu
+              <NavLink
+                to={menu.path!}
+                onClick={handleDirectLinkClick} // Close other submenus
+                className={({ isActive }) =>
+                  `menu-parent ${isActive ? "menu-parent-open" : ""}`
+                }
+              >
+                <span className="icon">{menu.icon}</span>
+                {!collapsed && <span className="menu-text">{menu.name}</span>}
+                {!collapsed && <span className="arrow-placeholder" />}
+              </NavLink>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

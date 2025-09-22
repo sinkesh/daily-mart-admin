@@ -1,14 +1,54 @@
 .navbar {
-  background-color: #ffffff;
-  color: #1f2d3d;
-  padding: 1rem 2rem;   /* thoda horizontal padding badha diya */
+  position: fixed;
+  top: 0;
+  left: 220px;
+  width: calc(100% - 220px);
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1.5rem;
+  background-color: #f3f3f4;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: left 0.3s, width 0.3s;
 }
 
-.logo {
+.collapsed-navbar {
+  left: 60px;
+  width: calc(100% - 60px);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.collapse-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
   cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.collapse-btn:hover {
+  color: #007bff;
+}
+
+.navbar-logo {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #1f2d3d;
+  user-select: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
 }
 
 .logout-btn {
@@ -19,13 +59,14 @@
   border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
+
 .logout-btn:hover {
   background-color: #dc2626;
 }
 
-
-/* Overlay */
+/* Popup Styles (unchanged) */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -39,33 +80,26 @@
   z-index: 2000;
 }
 
-/* Popup Box */
 .popup-box {
   background: white;
   padding: 20px;
   border-radius: 8px;
   width: 300px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.popup-box p {
-  margin-bottom: 20px;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Actions */
 .popup-actions {
   display: flex;
   justify-content: space-around;
+  margin-top: 12px;
 }
 
 .confirm-btn {
   background: #ef4444;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -74,15 +108,15 @@
   background: #6b7280;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.confirm-btn:hover {
-  background: #dc2626;
-}
-
-.cancel-btn:hover {
-  background: #4b5563;
+.welcome-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1f2d3d;
+  margin-right: 20px; /* Button ke saath gap */
+  text-overflow: ellipsis;
 }

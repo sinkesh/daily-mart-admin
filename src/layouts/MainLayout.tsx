@@ -8,18 +8,30 @@ interface MainLayoutProps {
   collapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
   pageTitle?: string;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>; // ✅ Add this
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+   className?: string;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children, collapsed, setCollapsed, pageTitle, setIsAuthenticated }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({
+  children,
+  collapsed,
+  setCollapsed,
+  pageTitle,
+  setIsAuthenticated,
+}) => {
   return (
     <div className="layout">
       {/* Sidebar */}
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
+      {/* Main Content Area */}
       <div className={`layout-main ${collapsed ? "collapsed" : ""}`}>
-        {/* Navbar with prop */}
-        <Navbar setIsAuthenticated={setIsAuthenticated} />
+        {/* ✅ Pass collapsed & setCollapsed to Navbar */}
+        <Navbar
+          setIsAuthenticated={setIsAuthenticated}
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+        />
 
         {/* Page Heading */}
         {pageTitle && (
@@ -28,7 +40,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, collapsed, setCollaps
           </div>
         )}
 
-        {/* Content Area */}
+        {/* Content */}
         <div className="layout-content">{children}</div>
       </div>
     </div>

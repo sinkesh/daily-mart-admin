@@ -1,24 +1,34 @@
 .layout-main {
   flex: 1;
+  margin-left: 220px;
+  /* default sidebar width */
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  background-color: #f9fafb; /* light gray for content area */
+  height: 100vh;
+  transition: margin-left 0.3s;
 }
 
-.page-heading {
-  padding: 3px; 
-  background-color: #f3f4f6;
-  font-size: 11px;
-  border-bottom: 1px solid #d1d5db;
-  margin: 0;
-  padding-left: 40px; /* 👈 heading ko thoda right shift kiya */
+/* Sidebar collapsed adjustment */
+.layout-main.collapsed {
+  margin-left: 60px;
 }
 
-
+/* ✅ Add top padding equal to navbar height */
 .layout-content {
   flex: 1;
-  overflow-y: auto; /* content scrollable */
-  padding: 15px 20px; /* gap kam kiya */
-  margin-top: 0; /* page-heading ke niche direct start ho */
+  overflow-y: auto;
+  padding: 1rem;
+  padding-top: 70px;
+  /* navbar height + small spacing */
+}
+
+/* Page heading */
+.page-heading {
+  padding-left: 35px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f9fafb;
+  position: sticky;
+  top: 60px;
+  font-size: 9px;
+  z-index: 500;
 }

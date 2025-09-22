@@ -1,39 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaBars } from "@react-icons/all-files/fa/FaBars";
+import { FaSignOutAlt } from "@react-icons/all-files/fa/FaSignOutAlt";
 import "./Navbar.css";
 
 interface NavbarProps {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  collapsed: boolean;
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ setIsAuthenticated }) => {
+const Navbar: React.FC<NavbarProps> = ({ setIsAuthenticated, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    setIsAuthenticated(false);   // ✅ authentication reset
+    setIsAuthenticated(false);
     setShowPopup(false);
-    navigate("/login");          // ✅ redirect to login
+    navigate("/login");
   };
 
   return (
-    <div className="navbar">
-      {/* Home button */}
-      <div
-        className="logo"
-        onClick={() => navigate("/dashboard")}
-        style={{ cursor: "pointer" }}
-      >
-        Home
+    <div className={`navbar ${collapsed ? "collapsed-navbar" : ""}`}>
+      <div className="navbar-left">
+        <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
+          <FaBars />
+        </button>
       </div>
 
-      {/* Logout button */}
-      <button className="logout-btn" onClick={() => setShowPopup(true)}>
-        Logout
-      </button>
+      {/* Right - Logout + Welcome */}
+      <div className="navbar-right">
+        <span className="welcome-text" style={{ marginRight: "20px" }}>
+          Welcome to Admin
+        </span>
+        <button className="logout-btn" onClick={() => setShowPopup(true)}>
+          <FaSignOutAlt style={{ marginRight: "6px" }} />
+          Logout
+        </button>
+      </div>
 
-      {/* Confirmation Popup */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup-box">
