@@ -6,6 +6,7 @@ export interface Stock {
     stock_quantity: number;
     reorder_level: string;
     unit_price: number;
+    warehouse_location: string;
     status: "active" | "inactive";
   }
   

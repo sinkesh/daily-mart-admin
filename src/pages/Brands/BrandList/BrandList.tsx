@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
 import "./BrandList.css";
-import { getAllBrandApi, deleteBrandApi, updateBrandStatusApi } from "../../../services/Brands/brand.service";
+import { getAllBrandApi, updateBrandStatusApi } from "../../../services/Brands/brand.service";
 import { BrandTypes } from "../../../services/Brands/brand.types";
 
 const CategoryList: React.FC = () => {
@@ -60,15 +60,15 @@ const CategoryList: React.FC = () => {
     }
   };
 
-  // ✅ Delete
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteBrandApi(id);
-      setBrand((prev) => prev.filter((cat) => cat.brand_id !== id));
-    } catch (error) {
-      console.error("Error deleting:", error);
-    }
-  };
+  // // ✅ Delete
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await deleteBrandApi(id);
+  //     setBrand((prev) => prev.filter((cat) => cat.brand_id !== id));
+  //   } catch (error) {
+  //     console.error("Error deleting:", error);
+  //   }
+  // };
 
   // ✅ Filtered Data
   const filtered = Array.isArray(brand)
@@ -138,7 +138,7 @@ const CategoryList: React.FC = () => {
           }}
           className="search-bar"
         />
-        <button className="add-btn" onClick={() => navigate("/add/category")}>
+        <button className="add-btn" onClick={() => navigate("/add/brand")}>
           + Add Brand
         </button>
       </div>
@@ -151,8 +151,8 @@ const CategoryList: React.FC = () => {
         actions={(row) => (
           <>
             <button className="action-btn view" onClick={() => setSelectedBrand(row)}> View</button>
-            <button className="action-btn edit" onClick={() => navigate(`/edit/category/${row.brand_id}`)}> Edit </button>
-            <button className="action-btn delete" onClick={() => handleDelete(row.brand_id)}> Delete</button>
+            <button className="action-btn edit" onClick={() => navigate(`/edit/brand/${row.brand_id}`)}> Edit </button>
+            {/* <button className="action-btn delete" onClick={() => handleDelete(row.brand_id)}> Delete</button> */}
           </>
         )}
       />

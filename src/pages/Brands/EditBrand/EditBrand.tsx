@@ -1,79 +1,97 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditBrand.css"; // Use same styles
+import "./EditBrand.css";
+import { getByIdBrandApi, updateBrandApi } from "../../../services/Brands/brand.service";
 
 const EditBrand: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
-    const [brandName, setBrandName] = useState("");
-    const [preview, setPreview] = useState<string | null>(null);
-    const [status, setStatus] = useState("active");
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [brandName, setBrandName] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null); // store actual file
+  const [preview, setPreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("brand") || "[]");
-        const barnd = stored.find((c: any) => c.id === parseInt(id!));
-        if (barnd) {
-            setBrandName(barnd.name);
-            setPreview(barnd.image);
-            setStatus(barnd.status);
-        }
-    }, [id]);
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files ? e.target.files[0] : null;
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setPreview(reader.result as string);
-            reader.readAsDataURL(file);
-        }
+  // Fetch category by ID
+  useEffect(() => {
+    const fetchCategory = async () => {
+      if (!id) return;
+      try {
+        const data = await getByIdBrandApi(parseInt(id));
+        setBrandName(data.brand_name);
+        setDescription(data.description);
+        setPreview(data.brand_logo || null);
+      } catch (error) {
+        console.error("Error fetching:", error);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchCategory();
+  }, [id]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+  // Handle image change
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImageFile(file); // save the actual file
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
 
-        const stored = JSON.parse(localStorage.getItem("brand") || "[]");
-        const updated = stored.map((c: any) =>
-            c.id === parseInt(id!)
-                ? { ...c, name: brandName, image: preview, status }
-                : c
-        );
-        localStorage.setItem("brand", JSON.stringify(updated));
-        navigate("/barnd/list");
-    };
+  // Handle form submit
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!id) return;
 
-    return (
-        <div className="add-category-container">
-            <h2>Edit Brand</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
-                    placeholder="Brand Name"
-                />
+    try {
+      const formData = new FormData();
+      formData.append("brand_name", brandName);
+      formData.append("description", description);
+      if (imageFile) formData.append("brand_logo", imageFile);
 
-                <div className="image-upload-box">
-                    {preview ? (
-                        <img src={preview} alt="Preview" className="preview-image" />
-                    ) : (
-                        <span>Click to upload image</span>
-                    )}
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
-                </div>
+      await updateBrandApi(parseInt(id), formData);
+      navigate("/brand/list");
+    } catch (error) {
+      console.error("Error updating:", error);
+    }
+  };
 
-                <div style={{ marginBottom: "15px" }}>
-                    <label>Status: </label>
-                    <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
 
-                <button type="submit">Update Brand</button>
-            </form>
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <div className="add-category-container">
+      <h2>Edit Category</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={brandName}
+          onChange={(e) => setBrandName(e.target.value)}
+          placeholder="Brand Name"
+        />
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+        />
+
+        <div className="image-upload-box">
+          {preview ? (
+            <img src={preview} alt="Preview" className="preview-image" />
+          ) : (
+            <span>Click to upload image</span>
+          )}
+          <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
-    );
+
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  );
 };
 
 export default EditBrand;

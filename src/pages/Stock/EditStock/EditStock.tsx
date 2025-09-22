@@ -1,71 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./EditStock.css";
+import { getStockById, updateStockApi } from "../../../services/Stock/Stock.service";
 
 const EditStock: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { stock_id } = useParams<{ stock_id: string }>(); // ✅ Correct param name
     const navigate = useNavigate();
 
-    const [stockName, setStockName] = useState("");
-    const [sku, setSku] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
-    const [preview, setPreview] = useState<string | null>(null);
+    // ✅ State variables for stock fields
+    const [productName, setProductName] = useState("");
+    const [brandName, setBrandName] = useState("");
+    const [categoryName, setCategoryName] = useState("");
+    const [stockQuantity, setStockQuantity] = useState<number | string>("");
+    const [reorderLevel, setReorderLevel] = useState<number | string>("");
+    const [unitPrice, setUnitPrice] = useState<number | string>("");
+    const [warehouseLocation, setWarehouseLocation] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    // ✅ 1. Load Data
+    // ✅ Fetch Stock Data by ID
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("stock") || "[]");
-        console.log("Stored Stock:", stored); // Debugging
-        console.log("Edit ID:", id);
+        console.log("Stock ID from params:", stock_id);
 
-        const stockItem = stored.find((item: any) => item.id === Number(id));
-        if (!stockItem) {
-            alert("Stock not found!");
-            navigate("/stock/list");
-            return;
-        }
+        const fetchStock = async () => {
+            if (!stock_id) return;
+            try {
+                const id = parseInt(stock_id);
+                const data = await getStockById(id);
 
-        setStockName(stockItem.name);
-        setSku(stockItem.sku);
-        setQuantity(String(stockItem.quantity));
-        setPrice(String(stockItem.price));
-        setPreview(stockItem.image);
-    }, [id, navigate]);
+                setProductName(data?.product_name ?? "");
+                setBrandName(data?.brand_name ?? "");
+                setCategoryName(data?.category_name ?? "");
+                setStockQuantity(data?.stock_quantity ?? "");
+                setReorderLevel(data?.reorder_level ?? "");
+                setUnitPrice(data?.unit_price ?? "");
+                setWarehouseLocation(data?.warehouse_location ?? "");
+            } catch (error) {
+                console.error("Error fetching stock:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setPreview(reader.result as string);
-            reader.readAsDataURL(file);
-        }
-    };
+        fetchStock();
+    }, [stock_id]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    // ✅ Handle Submit
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!stock_id) return;
 
-        if (!stockName.trim() || !sku.trim() || quantity === "" || price === "") {
-            alert("All fields are required!");
-            return;
+        try {
+            const id = parseInt(stock_id);
+            const payload = {
+                product_name: productName,
+                brand_name: brandName,
+                category_name: categoryName,
+                stock_quantity: Number(stockQuantity),
+                reorder_level: Number(reorderLevel),
+                unit_price: Number(unitPrice),
+                warehouse_location: warehouseLocation,
+            };
+
+            await updateStockApi(id, payload);
+            navigate("/stock/list");
+        } catch (error) {
+            console.error("Error updating stock:", error);
         }
-
-        const stored = JSON.parse(localStorage.getItem("stock") || "[]");
-        const updated = stored.map((item: any) =>
-            item.id === Number(id)
-                ? {
-                    ...item,
-                    name: stockName,
-                    sku,
-                    quantity: Number(quantity),
-                    price: Number(price),
-                    image: preview,
-                }
-                : item
-        );
-
-        localStorage.setItem("stock", JSON.stringify(updated));
-        navigate("/stock/list");
     };
+
+    if (loading) return <div>Loading...</div>;
 
     return (
         <div className="add-category-container">
@@ -73,45 +76,60 @@ const EditStock: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    value={stockName}
-                    onChange={(e) => setStockName(e.target.value)}
-                    placeholder="Enter Stock Name"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    placeholder="Product Name"
                 />
                 <input
                     type="text"
-                    value={sku}
-                    onChange={(e) => setSku(e.target.value)}
-                    placeholder="Enter SKU"
+                    value={brandName}
+                    onChange={(e) => setBrandName(e.target.value)}
+                    placeholder="Brand Name"
                 />
                 <input
                     type="text"
-                    value={quantity}
+                    value={categoryName}
+                    onChange={(e) => setCategoryName(e.target.value)}
+                    placeholder="Category Name"
+                />
+                <input
+                    type="text"
+                    value={stockQuantity}
                     onChange={(e) => {
                         const val = e.target.value;
-                        if (/^\d*$/.test(val)) setQuantity(val);
+                        if (/^\d*$/.test(val)) setStockQuantity(val); // sirf numbers allow
                     }}
-                    placeholder="Enter Quantity"
+                    placeholder="Stock Quantity"
                 />
+
                 <input
                     type="text"
-                    value={price}
+                    value={reorderLevel}
                     onChange={(e) => {
                         const val = e.target.value;
-                        if (/^\d*\.?\d*$/.test(val)) setPrice(val);
+                        if (/^\d*$/.test(val)) setReorderLevel(val);
                     }}
-                    placeholder="Enter Price"
+                    placeholder="Reorder Level"
                 />
 
-                <div className="image-upload-box">
-                    {preview ? (
-                        <img src={preview} alt="Preview" className="preview-image" />
-                    ) : (
-                        <span>Click to upload image</span>
-                    )}
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
-                </div>
+                <input
+                    type="text"
+                    value={unitPrice}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^\d*\.?\d*$/.test(val)) setUnitPrice(val); // decimal allowed
+                    }}
+                    placeholder="Unit Price"
+                />
 
-                <button type="submit">Update Stock</button>
+                <input
+                    type="text"
+                    value={warehouseLocation}
+                    onChange={(e) => setWarehouseLocation(e.target.value)}
+                    placeholder="Warehouse Location"
+                />
+
+                <button type="submit">Update</button>
             </form>
         </div>
     );

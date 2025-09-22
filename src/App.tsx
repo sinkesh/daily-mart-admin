@@ -199,7 +199,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/edit/stock/:id"
+          path="/edit/stock/:stock_id"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Stock" >

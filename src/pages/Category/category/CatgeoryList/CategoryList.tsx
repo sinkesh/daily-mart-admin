@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../../components/Table/Table";
 import "./CategoryList.css";
-import { getCategories, deleteCategoryApi, updateCategoryStatusApi } from "../../../../services/Category/category.service";
+import { getCategories, updateCategoryStatusApi } from "../../../../services/Category/category.service";
 import { Category } from "../../../../services/Category/category.types";
 
 const CategoryList: React.FC = () => {
@@ -59,15 +59,15 @@ const CategoryList: React.FC = () => {
     }
   };
 
-  // ✅ Delete Category
-  const handleDeleteCategory = async (id: number) => {
-    try {
-      await deleteCategoryApi(id);
-      setCategories((prev) => prev.filter((cat) => cat.id !== id));
-    } catch (error) {
-      console.error("Error deleting category:", error);
-    }
-  };
+  // // ✅ Delete Category
+  // const handleDeleteCategory = async (id: number) => {
+  //   try {
+  //     await deleteCategoryApi(id);
+  //     setCategories((prev) => prev.filter((cat) => cat.id !== id));
+  //   } catch (error) {
+  //     console.error("Error deleting category:", error);
+  //   }
+  // };
 
   // ✅ Filtered Data
   const filtered = Array.isArray(categories)
@@ -150,7 +150,7 @@ const CategoryList: React.FC = () => {
           <>
             <button className="action-btn edit" onClick={() => setSelectedCategory(row)}> View</button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/category/${row.id}`)}> Edit </button>
-            <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete</button>
+            {/* <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete</button> */}
           </>
         )}
       />

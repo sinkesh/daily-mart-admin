@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
 import "./FaqList.css";
-import { getAllFaq, deleteFaqApi, updateFaqStatusApi } from "../../../services/Faq/Faq.service";
+import { getAllFaq, updateFaqStatusApi } from "../../../services/Faq/Faq.service";
 import { Faq } from "../../../services/Faq/Faq.types";
 
 const FaqList: React.FC = () => {
@@ -59,16 +59,15 @@ const FaqList: React.FC = () => {
     }
   };
 
-
-  // ✅ Delete Faq
-  const handleDeleteFaq = async (faq_id: number) => {
-    try {
-      await deleteFaqApi(faq_id);
-      setFaq((prev) => prev.filter((cat) => cat.faq_id !== faq_id));
-    } catch (error) {
-      console.error("Error deleting faq:", error);
-    }
-  };
+  // // ✅ Delete Faq
+  // const handleDeleteFaq = async (faq_id: number) => {
+  //   try {
+  //     await deleteFaqApi(faq_id);
+  //     setFaq((prev) => prev.filter((cat) => cat.faq_id !== faq_id));
+  //   } catch (error) {
+  //     console.error("Error deleting faq:", error);
+  //   }
+  // };
 
   // ✅ Filtered Data
   const filtered = Array.isArray(faq)
@@ -130,9 +129,9 @@ const FaqList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedFaq(row.faq_id)}> View</button>
+            <button className="action-btn edit" onClick={() => setSelectedFaq(row)}> View</button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/faq/${row.faq_id}`)}> Edit </button>
-            <button className="action-btn delete" onClick={() => handleDeleteFaq(row.faq_id)}> Delete</button>
+            {/* <button className="action-btn delete" onClick={() => handleDeleteFaq(row.faq_id)}> Delete</button> */}
           </>
         )}
       />

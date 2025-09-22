@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
 import "./StockList.css";
-import { getAllStock, updateStockStatusApi, deleteStockApi } from "../../../services/Stock/Stock.service";
+import { getAllStock, updateStockStatusApi } from "../../../services/Stock/Stock.service";
 import { Stock } from "../../../services/Stock/Stock.types";
 
 const StockList: React.FC = () => {
@@ -29,6 +29,7 @@ const StockList: React.FC = () => {
           stock_quantity: c.stock_quantity,
           reorder_level: c.reorder_level,
           unit_price: c.unit_price,
+          warehouse_location: c.warehouse_location,
           status: c.status?.toLowerCase() === "active" ? "active" : "inactive",
           image: c.image || null,
         }));
@@ -65,15 +66,15 @@ const StockList: React.FC = () => {
     }
   };
 
-  // ✅ Delete Stock
-  const handleDeleteStock = async (stock_id: number) => {
-    try {
-      await deleteStockApi(stock_id);
-      setStock((prev) => prev.filter((s) => s.stock_id !== stock_id));
-    } catch (error) {
-      console.error("Error deleting stock:", error);
-    }
-  };
+  // // ✅ Delete Stock
+  // const handleDeleteStock = async (stock_id: number) => {
+  //   try {
+  //     await deleteStockApi(stock_id);
+  //     setStock((prev) => prev.filter((s) => s.stock_id !== stock_id));
+  //   } catch (error) {
+  //     console.error("Error deleting stock:", error);
+  //   }
+  // };
 
   // ✅ Search filter
   const filtered = stock.filter((s) =>
@@ -135,8 +136,8 @@ const StockList: React.FC = () => {
         actions={(row) => (
           <>
             <button className="action-btn edit" onClick={() => setSelectedStock(row)}> View </button>
-            <button className="action-btn edit" onClick={() => navigate(`/edit/stock/${row.id}`)}> Edit </button>
-            <button className="action-btn delete" onClick={() => handleDeleteStock(row.stock_id)}> Delete </button>
+            <button className="action-btn edit" onClick={() => navigate(`/edit/stock/${row.stock_id}`)}> Edit </button>
+            {/* <button className="action-btn delete" onClick={() => handleDeleteStock(row.stock_id)}> Delete </button> */}
           </>
         )}
       />

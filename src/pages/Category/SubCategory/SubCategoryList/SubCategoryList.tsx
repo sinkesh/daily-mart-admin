@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../../components/Table/Table";
 import "./SubCategoryList.css";
-import { getSubCategories, deleteSubCategoryApi, updateSubCategoryStatusApi } from "../../../../services/SubCategory/SubCategory.service";
+import { getSubCategories, updateSubCategoryStatusApi } from "../../../../services/SubCategory/SubCategory.service";
 import { SubCategory } from "../../../../services/SubCategory/SubCategory.types";
 
 const SubCategoryList: React.FC = () => {
@@ -62,15 +62,15 @@ const SubCategoryList: React.FC = () => {
     }
   };
 
-  // Delete row function
-  const handleDeleteCategory = async (id: number) => {
-    try {
-      await deleteSubCategoryApi(id);
-      setSubCategories(prev => prev.filter(cat => cat.id !== id));
-    } catch (error) {
-      console.error("Error deleting category:", error);
-    }
-  };
+  // // Delete row function
+  // const handleDeleteCategory = async (id: number) => {
+  //   try {
+  //     await deleteSubCategoryApi(id);
+  //     setSubCategories(prev => prev.filter(cat => cat.id !== id));
+  //   } catch (error) {
+  //     console.error("Error deleting category:", error);
+  //   }
+  // };
 
   // Search filter
   const filtered = subCategories.filter((c) =>
@@ -147,7 +147,7 @@ const SubCategoryList: React.FC = () => {
           <>
             <button className="action-btn edit" onClick={() => setSelectedCategory(row)}> View </button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/subcategory/${row.id}`)}> Edit </button>
-            <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete </button>
+            {/* <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete </button> */}
           </>
         )}
       />

@@ -1,44 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddBrand.css";
+import { createBrandApi } from "../../../services/Brands/brand.service";
 
 const AddBrand: React.FC = () => {
-  const [brandName, setbrandName] = useState("");
-  const [brandImage, setbrandImage] = useState<File | null>(null);
+  const [brandName, setBrandName] = useState("");
+  const [description, setDescription] = useState("");
+  const [brandLogo, setBrandLogo] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    setbrandImage(file);
+    setBrandLogo(file);
 
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
+      reader.onloadend = () => setPreview(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!brandName.trim() || !brandImage) {
-      return;
+    if (!brandName.trim() || !description.trim() || !brandLogo) return;
+
+    try {
+      await createBrandApi(brandName, description, brandLogo); // ✅ API call
+      navigate("/brand/list"); // redirect after success
+    } catch (error) {
+      console.error("Error creating:", error);
+      alert("Failed to create. Please try again.");
     }
-
-    const stored = JSON.parse(localStorage.getItem("brand") || "[]");
-    stored.push({
-      id: stored.length + 1,
-      name: brandName,
-      image: preview,
-      status: "active",
-    });
-
-    localStorage.setItem("brand", JSON.stringify(stored));
-
-    navigate("/brand/list"); // redirect after save
   };
 
   return (
@@ -49,10 +43,15 @@ const AddBrand: React.FC = () => {
           type="text"
           placeholder="Enter Brand Name"
           value={brandName}
-          onChange={(e) => setbrandName(e.target.value)}
+          onChange={(e) => setBrandName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Enter Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
 
-        {/* Image Upload Box */}
         <div className="image-upload-box">
           {preview ? (
             <img src={preview} alt="Preview" className="preview-image" />
@@ -62,7 +61,7 @@ const AddBrand: React.FC = () => {
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        <button type="submit">Save Brand</button>
+        <button type="submit">Save</button>
       </form>
     </div>
   );

@@ -29,24 +29,28 @@ export const getStockById = async (id: number): Promise<Stock> => {
         stock_quantity: data.stock_quantity,
         reorder_level: data.reorder_level,
         unit_price: data.unit_price,
+        warehouse_location: data.warehouse_location,
         status: data.status.toLowerCase() === "active" ? "active" : "inactive",
     };
 };
 
-// // ✅ Update Sub Category
-// export const updateSubCategoryApi = async (id: number, formData: FormData): Promise<void> => {
-//   try {
-//     await axios.put(`${API_BASE}/Edit_Sub_Category/${id}`, formData, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     });
-
-//     console.log("Category updated successfully!");
-//   } catch (error: any) {
-//     console.error("Error updating category:", error.response?.data || error.message);
-//   }
-// };
+// ✅ Update Sub Category
+export const updateStockApi = async (id: number,
+    payload: {
+        product_name: string,
+        brand_name: string,
+        category_name: string,
+        stock_quantity: number,
+        reorder_level: number,
+        unit_price: number,
+        warehouse_location: string,
+    }) => {
+    return axios.put(`${API_BASE}/Edit_Stock/${id}`, payload, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+};
 
 // ✅ Get All Categories
 export const getAllStock = async (): Promise<{ data: any[] }> => {
