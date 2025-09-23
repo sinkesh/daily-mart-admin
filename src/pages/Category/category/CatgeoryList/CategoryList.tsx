@@ -29,11 +29,11 @@ const CategoryList: React.FC = () => {
         }));
         setCategories(mapped);
       } else {
-        console.error("Invalid categories response:", data);
+        console.error("Invalid response:", data);
         setCategories([]);
       }
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Error fetching:", error);
       setCategories([]);
     }
   };
@@ -65,7 +65,7 @@ const CategoryList: React.FC = () => {
   //     await deleteCategoryApi(id);
   //     setCategories((prev) => prev.filter((cat) => cat.id !== id));
   //   } catch (error) {
-  //     console.error("Error deleting category:", error);
+  //     console.error("Error deleting:", error);
   //   }
   // };
 

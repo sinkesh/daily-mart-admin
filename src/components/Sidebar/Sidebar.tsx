@@ -36,7 +36,7 @@ const menuData = [
   {
     name: "Products",
     icon: <FaBoxOpen />, // Product icon
-    submenu: [{ name: "Product List", path: "/products/list", icon: <FaList /> }],
+    submenu: [{ name: "Product List", path: "/product/list", icon: <FaList /> }],
   },
   {
     name: "Category",

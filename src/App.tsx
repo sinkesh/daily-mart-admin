@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
+import MainLayout from "./layouts/MainLayout";
+import PrivateRoute from "./components/routes/PrivateRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import UserList from "./pages/Users/UserList";
 import Roles from "./pages/Roles/RoleList";
-import PrivateRoute from "./components/routes/PrivateRoute";
-import MainLayout from "./layouts/MainLayout";
 import ProductList from "./pages/Products/ProductList/ProductList";
-import CategoryList from "./pages/Category/Category/CatgeoryList/CategoryList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
+import EditProduct from "./pages/Products/EditProduct/EditProduct";
+import CategoryList from "./pages/Category/Category/CatgeoryList/CategoryList";
 import AddCategory from "./pages/Category/Category/AddCategory/AddCategory";
 import EditCategory from "./pages/Category/Category/EditCategory/EditCategory"
 import SubCatgeoryList from "./pages/Category/SubCategory/SubCategoryList/SubCategoryList";
@@ -47,8 +48,7 @@ const App: React.FC = () => {
           path="/login"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
+              <Navigate to="/dashboard" replace />) : (
               <Login setIsAuthenticated={setIsAuthenticated} />
             )
           }
@@ -63,7 +63,6 @@ const App: React.FC = () => {
                 <Dashboard />
               </MainLayout>
             </PrivateRoute>
-
           }
         />
 
@@ -93,7 +92,7 @@ const App: React.FC = () => {
 
         {/* Products */}
         <Route
-          path="/products/list"
+          path="/product/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Product">
@@ -103,11 +102,21 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/add/products"
+          path="/add/product"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Add Product">
                 <AddProduct />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit/product/:id"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Product">
+                <EditProduct />
               </MainLayout>
             </PrivateRoute>
           }

@@ -1,0 +1,30 @@
+export interface ProductTypes {
+    product_id: number;
+    product_name: string;
+    product_slug: string;
+    product_description: string;
+    short_description: string;
+    brand_name: string;
+    category_name: string;
+    sku: string;
+    hsn_code: string;
+    unit_price: number;
+    discount_price: number;
+    currency: string;
+    tax_rate: number;
+    stock_quantity: number;
+    reorder_level: number;
+    warehouse_location: string;
+    weight: number;
+    dimensions: string;
+    color: string;
+    size: string;
+    material: string;
+    tags: string;
+    thumbnail_image: string;
+    video_url: string;
+    is_featured: boolean;
+    created_by: number | string;
+    updated_by: number | string;
+    status: string;
+}
