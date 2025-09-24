@@ -5,7 +5,7 @@ import "./ProductList.css";
 import { getAllProduct, updateProductStatusApi } from "../../../services/Products/Product.service";
 import { ProductTypes } from "../../../services/Products/Product.types";
 
-const CategoryList: React.FC = () => {
+const ProductList: React.FC = () => {
   const [search, setSearch] = useState("");
   const [product, setProduct] = useState<ProductTypes[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductTypes | null>(null);
@@ -108,8 +108,17 @@ const CategoryList: React.FC = () => {
 
   const columns = [
     { key: "product_id", label: "#" },
-    { key: "product_name", label: "Product Name" },
+    {
+      key: "product_name",
+      label: "Product Name",
+      render: (value: string) =>
+        value && value.length > 12 ? value.substring(0, 12) + "..." : value,
+    },
     { key: "category_name", label: "Category Name" },
+    { key: "unit_price", label: "Unit Price" },
+    { key: "discount_price", label: "Discount Price" },
+    { key: "sku", label: "SKU" },
+    { key: "stock_quantity", label: "Stock Quantity" },
     {
       key: "thumbnail_image",
       label: "Image",
@@ -119,8 +128,8 @@ const CategoryList: React.FC = () => {
             src={value}
             alt="Product"
             style={{
-              width: "50px",
-              height: "50px",
+              width: "30px",
+              height: "30px",
               objectFit: "contain",
               borderRadius: "10px",
               border: "1px solid #ddd",
@@ -206,7 +215,7 @@ const CategoryList: React.FC = () => {
                   <td>{selectedProduct.product_name}</td>
                 </tr>
                 <tr>
-                  <td><strong>category Name</strong></td>
+                  <td><strong>Category Name</strong></td>
                   <td>{selectedProduct.category_name}</td>
                 </tr>
                 <tr>
@@ -256,4 +265,4 @@ const CategoryList: React.FC = () => {
   );
 };
 
-export default CategoryList;
+export default ProductList;

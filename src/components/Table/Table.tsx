@@ -2,15 +2,15 @@ import React from "react";
 import "./Table.css";
 
 interface Column {
-  key: string;      // Data key from row object
-  label: string;    // Table header text
-  render?: (value: any, row: any) => React.ReactNode; // 👈 render support
+  key: string;
+  label: string;
+  render?: (value: any, row: any) => React.ReactNode;
 }
 
 interface CommonTableProps {
   columns: Column[];
   data: Record<string, any>[];
-  actions?: (row: any) => React.ReactNode; // Optional actions column
+  actions?: (row: any) => React.ReactNode;
   tableClassName?: string; 
 }
 
