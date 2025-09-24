@@ -51,7 +51,7 @@ const ProductList: React.FC = () => {
           updated_by: c.updated_by,
           status: c.status.toLowerCase() === "active" ? "active" : "inactive",
         }));
-        
+
         setProduct(mapped);
       } else {
         console.error("Invalid response:", data);
@@ -225,9 +225,9 @@ const ProductList: React.FC = () => {
                       className="status-badge"
                       style={{
                         backgroundColor:
-                        selectedProduct.status === "active" ? "#d4f5d4" : "#f5d4d4",
+                          selectedProduct.status === "active" ? "#d4f5d4" : "#f5d4d4",
                         color:
-                        selectedProduct.status === "active" ? "green" : "red",
+                          selectedProduct.status === "active" ? "green" : "red",
                         cursor: "pointer",
                       }}
                       onClick={() =>
