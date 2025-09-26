@@ -163,3 +163,19 @@
   overflow-y: auto;
   padding: 0.8rem 0;
 }
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #343841;
+  border-bottom: 1px solid #384366;
+  color: #fff;
+  transition: background 0.3s;
+  margin-top: 0;
+}
+
+.sidebar {
+  background-color: #1f2937;
+  padding-top: 0;
+}
