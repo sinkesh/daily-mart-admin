@@ -62,7 +62,7 @@ const EditStock: React.FC = () => {
             };
 
             await updateStockApi(id, payload);
-            navigate("/stock/list");
+            navigate("/inventory/list");
         } catch (error) {
             console.error("Error updating stock:", error);
         }

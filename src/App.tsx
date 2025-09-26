@@ -9,9 +9,9 @@ import Roles from "./pages/Roles/RoleList";
 import ProductList from "./pages/Products/ProductList/ProductList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
 import EditProduct from "./pages/Products/EditProduct/EditProduct";
-import CategoryList from "./pages/Category/Category/CatgeoryList/CategoryList";
-import AddCategory from "./pages/Category/Category/AddCategory/AddCategory";
-import EditCategory from "./pages/Category/Category/EditCategory/EditCategory"
+import CategoryList from "./pages/Category/category/CatgeoryList/CategoryList";
+import AddCategory from "./pages/Category/category/AddCategory/AddCategory";
+import EditCategory from "./pages/Category/category/EditCategory/EditCategory"
 import SubCatgeoryList from "./pages/Category/SubCategory/SubCategoryList/SubCategoryList";
 import AddSubCategory from "./pages/Category/SubCategory/AddSubCategory/AddSubCategory";
 import EditSubCategory from "./pages/Category/SubCategory/EditSubCategory/EditSubCategory";
@@ -24,6 +24,12 @@ import BrandList from "./pages/Brands//BrandList/BrandList";
 import FaqList from "./pages/Faq/FaqList/FaqList";
 import AddFaq from "./pages/Faq/AddFaq/AddFaq";
 import EditFaq from "./pages/Faq/EditFaq/EditFaq";
+import ReviewList from "./pages/Review/ReviewList/ReviewList";
+import ChangePassword from "./pages/Settings/ChangePassword/ChangePassword";
+import BannerList from "./pages/BannerList/BannerList/BannerList";
+import AddBanner from "./pages/BannerList/AddBanner/AddBanner";
+import EditBanner from "./pages/BannerList/EditBanner/EditBanner";
+
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -188,7 +194,7 @@ const App: React.FC = () => {
 
         {/* Stock */}
         <Route
-          path="/stock/list"
+          path="/inventory/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Stock">
@@ -277,6 +283,60 @@ const App: React.FC = () => {
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Faq" >
                 <EditFaq />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/review/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Review">
+                <ReviewList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        {/* Banner */}
+        <Route
+          path="/banner/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Banner">
+                <BannerList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/add/banner"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Add Banner">
+                <AddBanner />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit/banner/:faq_id"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Banner" >
+                <EditBanner />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/setting/changepassword"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Change Password">
+                <ChangePassword />
               </MainLayout>
             </PrivateRoute>
           }

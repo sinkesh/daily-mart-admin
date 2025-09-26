@@ -8,7 +8,6 @@ import { FaUser } from "@react-icons/all-files/fa/FaUser";
 import { FaCog } from "@react-icons/all-files/fa/FaCog";
 import { FaList } from "@react-icons/all-files/fa/FaList";
 import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
-import { FaBoxes } from "@react-icons/all-files/fa/FaBoxes";
 import { FaTags } from "@react-icons/all-files/fa/FaTags";
 import { FaUsers } from "@react-icons/all-files/fa/FaUsers";
 import { FaBoxOpen } from "@react-icons/all-files/fa/FaBoxOpen";
@@ -16,6 +15,23 @@ import { FaThLarge } from "@react-icons/all-files/fa/FaThLarge";
 import { FaLayerGroup } from "@react-icons/all-files/fa/FaLayerGroup";
 import { FaShieldAlt } from "@react-icons/all-files/fa/FaShieldAlt";
 import { FaQuestionCircle } from "@react-icons/all-files/fa/FaQuestionCircle";
+import { FaStar } from "@react-icons/all-files/fa/FaStar";
+import { FaImage } from "@react-icons/all-files/fa/FaImage";
+import { FaTruck } from "@react-icons/all-files/fa/FaTruck";
+import { FaWarehouse } from "@react-icons/all-files/fa/FaWarehouse";
+import { FaClipboardList } from "@react-icons/all-files/fa/FaClipboardList";
+import { FaEdit } from "@react-icons/all-files/fa/FaEdit";
+import { FaExclamationTriangle } from "@react-icons/all-files/fa/FaExclamationTriangle";
+import { FaCalendarAlt } from "@react-icons/all-files/fa/FaCalendarAlt";
+import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
+import { FaBox } from "@react-icons/all-files/fa/FaBox";
+import { FaClipboard } from "@react-icons/all-files/fa/FaClipboard";
+import { FaClock } from "@react-icons/all-files/fa/FaClock";
+import { FaTruckMoving } from "@react-icons/all-files/fa/FaTruckMoving";
+import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
+import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
+import { FaMoneyBillAlt } from "@react-icons/all-files/fa/FaMoneyBillAlt";
+import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 
 
 interface SidebarProps {
@@ -27,34 +43,70 @@ const menuData = [
   { name: "Dashboard", icon: <FaHome />, path: "/Dashboard" },
   {
     name: "Users",
-    icon: <FaUsers />, // User icon
+    icon: <FaUsers />,
     submenu: [
-      { name: "User List", path: "/users/list", icon: <FaList /> },
+      { name: "Users", path: "/users/list", icon: <FaList /> },
       { name: "Roles", path: "/users/roles", icon: <FaShieldAlt /> },
     ],
   },
   {
     name: "Products",
-    icon: <FaBoxOpen />, // Product icon
-    submenu: [{ name: "Product List", path: "/product/list", icon: <FaList /> }],
+    icon: <FaBoxOpen />,
+    submenu: [
+      { name: "Product", path: "/product/list", icon: <FaList /> },
+      { name: "Brand", path: "/brand/list", icon: <FaTags /> },
+    ],
   },
   {
     name: "Category",
-    icon: <FaLayerGroup />, // Category icon
+    icon: <FaLayerGroup />,
     submenu: [
-      { name: "Category List", path: "/category/list", icon: <FaThLarge /> },
-      { name: "Sub Category List", path: "/subcategory/list", icon: <FaThLarge /> },
+      { name: "Category", path: "/category/list", icon: <FaThLarge /> },
+      { name: "Sub Category", path: "/subcategory/list", icon: <FaThLarge /> },
     ],
   },
-  { name: "Stock List", path: "/stock/list", icon: <FaBoxes /> },
-  { name: "Brand List", path: "/brand/list", icon: <FaTags /> },
-  { name: "Faq List", path: "/faq/list", icon: <FaQuestionCircle /> },
+  {
+    name: "Inventory",
+    icon: <FaWarehouse />,
+    submenu: [
+      { name: "Stock", path: "/inventory/list", icon: <FaClipboardList /> },
+      { name: "Stock Adjustment", path: "/inventory/adjust", icon: <FaEdit /> },
+      { name: "Low Stock Alerts", path: "/inventory/low-stock", icon: <FaExclamationTriangle /> },
+      { name: "Expiry Tracking", path: "/inventory/expiry", icon: <FaCalendarAlt /> },
+    ],
+  },
+  {
+    name: "Purchases",
+    icon: <FaTruck />,
+    submenu: [
+      { name: "Purchase Orders", path: "/purchase/orders", icon: <FaShoppingCart /> },
+      { name: "Receive Stock", path: "/purchase/receive", icon: <FaBox /> },
+      { name: "Vendor Stock Tracking", path: "/purchase/vendor-stock", icon: <FaUsers /> },
+    ],
+  },
+  {
+    name: "Orders",
+    icon: <FaClipboard />,
+    submenu: [
+      { name: "All Orders", path: "/orders/all", icon: <FaList /> },
+      { name: "Pending Orders", path: "/orders/pending", icon: <FaClock /> },
+      { name: "Processing Orders", path: "/orders/processing", icon: <FaTruckMoving /> },
+      { name: "Completed Orders", path: "/orders/completed", icon: <FaCheck /> },
+      { name: "Cancelled Orders", path: "/orders/cancelled", icon: <FaTimes /> },
+      { name: "Returned Orders", path: "/orders/cancelled", icon: <FaUndo /> },
+      { name: "Refund Requests", path: "/orders/refunds", icon: <FaMoneyBillAlt /> },
+    ]
+  },
+
+  { name: "Faq", path: "/faq/list", icon: <FaQuestionCircle /> },
+  { name: "Review", path: "/review/list", icon: <FaStar /> },
+  { name: "Banner", path: "/banner/list", icon: <FaImage /> },
   {
     name: "Settings",
     icon: <FaCog />, // Settings icon
     submenu: [
       { name: "Profile", path: "/settings/profile", icon: <FaUser /> },
-      { name: "Change Password", path: "/settings/changepassword", icon: <FaPlus /> },
+      { name: "Change Password", path: "/setting/changepassword", icon: <FaPlus /> },
     ],
   },
 ];

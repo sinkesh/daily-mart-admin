@@ -40,7 +40,7 @@ const AddStock: React.FC = () => {
 
     try {
       await createStock(payload);
-      navigate("/stock/list");
+      navigate("/inventory/list");
     } catch (error) {
       console.error("❌ Error creating stock:", error);
       alert("Failed to create stock");
