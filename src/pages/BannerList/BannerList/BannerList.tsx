@@ -93,8 +93,8 @@ const CategoryList: React.FC = () => {
             src={value}
             alt="Category"
             style={{
-              width: "50px",
-              height: "50px",
+              width: "30px",
+              height: "30px",
               objectFit: "contain",
               borderRadius: "10px",
               border: "1px solid #ddd",

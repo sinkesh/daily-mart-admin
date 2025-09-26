@@ -98,7 +98,7 @@ const SubCategoryList: React.FC = () => {
           <img
             src={value}
             alt="subCategory"
-            style={{ width: "50px", height: "50px", objectFit: "contain", borderRadius: "10px", border: "1px solid #ddd" }}
+            style={{ width: "30px", height: "30px", objectFit: "contain", borderRadius: "10px", border: "1px solid #ddd" }}
           />
         ) : (
           "No Image"
@@ -135,7 +135,7 @@ const SubCategoryList: React.FC = () => {
           className="search-bar"
         />
         <button className="add-btn" onClick={() => navigate("/add/subcategory")}>
-          + Add Sub Category
+          Add Sub Category
         </button>
       </div>
 

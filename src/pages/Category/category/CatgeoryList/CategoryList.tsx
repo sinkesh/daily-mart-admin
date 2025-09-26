@@ -93,8 +93,8 @@ const CategoryList: React.FC = () => {
             src={value}
             alt="Category"
             style={{
-              width: "50px",
-              height: "50px",
+              width: "30px",
+              height: "30px",
               objectFit: "contain",
               borderRadius: "10px",
               border: "1px solid #ddd",
@@ -137,7 +137,7 @@ const CategoryList: React.FC = () => {
           className="search-bar"
         />
         <button className="add-btn" onClick={() => navigate("/add/category")}>
-          + Add Category
+          Add Category
         </button>
       </div>
 
@@ -148,7 +148,7 @@ const CategoryList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedCategory(row)}> View</button>
+            <button className="action-btn view" onClick={() => setSelectedCategory(row)}> View</button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/category/${row.id}`)}> Edit </button>
             {/* <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete</button> */}
           </>

@@ -35,6 +35,8 @@ import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
 import { FaChartLine } from "@react-icons/all-files/fa/FaChartLine";
 import { FaMoneyBillWave } from "@react-icons/all-files/fa/FaMoneyBillWave";
 import { FaChartPie } from "@react-icons/all-files/fa/FaChartPie";
+import { FaBell } from "@react-icons/all-files/fa/FaBell";
+import { FaEnvelope } from "@react-icons/all-files/fa/FaEnvelope";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -114,8 +116,16 @@ const menuData = [
   { name: "Review", path: "/review/list", icon: <FaStar /> },
   { name: "Banner", path: "/banner/list", icon: <FaImage /> },
   {
+    name: "Notification",
+    icon: <FaBell />,
+    submenu: [
+      { name: "Single Notification", path: "/notification/singlenotification", icon: <FaEnvelope /> },
+      { name: "Bulk Notification", path: "/notification/bulknotification", icon: <FaUsers /> },
+    ],
+  },
+  {
     name: "Settings",
-    icon: <FaCog />, // Settings icon
+    icon: <FaCog />,
     submenu: [
       { name: "Profile", path: "/settings/profile", icon: <FaUser /> },
       { name: "Change Password", path: "/setting/changepassword", icon: <FaPlus /> },

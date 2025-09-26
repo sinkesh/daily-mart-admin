@@ -118,7 +118,7 @@ const FaqList: React.FC = () => {
           className="search-bar"
         />
         <button className="add-btn" onClick={() => navigate("/add/faq")}>
-          + Add Faq
+          Add Faq
         </button>
       </div>
 

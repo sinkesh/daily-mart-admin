@@ -41,12 +41,16 @@
 }
 
 /* Striped rows */
-.common-table tbody tr:nth-child(odd) td { background-color: #ffffff; }
-.common-table tbody tr:nth-child(even) td { background-color: #f3f4f6; }
+
+
+.common-table tbody tr:nth-child(even) td {
+  background-color: rgba(0, 0, 0, 0.05);
+  ;
+}
 
 /* Hover effect */
 .common-table tbody tr:hover td {
-  background-color: #eef2ff;
+  background-color: rgba(0, 0, 0, 0.05);
   transform: translateX(2px);
 }
 
@@ -62,24 +66,21 @@
   transition: transform 0.2s, background-color 0.2s;
 }
 
-.action-btn:hover { transform: scale(1.1); }
-.action-btn.edit { background-color: #facc15; color: #1e293b; }
-.action-btn.delete { background-color: #ef4444; color: white; }
 
 /* Fix status column width */
 .common-table td.status-cell {
-  width: 80px; /* Fixed width to prevent table shift */
+  width: 80px;
   text-align: center;
 }
 
-/* Status badge styling */
 .status-badge {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
-  min-width: 60px; /* Prevent width change when toggling */
+  min-width: 60px;
+  /* Prevent width change when toggling */
   text-align: center;
   transition: background-color 0.2s, color 0.2s;
 }
@@ -98,4 +99,46 @@
 .compact-table thead th {
   font-weight: 600;
   background: #f4f4f4;
+}
+
+/* Stronger striped rows */
+.common-table tbody tr:nth-child(odd) td {
+  background-color: #ffffff;
+  /* white */
+}
+
+.common-table tbody tr:hover td {
+  background-color: rgba(0, 0, 0, 0.09);;
+  transform: none;
+  cursor: pointer;
+}
+
+/* Actions buttons */
+.action-btn {
+  border: none;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-right: 0.4rem;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Edit button */
+.action-btn.edit {
+  background-color: #facc15; /* yellow */
+  color: #1e293b;
+}
+
+/* View button */
+.action-btn.view {
+  background-color: #3b82f6; /* blue */
+  color: white;
+}
+
+/* Delete button */
+.action-btn.delete {
+  background-color: #ef4444; /* red */
+  color: white;
 }
