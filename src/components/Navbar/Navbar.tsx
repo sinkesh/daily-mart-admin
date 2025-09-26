@@ -1,18 +1,37 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { FaSignOutAlt } from "@react-icons/all-files/fa/FaSignOutAlt";
-import "./Navbar.css";
+import { FaBell } from "@react-icons/all-files/fa/FaBell";
+import { useNavigate } from "react-router-dom";
+import './Navbar.css'
 
-interface NavbarProps {
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  collapsed: boolean;
-  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ setIsAuthenticated, collapsed, setCollapsed }) => {
+const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
+
+  const notifications = [
+    { id: 1, text: "New user registered" },
+    { id: 2, text: "New order received" },
+    { id: 3, text: "Low stock alert" },
+  ];
+
+  // Click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target as Node)
+      ) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -29,15 +48,45 @@ const Navbar: React.FC<NavbarProps> = ({ setIsAuthenticated, collapsed, setColla
         </button>
       </div>
 
-      {/* Right - Logout + Welcome */}
       <div className="navbar-right">
+
+        {/* Notification Bell */}
+        <div className="notification-wrapper" ref={notificationRef}>
+          <button
+            className="notification-btn"
+            onClick={() => setShowNotifications(!showNotifications)}
+          >
+            <FaBell />
+            {notifications.length > 0 && (
+              <span className="notification-count">{notifications.length}</span>
+            )}
+          </button>
+
+          {showNotifications && (
+            <div className="notification-dropdown right-align">
+              {notifications.map((n) => (
+                <div key={n.id} className="notification-item">
+                  {n.text}
+                </div>
+              ))}
+              {notifications.length === 0 && (
+                <div className="notification-item">No new notifications</div>
+              )}
+            </div>
+          )}
+        </div>
+
         <span className="welcome-text" style={{ marginRight: "20px" }}>
           Welcome to Admin
         </span>
-        <button className="logout-btn" onClick={() => setShowPopup(true)}>
-          <FaSignOutAlt style={{ marginRight: "6px" }} />
+
+        {/* Logout */}
+        <a href="#!" className="logout" onClick={() => setShowPopup(true)}>
+          <FaSignOutAlt />
           Logout
-        </button>
+        </a>
+
+
       </div>
 
       {showPopup && (

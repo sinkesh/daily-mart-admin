@@ -17,21 +17,21 @@ const Dashboard: React.FC = () => {
 
       {/* Top Cards */}
       <div className="cards">
-        <div className="card">
+        <div className="card card-1">
+          <h2>Total Users</h2>
+          <p>1200</p>
+        </div>
+        <div className="card card-2">
           <h2>Total Orders</h2>
-          <p>1,245</p>
+          <p>350</p>
         </div>
-        <div className="card">
-          <h2>Total Sales</h2>
-          <p>₹ 5,20,000</p>
+        <div className="card card-3">
+          <h2>Revenue</h2>
+          <p>$25k</p>
         </div>
-        <div className="card">
-          <h2>New Customers</h2>
-          <p>320</p>
-        </div>
-        <div className="card">
+        <div className="card card-4">
           <h2>Pending Orders</h2>
-          <p>56</p>
+          <p>18</p>
         </div>
       </div>
 

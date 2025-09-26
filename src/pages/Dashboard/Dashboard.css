@@ -104,3 +104,47 @@ th, td {
   background: #fee2e2;
   color: #991b1b;
 }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Card base styling */
+.card {
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Card specific colors */
+.card.card-1 { background: #3b82f6; }  /* Blue */
+.card.card-2 { background: #10b981; }  /* Green */
+.card.card-3 { background: #f59e0b; }  /* Amber */
+.card.card-4 { background: #ef4444; }  /* Red */
+.card.card-5 { background: #8b5cf6; }  /* Purple */
+.card.card-6 { background: #ec4899; }  /* Pink */
+.card.card-7 { background: #14b8a6; }  /* Teal */
+.card.card-8 { background: #f97316; }  /* Orange */
+
+.card h2 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
