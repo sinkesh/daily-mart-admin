@@ -32,7 +32,9 @@ import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
 import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 import { FaMoneyBillAlt } from "@react-icons/all-files/fa/FaMoneyBillAlt";
 import { FaUndo } from "@react-icons/all-files/fa/FaUndo";
-
+import { FaChartLine } from "@react-icons/all-files/fa/FaChartLine";
+import { FaMoneyBillWave } from "@react-icons/all-files/fa/FaMoneyBillWave";
+import { FaChartPie } from "@react-icons/all-files/fa/FaChartPie";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -97,7 +99,17 @@ const menuData = [
       { name: "Refund Requests", path: "/orders/refunds", icon: <FaMoneyBillAlt /> },
     ]
   },
-
+  {
+    name: "Reports",
+    icon: <FaChartLine />,
+    submenu: [
+      { name: "Sales Report", path: "/reports/sales", icon: <FaChartLine /> },
+      { name: "Inventory Report", path: "/reports/inventory", icon: <FaBox /> },
+      { name: "Category Wise Sales", path: "/reports/category-sales", icon: <FaTags /> },
+      { name: "Profit Report", path: "/reports/profit-loss", icon: <FaMoneyBillWave /> },
+      { name: "Loss Report", path: "/reports/profit-loss", icon: <FaChartPie /> },
+    ]
+  },
   { name: "Faq", path: "/faq/list", icon: <FaQuestionCircle /> },
   { name: "Review", path: "/review/list", icon: <FaStar /> },
   { name: "Banner", path: "/banner/list", icon: <FaImage /> },
