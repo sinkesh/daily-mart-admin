@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./EditBanner.css";
-import { getCategoryById, updateCategoryApi } from "../../../services/Category/category.service";
+import { getBannerById, updateBannerApi } from "../../../services/Banner/Banner.service";
 
 const EditCategory: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { banner_id } = useParams<{ banner_id: string }>();
   const navigate = useNavigate();
-  const [categoryName, setCategoryName] = useState("");
+  const [bannerName, setBannerName] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null); // store actual file
   const [preview, setPreview] = useState<string | null>(null);
   const [status, setStatus] = useState("active");
@@ -15,11 +15,11 @@ const EditCategory: React.FC = () => {
   // Fetch category by ID
   useEffect(() => {
     const fetchCategory = async () => {
-      if (!id) return;
+      if (!banner_id) return;
       try {
-        const data = await getCategoryById(parseInt(id));
-        setCategoryName(data.name);
-        setPreview(data.image || null);
+        const data = await getBannerById(parseInt(banner_id));
+        setBannerName(data.banner_name);
+        setPreview(data.banner_image || null);
         setStatus(data.status);
       } catch (error) {
         console.error("Error fetching category:", error);
@@ -28,13 +28,13 @@ const EditCategory: React.FC = () => {
       }
     };
     fetchCategory();
-  }, [id]);
+  }, [banner_id]);
 
   // Handle image change
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      setImageFile(file); // save the actual file
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => setPreview(reader.result as string);
       reader.readAsDataURL(file);
@@ -44,18 +44,18 @@ const EditCategory: React.FC = () => {
   // Handle form submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!id) return;
+    if (!banner_id) return;
 
     try {
       const formData = new FormData();
-      formData.append("category_name", categoryName);
+      formData.append("banner_name", bannerName);
       formData.append("status", status.toUpperCase());
-      if (imageFile) formData.append("category_image", imageFile);
+      if (imageFile) formData.append("banner_image", imageFile);
 
-      await updateCategoryApi(parseInt(id), formData);
-      navigate("/category/list");
+      await updateBannerApi(parseInt(banner_id), formData);
+      navigate("/banner/list");
     } catch (error) {
-      console.error("Error updating category:", error);
+      console.error("Error updating:", error);
     }
   };
 
@@ -68,9 +68,9 @@ const EditCategory: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={categoryName}
-          onChange={(e) => setCategoryName(e.target.value)}
-          placeholder="Category Name"
+          value={bannerName}
+          onChange={(e) => setBannerName(e.target.value)}
+          placeholder="Banner Name"
         />
 
         <div className="image-upload-box">
@@ -82,15 +82,7 @@ const EditCategory: React.FC = () => {
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>Status: </label>
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-
-        <button type="submit">Update Category</button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );

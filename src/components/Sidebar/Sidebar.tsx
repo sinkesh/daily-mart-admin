@@ -119,8 +119,8 @@ const menuData = [
     name: "Notification",
     icon: <FaBell />,
     submenu: [
-      { name: "Single Notification", path: "/notification/singlenotification", icon: <FaEnvelope /> },
-      { name: "Bulk Notification", path: "/notification/bulknotification", icon: <FaUsers /> },
+      { name: "Single Notification", path: "/notification/singlenotification/list", icon: <FaEnvelope /> },
+      { name: "Bulk Notification", path: "/notification/bulknotification/list", icon: <FaUsers /> },
     ],
   },
   {

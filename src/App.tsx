@@ -26,9 +26,11 @@ import AddFaq from "./pages/Faq/AddFaq/AddFaq";
 import EditFaq from "./pages/Faq/EditFaq/EditFaq";
 import ReviewList from "./pages/Review/ReviewList/ReviewList";
 import ChangePassword from "./pages/Settings/ChangePassword/ChangePassword";
-import BannerList from "./pages/BannerList/BannerList/BannerList";
-import AddBanner from "./pages/BannerList/AddBanner/AddBanner";
-import EditBanner from "./pages/BannerList/EditBanner/EditBanner";
+import BannerList from "./pages/Banner/BannerList/BannerList";
+import AddBanner from "./pages/Banner/AddBanner/AddBanner";
+import EditBanner from "./pages/Banner/EditBanner/EditBanner";
+import SingleNotificationList from "./pages/Notifications/SingleNotification/SingleNotificationList/SingleNotificationList";
+import BulkNotificationList from "./pages/Notifications/BulkNotification/BulkNotificationList/BulkNotificationList";
 
 
 const App: React.FC = () => {
@@ -321,11 +323,31 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/edit/banner/:faq_id"
+          path="/edit/banner/:banner_id"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Banner" >
                 <EditBanner />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notification/singlenotification/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Single Notification" >
+                <SingleNotificationList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notification/bulknotification/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Bulk Notification" >
+                <BulkNotificationList />
               </MainLayout>
             </PrivateRoute>
           }

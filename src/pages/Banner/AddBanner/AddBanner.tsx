@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddBanner.css";
-import { createCategory } from "../../../services/Category/category.service";
+import { createBanner } from "../../../services/Banner/Banner.service";
 
-const AddCategory: React.FC = () => {
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryImage, setCategoryImage] = useState<File | null>(null);
+const AddBanner: React.FC = () => {
+  const [bannerName, setBannerName] = useState("");
+  const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    setCategoryImage(file);
+    setBannerImage(file);
 
     if (file) {
       const reader = new FileReader();
@@ -23,14 +23,14 @@ const AddCategory: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!categoryName.trim() || !categoryImage) return;
+    if (!bannerName.trim() || !bannerImage) return;
 
     try {
-      await createCategory(categoryName, categoryImage); // ✅ API call
-      navigate("/category/list"); // redirect after success
+      await createBanner(bannerName, bannerImage);
+      navigate("/banner/list");
     } catch (error) {
-      console.error("Error creating category:", error);
-      alert("Failed to create category. Please try again.");
+      console.error("Error creating:", error);
+      alert("Failed to create. Please try again.");
     }
   };
 
@@ -40,9 +40,9 @@ const AddCategory: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Enter Category Name"
-          value={categoryName}
-          onChange={(e) => setCategoryName(e.target.value)}
+          placeholder="Enter Banner Name"
+          value={bannerName}
+          onChange={(e) => setBannerName(e.target.value)}
         />
 
         <div className="image-upload-box">
@@ -54,10 +54,10 @@ const AddCategory: React.FC = () => {
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        <button type="submit">Save Category</button>
+        <button type="submit">Save</button>
       </form>
     </div>
   );
 };
 
-export default AddCategory;
+export default AddBanner;

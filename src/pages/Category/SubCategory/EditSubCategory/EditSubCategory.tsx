@@ -110,18 +110,6 @@ const EditSubCategory: React.FC = () => {
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        {/* Status Dropdown */}
-        <div style={{ marginBottom: "15px" }}>
-          <label>Status: </label>
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value as "active" | "inactive")}
-          >
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-
         <button type="submit">Update</button>
       </form>
     </div>
