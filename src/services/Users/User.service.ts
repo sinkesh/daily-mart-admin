@@ -8,6 +8,12 @@ export const getAllUser = async (): Promise<{ data: any[] }> => {
   return res.data;
 };
 
+// ✅ Get All Product
+export const getAllActiveUser = async (): Promise<{ data: any[] }> => {
+  const res = await axios.get(`${API_BASE}/Get_All_Active_User`);
+  return res.data;
+};
+
 // ✅ Add Product
 export const createProduct = (formData: FormData) => {
   return axios.post(`${API_BASE}/Create_Product`, formData, {

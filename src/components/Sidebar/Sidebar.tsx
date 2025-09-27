@@ -37,6 +37,7 @@ import { FaMoneyBillWave } from "@react-icons/all-files/fa/FaMoneyBillWave";
 import { FaChartPie } from "@react-icons/all-files/fa/FaChartPie";
 import { FaBell } from "@react-icons/all-files/fa/FaBell";
 import { FaEnvelope } from "@react-icons/all-files/fa/FaEnvelope";
+import { FaUserCheck } from "@react-icons/all-files/fa/FaUserCheck";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -49,7 +50,9 @@ const menuData = [
     name: "Users",
     icon: <FaUsers />,
     submenu: [
-      { name: "Users", path: "/users/list", icon: <FaList /> },
+      { name: "All Users", path: "/allusers/list", icon: <FaUsers /> },
+      { name: "Active Users", path: "/activeusers/list", icon: <FaUserCheck /> },
+      { name: "Query", path: "/query/list", icon: <FaQuestionCircle /> },
       { name: "Roles", path: "/users/roles", icon: <FaShieldAlt /> },
     ],
   },

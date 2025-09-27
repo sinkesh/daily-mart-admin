@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import CommonTable from "../../components/Table/Table";
+import CommonTable from "../../../components/Table/Table";
 import "./UserList.css";
-import { getAllUser, updateUserStatusApi } from "../../services/Users/User.service";
-import { UserTypes } from "../../services/Users/User.types";
+import { getAllUser, updateUserStatusApi } from "../../../services/Users/User.service";
+import { UserTypes } from "../../../services/Users/User.types";
 
 const UserList: React.FC = () => {
   const [search, setSearch] = useState("");

@@ -4,7 +4,9 @@ import Login from "./pages/Login/Login";
 import MainLayout from "./layouts/MainLayout";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import UserList from "./pages/Users/UserList";
+import UserList from "./pages/Users/AllUsers/UserList";
+import ActiveUsersList from "./pages/Users/ActiveUsers/ActiveUsersList";
+import QueryList from "./pages/Users/Query/QueryList";
 import Roles from "./pages/Roles/RoleList";
 import ProductList from "./pages/Products/ProductList/ProductList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
@@ -78,11 +80,33 @@ const App: React.FC = () => {
 
         {/* Users List */}
         <Route
-          path="/users/list"
+          path="/allusers/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Users">
                 <UserList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        {/* Active Users List */}
+        <Route
+          path="/activeusers/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Active Users">
+                <ActiveUsersList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        {/* Query List */}
+        <Route
+          path="/query/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Query">
+                <QueryList />
               </MainLayout>
             </PrivateRoute>
           }
