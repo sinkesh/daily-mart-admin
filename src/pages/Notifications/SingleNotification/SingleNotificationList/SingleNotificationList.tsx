@@ -136,6 +136,9 @@ const BannerList: React.FC = () => {
           }}
           className="search-bar"
         />
+        <button className="add-btn" onClick={() => navigate("/notification/singlenotification")}>
+          Add Notification
+        </button>
       </div>
 
       {/* ✅ Table with paginated data */}

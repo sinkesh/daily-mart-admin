@@ -30,7 +30,9 @@ import BannerList from "./pages/Banner/BannerList/BannerList";
 import AddBanner from "./pages/Banner/AddBanner/AddBanner";
 import EditBanner from "./pages/Banner/EditBanner/EditBanner";
 import SingleNotificationList from "./pages/Notifications/SingleNotification/SingleNotificationList/SingleNotificationList";
+import SendSingleNotification from "./pages/Notifications/SingleNotification/SendSingleNotification/SendSingleNotification";
 import BulkNotificationList from "./pages/Notifications/BulkNotification/BulkNotificationList/BulkNotificationList";
+import SendBulkNotification from "./pages/Notifications/BulkNotification/SendBulkNotification/SendBulkNotification";
 
 
 const App: React.FC = () => {
@@ -343,11 +345,31 @@ const App: React.FC = () => {
           }
         />
         <Route
+          path="/notification/singlenotification"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Single Notification" >
+                <SendSingleNotification />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/notification/bulknotification/list"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Bulk Notification" >
                 <BulkNotificationList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notification/bulknotification"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Bulk Notification" >
+                <SendBulkNotification />
               </MainLayout>
             </PrivateRoute>
           }
