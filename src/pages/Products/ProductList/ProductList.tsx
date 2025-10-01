@@ -29,7 +29,7 @@ const ProductList: React.FC = () => {
           short_description: c.short_description,
           brand_name: c.brand_name,
           category_name: c.category_name,
-          sku: c.sku,
+          product_sku: c.product_sku,
           hsn_code: c.hsn_code,
           unit_price: c.unit_price,
           discount_price: c.discount_price,
@@ -117,7 +117,7 @@ const ProductList: React.FC = () => {
     { key: "category_name", label: "Category Name" },
     { key: "unit_price", label: "Unit Price" },
     { key: "discount_price", label: "Discount Price" },
-    { key: "sku", label: "SKU" },
+    { key: "product_sku", label: "SKU" },
     { key: "stock_quantity", label: "Stock Quantity" },
     {
       key: "thumbnail_image",

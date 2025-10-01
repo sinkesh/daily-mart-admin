@@ -14,7 +14,7 @@ const EditProduct: React.FC = () => {
         short_description: "",
         brand_name: "",
         category_name: "",
-        sku: "",
+        product_sku: "",
         hsn_code: "",
         unit_price: 0,
         discount_price: 0,
@@ -138,8 +138,8 @@ const EditProduct: React.FC = () => {
                             <input id="category_name" type="text" name="category_name" value={productData.category_name} onChange={handleChange} />
                         </div>
                         <div>
-                            <label htmlFor="sku">SKU</label>
-                            <input id="sku" type="text" name="sku" value={productData.sku} onChange={handleChange} />
+                            <label htmlFor="product_sku">SKU</label>
+                            <input id="product_sku" type="text" name="product_sku" value={productData.product_sku} onChange={handleChange} />
                         </div>
                         <div>
                             <label htmlFor="hsn_code">HSN Code</label>

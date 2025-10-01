@@ -11,7 +11,9 @@ const AddProduct: React.FC = () => {
         short_description: "",
         brand_name: "",
         category_name: "",
-        sku: "",
+        product_sku: "",
+        uom: "",
+        offer_price: "",
         hsn_code: "",
         unit_price: 0,
         discount_price: 0,
@@ -30,7 +32,7 @@ const AddProduct: React.FC = () => {
     });
 
     const [thumbnailImage, setThumbnailImage] = useState<File | null>(null);
-    const [videoFile, setVideoFile] = useState<File | null>(null);
+    // const [videoFile, setVideoFile] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -53,9 +55,9 @@ const AddProduct: React.FC = () => {
         }
     };
 
-    const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setVideoFile(e.target.files?.[0] || null);
-    };
+    // const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setVideoFile(e.target.files?.[0] || null);
+    // };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,7 +67,7 @@ const AddProduct: React.FC = () => {
                 formData.append(key, String(value));
             });
             if (thumbnailImage) formData.append("thumbnail_image", thumbnailImage);
-            if (videoFile) formData.append("video_url", videoFile);
+            // if (videoFile) formData.append("video_url", videoFile);
 
             await createProduct(formData);
             navigate("/product/list");
@@ -100,8 +102,16 @@ const AddProduct: React.FC = () => {
                             <input id="category_name" type="text" name="category_name" value={productData.category_name} onChange={handleChange} />
                         </div>
                         <div>
-                            <label htmlFor="sku">SKU</label>
-                            <input id="sku" type="text" name="sku" value={productData.sku} onChange={handleChange} />
+                            <label htmlFor="product_sku">SKU</label>
+                            <input id="product_sku" type="text" name="product_sku" value={productData.product_sku} onChange={handleChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="uom">UOM</label>
+                            <input id="uom" type="text" name="uom" value={productData.uom} onChange={handleChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="offer_price">Offer Price</label>
+                            <input id="offer_price" type="text" name="offer_price" value={productData.offer_price} onChange={handleChange} />
                         </div>
                         <div>
                             <label htmlFor="hsn_code">HSN Code</label>
@@ -205,10 +215,10 @@ const AddProduct: React.FC = () => {
                         <input type="file" accept="image/*" onChange={handleImageChange} />
                     </div>
 
-                    <div className="video-upload-box">
+                    {/* <div className="video-upload-box">
                         <span>Upload Product Video</span>
                         <input type="file" accept="video/*" onChange={handleVideoChange} />
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* --- SUBMIT BUTTON --- */}

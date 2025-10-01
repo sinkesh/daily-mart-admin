@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CommonTable from "../../../components/Table/Table";
+import CommonTable from "../../components/Table/Table";
 import "./ReviewList.css";
-import { getAllProduct, updateProductStatusApi } from "../../../services/Products/Product.service";
-import { ProductTypes } from "../../../services/Products/Product.types";
+import { getAllProduct, updateProductStatusApi } from "../../services/Products/Product.service";
+import { ProductTypes } from "../../services/Products/Product.types";
 
 const ProductList: React.FC = () => {
     const [search, setSearch] = useState("");
@@ -29,7 +29,7 @@ const ProductList: React.FC = () => {
                     short_description: c.short_description,
                     brand_name: c.brand_name,
                     category_name: c.category_name,
-                    sku: c.sku,
+                    product_sku: c.product_sku,
                     hsn_code: c.hsn_code,
                     unit_price: c.unit_price,
                     discount_price: c.discount_price,

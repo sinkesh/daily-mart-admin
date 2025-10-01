@@ -26,7 +26,7 @@ import BrandList from "./pages/Brands//BrandList/BrandList";
 import FaqList from "./pages/Faq/FaqList/FaqList";
 import AddFaq from "./pages/Faq/AddFaq/AddFaq";
 import EditFaq from "./pages/Faq/EditFaq/EditFaq";
-import ReviewList from "./pages/Review/ReviewList/ReviewList";
+import ReviewList from "./pages/Review/ReviewList";
 import ChangePassword from "./pages/Settings/ChangePassword/ChangePassword";
 import BannerList from "./pages/Banner/BannerList/BannerList";
 import AddBanner from "./pages/Banner/AddBanner/AddBanner";

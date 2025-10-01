@@ -6,7 +6,7 @@ export interface ProductTypes {
     short_description: string;
     brand_name: string;
     category_name: string;
-    sku: string;
+    product_sku: string;
     hsn_code: string;
     unit_price: number;
     discount_price: number;
@@ -22,7 +22,7 @@ export interface ProductTypes {
     material: string;
     tags: string;
     thumbnail_image: string;
-    video_url: string;
+    // video_url: string;
     is_featured: boolean;
     created_by: number | string;
     updated_by: number | string;
