@@ -7,13 +7,13 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import UserList from "./pages/Users/AllUsers/UserList";
 import ActiveUsersList from "./pages/Users/ActiveUsers/ActiveUsersList";
 import QueryList from "./pages/Users/Query/QueryList";
-import Roles from "./pages/Roles/RoleList";
+import Roles from "./pages/Roles/RoleList/RoleList";
 import ProductList from "./pages/Products/ProductList/ProductList";
 import AddProduct from "./pages/Products/AddProduct/AddProduct";
 import EditProduct from "./pages/Products/EditProduct/EditProduct";
-import CategoryList from "./pages/Category/Category/CatgeoryList/CategoryList";
-import AddCategory from "./pages/Category/Category/AddCategory/AddCategory";
-import EditCategory from "./pages/Category/Category/EditCategory/EditCategory"
+import CategoryList from "./pages/Category/category/CatgeoryList/CategoryList";
+import AddCategory from "./pages/Category/category/AddCategory/AddCategory";
+import EditCategory from "./pages/Category/category/EditCategory/EditCategory"
 import SubCatgeoryList from "./pages/Category/SubCategory/SubCategoryList/SubCategoryList";
 import AddSubCategory from "./pages/Category/SubCategory/AddSubCategory/AddSubCategory";
 import EditSubCategory from "./pages/Category/SubCategory/EditSubCategory/EditSubCategory";
@@ -31,6 +31,9 @@ import ChangePassword from "./pages/Settings/ChangePassword/ChangePassword";
 import BannerList from "./pages/Banner/BannerList/BannerList";
 import AddBanner from "./pages/Banner/AddBanner/AddBanner";
 import EditBanner from "./pages/Banner/EditBanner/EditBanner";
+import RoleList from "./pages/Roles/RoleList/RoleList";
+import AddRole from "./pages/Roles/AddRole/AddRole";
+import EditRole from "./pages/Roles/EditRole/EditRole";
 import SingleNotificationList from "./pages/Notifications/SingleNotification/SingleNotificationList/SingleNotificationList";
 import SendSingleNotification from "./pages/Notifications/SingleNotification/SendSingleNotification/SendSingleNotification";
 import BulkNotificationList from "./pages/Notifications/BulkNotification/BulkNotificationList/BulkNotificationList";
@@ -354,6 +357,38 @@ const App: React.FC = () => {
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Banner" >
                 <EditBanner />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+
+        {/* Role */}
+        <Route
+          path="/role/list"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="All Role">
+                <RoleList />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/add/role"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Add Role">
+                <AddRole />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit/role/:role_id"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <MainLayout collapsed={collapsed} setCollapsed={setCollapsed} setIsAuthenticated={setIsAuthenticated} pageTitle="Edit Role" >
+                <EditRole />
               </MainLayout>
             </PrivateRoute>
           }

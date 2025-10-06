@@ -1,78 +1,77 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./FaqList.css";
-import { getAllFaq, updateFaqStatusApi } from "../../../services/Faq/Faq.service";
-import { Faq } from "../../../services/Faq/Faq.types";
+import "./RoleList.css";
+import { getAllRole, updateRoleStatusApi } from "../../../services/Role/Role.service";
+import { RoleTypes } from "../../../services/Role/Role.types";
 
-const FaqList: React.FC = () => {
+const RoleList: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [faq, setFaq] = useState<Faq[]>([]);
-  const [selectedFaq, setSelectedFaq] = useState<Faq | null>(null);
+  const [role, setRole] = useState<RoleTypes[]>([]);
+  const [selectedRole, setSelectedRole] = useState<RoleTypes | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const navigate = useNavigate();
   const calledOnce = useRef(false);
 
-  // ✅ Load faq from API
-  const loadFaq = async () => {
+  // ✅ Load role from API
+  const loadRole = async () => {
     try {
-      const response = await getAllFaq();
+      const response = await getAllRole();
       const data = response.data || response;
 
       if (Array.isArray(data)) {
-        const mapped: Faq[] = data.map((c: any) => ({
-          faq_id: c.faq_id,
-          question: c.question,
-          answer: c.answer,
+        const mapped: RoleTypes[] = data.map((c: any) => ({
+          role_id: c.role_id,
+          role_name: c.role_name,
           status: c.status.toLowerCase() === "active" ? "active" : "inactive",
         }));
-        setFaq(mapped);
+        setRole(mapped);
       } else {
-        console.error("Invalid faq response:", data);
-        setFaq([]);
+        console.error("Invalid response:", data);
+        setRole([]);
       }
     } catch (error) {
-      console.error("Error fetching faq:", error);
-      setFaq([]);
+      console.error("Error fetching:", error);
+      setRole([]);
     }
   };
 
   useEffect(() => {
     if (calledOnce.current) return;
     calledOnce.current = true;
-    loadFaq();
+    loadRole();
   }, []);
 
   // ✅ Toggle Status
-  const toggleStatus = async (faq_id: number, currentStatus: "active" | "inactive") => {
+  const toggleStatus = async (role_id: number, currentStatus: "active" | "inactive") => {
     const newStatus: "active" | "inactive" = currentStatus === "active" ? "inactive" : "active";
     try {
-      await updateFaqStatusApi(faq_id, { status: newStatus });
-      const updated = faq.map((cat) =>
-        cat.faq_id === faq_id ? { ...cat, status: newStatus } : cat
+      await updateRoleStatusApi(role_id, { status: newStatus });
+      const updated = role.map((cat) =>
+        cat.role_id === role_id ? { ...cat, status: newStatus } : cat
       );
-      setFaq(updated);
+      setRole(updated);
     } catch (error) {
       console.error("Error updating status:", error);
       alert("Failed to update status!");
     }
   };
 
-  // // ✅ Delete Faq
-  // const handleDeleteFaq = async (faq_id: number) => {
+  // // ✅ Delete role
+  // const handleDeleteROle = async (role_id: number) => {
   //   try {
-  //     await deleteFaqApi(faq_id);
-  //     setFaq((prev) => prev.filter((cat) => cat.faq_id !== faq_id));
+  //     await deleteRoleApi(role_id);
+  //     setRole((prev) => prev.filter((cat) => cat.role_id !== role_id));
   //   } catch (error) {
-  //     console.error("Error deleting faq:", error);
+  //     console.error("Error deleting:", error);
   //   }
   // };
 
   // ✅ Filtered Data
-  const filtered = Array.isArray(faq)
-    ? faq.filter((c) =>
-      c.question?.toLowerCase().includes(search.toLowerCase())
+  const filtered = Array.isArray(role)
+    ? role.filter((c) =>
+      c.role_name?.toLowerCase().includes(search.toLowerCase())
     )
     : [];
 
@@ -82,9 +81,8 @@ const FaqList: React.FC = () => {
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
   const columns = [
-    { key: "faq_id", label: "#" },
-    { key: "question", label: "Question" },
-    { key: "answer", label: "Answer" },
+    { key: "role_id", label: "#" },
+    { key: "role_name", label: "Role Name" },
     {
       key: "status",
       label: "Status",
@@ -96,7 +94,7 @@ const FaqList: React.FC = () => {
             color: value === "active" ? "green" : "red",
             cursor: "pointer",
           }}
-          onClick={() => toggleStatus(row.faq_id, row.status)}
+          onClick={() => toggleStatus(row.role_id, row.status)}
         >
           {value === "active" ? "Active" : "Inactive"}
         </span>
@@ -117,8 +115,8 @@ const FaqList: React.FC = () => {
           }}
           className="search-bar"
         />
-        <button className="add-btn" onClick={() => navigate("/add/faq")}>
-          Add Faq
+        <button className="add-btn" onClick={() => navigate("/add/role")}>
+          Add Role
         </button>
       </div>
 
@@ -129,9 +127,9 @@ const FaqList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedFaq(row)}> View</button>
-            <button className="action-btn edit" onClick={() => navigate(`/edit/faq/${row.faq_id}`)}> Edit </button>
-            {/* <button className="action-btn delete" onClick={() => handleDeleteFaq(row.faq_id)}> Delete</button> */}
+            <button className="action-btn edit" onClick={() => setSelectedRole(row)}> View</button>
+            <button className="action-btn edit" onClick={() => navigate(`/edit/role/${row.role_id}`)}> Edit </button>
+            {/* <button className="action-btn delete" onClick={() => handleDeleteROle(row.role_id)}> Delete</button> */}
           </>
         )}
       />
@@ -146,23 +144,19 @@ const FaqList: React.FC = () => {
       </div>
 
       {/* ✅ Modal */}
-      {selectedFaq && (
-        <div className="modal-overlay" onClick={() => setSelectedFaq(null)}>
+      {selectedRole && (
+        <div className="modal-overlay" onClick={() => setSelectedRole(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Faq Details</h3>
+            <h3>Role Details</h3>
             <table className="details-table">
               <tbody>
                 <tr>
                   <td><strong>ID</strong></td>
-                  <td>{selectedFaq.faq_id}</td>
+                  <td>{selectedRole.role_id}</td>
                 </tr>
                 <tr>
-                  <td><strong>Question</strong></td>
-                  <td>{selectedFaq.question}</td>
-                </tr>
-                <tr>
-                  <td><strong>Answer</strong></td>
-                  <td>{selectedFaq.answer}</td>
+                  <td><strong>Role Name</strong></td>
+                  <td>{selectedRole.role_name}</td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>
@@ -171,25 +165,25 @@ const FaqList: React.FC = () => {
                       className="status-badge"
                       style={{
                         backgroundColor:
-                          selectedFaq.status === "active" ? "#d4f5d4" : "#f5d4d4",
+                          selectedRole.status === "active" ? "#d4f5d4" : "#f5d4d4",
                         color:
-                          selectedFaq.status === "active" ? "green" : "red",
+                          selectedRole.status === "active" ? "green" : "red",
                         cursor: "pointer",
                       }}
                       onClick={() =>
-                        setSelectedFaq({
-                          ...selectedFaq,
-                          status: selectedFaq.status === "active" ? "inactive" : "active",
+                        setSelectedRole({
+                          ...selectedRole,
+                          status: selectedRole.status === "active" ? "inactive" : "active",
                         })
                       }
                     >
-                      {selectedFaq.status === "active" ? "Active" : "Inactive"}
+                      {selectedRole.status === "active" ? "Active" : "Inactive"}
                     </span>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <button className="add-btn" onClick={() => setSelectedFaq(null)} style={{ marginTop: "15px" }} > Close </button>
+            <button className="add-btn" onClick={() => setSelectedRole(null)} style={{ marginTop: "15px" }} > Close </button>
           </div>
         </div>
       )}
@@ -197,4 +191,4 @@ const FaqList: React.FC = () => {
   );
 };
 
-export default FaqList;
+export default RoleList;
