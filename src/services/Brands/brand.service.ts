@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BrandTypes } from "./brand.types";
-
-const API_BASE = "http://localhost:8000/api/v1";
+import { environment } from "../../environments/environment";
+const API_BASE_NAME = `${environment.apiBaseUrl}`
 
 // ✅ Get All Brand
 export const getAllBrandApi = async (): Promise<{ data: any[] }> => {
-    const res = await axios.get(`${API_BASE}/Get_All_Brand`);
+    const res = await axios.get(`${API_BASE_NAME}/Get_All_Brand`);
     return res.data;
 };
 
@@ -16,7 +16,7 @@ export const createBrandApi = async (brand_name: string, description: string, im
     formData.append("description", description);
     formData.append("brand_logo", imageFile);
 
-    const res = await axios.post(`${API_BASE}/Create_Brand`, formData, {
+    const res = await axios.post(`${API_BASE_NAME}/Create_Brand`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
     });
 
@@ -25,14 +25,14 @@ export const createBrandApi = async (brand_name: string, description: string, im
 
 // ✅ Delete Brand
 export const deleteBrandApi = async (id: number): Promise<void> => {
-    await axios.delete(`${API_BASE}/Delete_Brand/${id}`, {
+    await axios.delete(`${API_BASE_NAME}/Delete_Brand/${id}`, {
         data: { status: "INACTIVE" }
     });
 };
 
 // ✅ Get ById Brand
 export const getByIdBrandApi = async (id: number): Promise<BrandTypes> => {
-    const res = await axios.get(`${API_BASE}/Get_ById_Brand/${id}`);
+    const res = await axios.get(`${API_BASE_NAME}/Get_ById_Brand/${id}`);
     const data = res.data.data;
     return {
         brand_id: data.brand_id,
@@ -47,7 +47,7 @@ export const getByIdBrandApi = async (id: number): Promise<BrandTypes> => {
 // ✅ Update Brand Status
 export const updateBrandStatusApi = async (brand_id: number, payload: { status: string }): Promise<void> => {
     try {
-        await axios.put(`${API_BASE}/Update_Brand_Status/${brand_id}`, payload, {
+        await axios.put(`${API_BASE_NAME}/Update_Brand_Status/${brand_id}`, payload, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -62,7 +62,7 @@ export const updateBrandStatusApi = async (brand_id: number, payload: { status: 
 // ✅ Update Brand
 export const updateBrandApi = async (id: number, formData: FormData): Promise<void> => {
     try {
-        await axios.put(`${API_BASE}/Edit_Brand/${id}`, formData, {
+        await axios.put(`${API_BASE_NAME}/Edit_Brand/${id}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

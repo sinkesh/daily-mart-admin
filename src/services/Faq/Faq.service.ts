@@ -1,11 +1,11 @@
 import axios from "axios";
 import { Faq } from "./Faq.types";
-const API_BASE = "http://localhost:8000/api/v1";
+import { environment } from "../../environments/environment";
+const API_BASE_NAME = `${environment.apiBaseUrl}`
 
-// ✅ Create Faq
 export const createFaq = async (payload: any) => {
     try {
-        const response = await axios.post(`${API_BASE}/Create_Faq`, payload, {
+        const response = await axios.post(`${API_BASE_NAME}/Create_Faq`, payload, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -17,9 +17,8 @@ export const createFaq = async (payload: any) => {
     }
 };
 
-// ✅ Get ById Faq
 export const getByIdFaq = async (faq_id: number): Promise<Faq> => {
-    const res = await axios.get(`${API_BASE}/Get_ById_Faq/${faq_id}`);
+    const res = await axios.get(`${API_BASE_NAME}/Get_ById_Faq/${faq_id}`);
     const data = res.data.data;
     console.log("data", data)
     return {
@@ -30,25 +29,22 @@ export const getByIdFaq = async (faq_id: number): Promise<Faq> => {
     };
 };
 
-// ✅ Update Faq
 export const updateFaqApi = async (faq_id: number, payload: { question: string; answer: string }) => {
-    return axios.put(`${API_BASE}/Edit_Faq/${faq_id}`, payload, {
+    return axios.put(`${API_BASE_NAME}/Edit_Faq/${faq_id}`, payload, {
         headers: {
             "Content-Type": "application/json",
         },
     });
 };
 
-// ✅ Get All Faq
 export const getAllFaq = async (): Promise<{ data: any[] }> => {
-    const res = await axios.get(`${API_BASE}/Get_All_Faq`);
+    const res = await axios.get(`${API_BASE_NAME}/Get_All_Faq`);
     return res.data;
 };
 
-// ✅ Update Faq Status
 export const updateFaqStatusApi = async (faq_id: number, payload: { status: string }): Promise<void> => {
     try {
-        await axios.put(`${API_BASE}/Update_Faq_Status/${faq_id}`, payload, {
+        await axios.put(`${API_BASE_NAME}/Update_Faq_Status/${faq_id}`, payload, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -60,9 +56,8 @@ export const updateFaqStatusApi = async (faq_id: number, payload: { status: stri
     }
 };
 
-// ✅ Delete Faq
 export const deleteFaqApi = async (faq_id: number): Promise<void> => {
-    await axios.delete(`${API_BASE}/Delete_Faq/${faq_id}`, {
+    await axios.delete(`${API_BASE_NAME}/Delete_Faq/${faq_id}`, {
         data: { status: "INACTIVE" }
     });
 };

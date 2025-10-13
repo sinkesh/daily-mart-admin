@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BannerTypes } from "./Banner.types";
-const API_BASE_NAME = "http://localhost:8000/api/v1";
+import { environment } from "../../environments/environment";
+const API_BASE_NAME = `${environment.apiBaseUrl}`
 
 export const getAllBanner = async (): Promise<{ data: any[] }> => {
   const res = await axios.get(`${API_BASE_NAME}/Get_All_Banner`);

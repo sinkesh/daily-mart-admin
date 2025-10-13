@@ -1,10 +1,11 @@
 import axios from "axios";
 import { RoleTypes } from "./Role.types";
-const API_BASE = "http://localhost:8000/api/v1";
+import { environment } from "../../environments/environment";
+const API_BASE_NAME = `${environment.apiBaseUrl}`
 
 export const createRole = async (payload: any) => {
     try {
-        const response = await axios.post(`${API_BASE}/Create_Role`, payload, {
+        const response = await axios.post(`${API_BASE_NAME}/Create_Role`, payload, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -17,7 +18,7 @@ export const createRole = async (payload: any) => {
 };
 
 export const getByIdRole = async (role_id: number): Promise<RoleTypes> => {
-    const res = await axios.get(`${API_BASE}/Get_ById_Role/${role_id}`);
+    const res = await axios.get(`${API_BASE_NAME}/Get_ById_Role/${role_id}`);
     const data = res.data.data;
     return {
         role_id: data.role_id,
@@ -27,7 +28,7 @@ export const getByIdRole = async (role_id: number): Promise<RoleTypes> => {
 };
 
 export const updateRoleApi = async (role_id: number, payload: { role_name: string; }) => {
-    return axios.put(`${API_BASE}/Edit_Role/${role_id}`, payload, {
+    return axios.put(`${API_BASE_NAME}/Edit_Role/${role_id}`, payload, {
         headers: {
             "Content-Type": "application/json",
         },
@@ -35,13 +36,13 @@ export const updateRoleApi = async (role_id: number, payload: { role_name: strin
 };
 
 export const getAllRole = async (): Promise<{ data: any[] }> => {
-    const res = await axios.get(`${API_BASE}/Get_All_Role`);
+    const res = await axios.get(`${API_BASE_NAME}/Get_All_Role`);
     return res.data;
 };
 
 export const updateRoleStatusApi = async (role_id: number, payload: { status: string }): Promise<void> => {
     try {
-        await axios.put(`${API_BASE}/Update_Role_Status/${role_id}`, payload, {
+        await axios.put(`${API_BASE_NAME}/Update_Role_Status/${role_id}`, payload, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -54,7 +55,7 @@ export const updateRoleStatusApi = async (role_id: number, payload: { status: st
 };
 
 export const deleteRoleApi = async (role_id: number): Promise<void> => {
-    await axios.delete(`${API_BASE}/Delete_Role/${role_id}`, {
+    await axios.delete(`${API_BASE_NAME}/Delete_Role/${role_id}`, {
         data: { status: "INACTIVE" }
     });
 };
