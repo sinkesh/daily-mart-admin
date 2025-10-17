@@ -85,7 +85,7 @@
   
   /* Alternating row colors */
   .userlist-table tbody tr:nth-child(even) td {
-    background-color: #f9fafb;
+    background-color: #0f212e;
   }
   
   /* Hover effect */

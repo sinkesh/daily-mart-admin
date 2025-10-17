@@ -1,23 +1,24 @@
-/* Table wrapper */
 .table-wrapper {
   overflow-x: auto;
-  background: #ffffff;
+  background: #1a2c38;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 0.5rem;
 }
 
-/* Table */
 .common-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   min-width: 700px;
+  color: white;
 }
 
-/* Table header */
+.common-table tbody tr {
+  height: 60px;
+}
+
 .common-table th {
-  background-color: #5b6d8b;
+  background-color: #243b4a;
   color: white;
   font-weight: 600;
   font-size: 0.95rem;
@@ -26,35 +27,31 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  border-bottom: 1px solid #334155;
 }
 
-/* Table cells */
 .common-table td {
   padding: 0.9rem 1rem;
   text-align: left;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: #213743;
+  border-bottom: 1px solid #334155;
   font-size: 0.95rem;
   transition: background-color 0.2s, transform 0.2s;
   white-space: nowrap;
   vertical-align: middle;
+  color: white;
 }
-
-/* Striped rows */
-
 
 .common-table tbody tr:nth-child(even) td {
-  background-color: rgba(0, 0, 0, 0.05);
-  ;
+  background-color: #1f2f3d;
 }
 
-/* Hover effect */
 .common-table tbody tr:hover td {
-  background-color: rgba(0, 0, 0, 0.05);
-  transform: translateX(2px);
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: none;
+  cursor: pointer;
 }
 
-/* Actions buttons */
 .action-btn {
   border: none;
   padding: 0.35rem 0.6rem;
@@ -66,8 +63,6 @@
   transition: transform 0.2s, background-color 0.2s;
 }
 
-
-/* Fix status column width */
 .common-table td.status-cell {
   width: 80px;
   text-align: center;
@@ -80,9 +75,9 @@
   font-weight: bold;
   cursor: pointer;
   min-width: 60px;
-  /* Prevent width change when toggling */
   text-align: center;
   transition: background-color 0.2s, color 0.2s;
+  color: white;
 }
 
 .compact-table th,
@@ -90,6 +85,7 @@
   padding: 6px 10px;
   font-size: 14px;
   line-height: 1.2;
+  color: white;
 }
 
 .compact-table tr {
@@ -98,47 +94,22 @@
 
 .compact-table thead th {
   font-weight: 600;
-  background: #f4f4f4;
+  background: #243b4a;
+  color: white;
 }
 
-/* Stronger striped rows */
-.common-table tbody tr:nth-child(odd) td {
-  background-color: #ffffff;
-  /* white */
-}
-
-.common-table tbody tr:hover td {
-  background-color: rgba(0, 0, 0, 0.09);;
-  transform: none;
-  cursor: pointer;
-}
-
-/* Actions buttons */
-.action-btn {
-  border: none;
-  padding: 0.35rem 0.6rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-right: 0.4rem;
-  transition: transform 0.2s, background-color 0.2s;
-}
-
-/* Edit button */
 .action-btn.edit {
-  background-color: #facc15; /* yellow */
+  background-color: #facc15;
   color: #1e293b;
 }
 
-/* View button */
 .action-btn.view {
-  background-color: #3b82f6; /* blue */
+  background-color: #3b82f6;
   color: white;
 }
 
-/* Delete button */
 .action-btn.delete {
-  background-color: #ef4444; /* red */
+  background-color: #ef4444;
   color: white;
 }
+

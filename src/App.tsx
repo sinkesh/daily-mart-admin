@@ -453,10 +453,10 @@ const App: React.FC = () => {
         </Routes>
 
         {/* ✅ Yeh div Routes ke bahar hona chahiye */}
-        <div style={{ textAlign: "center", padding: "20px", marginTop: "auto" }}>
+        {/* <div style={{ textAlign: "center", padding: "20px", marginTop: "auto" }}>
           <h2>Admin Panel</h2>
           <p>Backend API URL: {process.env.REACT_APP_API_URL}</p>
-        </div>
+        </div> */}
       </div>
     </Router>
   );

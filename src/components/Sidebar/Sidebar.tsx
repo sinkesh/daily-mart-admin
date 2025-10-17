@@ -145,7 +145,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   };
 
   const handleDirectLinkClick = () => {
-    // Direct NavLink clicked, close any open submenu
     setOpenMenu(null);
   };
 

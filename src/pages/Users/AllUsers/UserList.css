@@ -85,12 +85,12 @@
 
 /* Alternating row colors */
 .userlist-table tbody tr:nth-child(even) td {
-  background-color: #f9fafb;
+  background-color: #0f212e;
 }
 
 /* Hover effect */
 .userlist-table tbody tr:hover td {
-  background-color: #eef2ff;
+  /* background-color: #eef2ff; */
   transform: translateX(2px);
 }
 
