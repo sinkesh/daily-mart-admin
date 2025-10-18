@@ -110,6 +110,7 @@
   font-size: 0.95rem;
   width: 250px;
   background-color: #0f212e;
+  color: white;
   outline: none;
   transition: all 0.2s ease-in-out;
 }
