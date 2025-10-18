@@ -99,7 +99,9 @@ const EditProduct: React.FC = () => {
         try {
             const formData = new FormData();
             Object.entries(productData).forEach(([key, value]) => {
-                formData.append(key, String(value));
+                if (value !== null && value !== undefined && value !== "") {
+                    formData.append(key, String(value));
+                }
             });
             if (thumbnailImage) formData.append("thumbnail_image", thumbnailImage);
             if (videoFile) formData.append("video_url", videoFile);

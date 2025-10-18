@@ -13,6 +13,7 @@ const ProductList: React.FC = () => {
   const itemsPerPage = 10;
   const navigate = useNavigate();
   const calledOnce = useRef(false);
+  console.log("selectedProduct", selectedProduct)
 
   // ✅ Load product from API
   const loadProduct = async () => {
