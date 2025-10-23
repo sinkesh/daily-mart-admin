@@ -12,6 +12,13 @@ const EditProduct: React.FC = () => {
         product_slug: "",
         product_description: "",
         short_description: "",
+        how_to_use: "",
+        safety_instruction: "",
+        ingredients: "",
+        composition_information: "",
+        additional_information: "",
+        long_description: "",
+        highlight: "",
         brand_name: "",
         category_name: "",
         product_sku: "",
@@ -33,10 +40,7 @@ const EditProduct: React.FC = () => {
     });
 
     const [thumbnailImage, setThumbnailImage] = useState<File | null>(null);
-    const [videoFile, setVideoFile] = useState<File | null>(null);
-
     const [previewImage, setPreviewImage] = useState<string | null>(null);
-    const [previewVideo, setPreviewVideo] = useState<string | null>(null);
 
     // --- FETCH PRODUCT DATA ---
     useEffect(() => {
@@ -46,10 +50,7 @@ const EditProduct: React.FC = () => {
             try {
                 const response = await getByIdProduct(id);
                 setProductData(response.data);
-
                 if (response.data.thumbnail_image) setPreviewImage(response.data.thumbnail_image);
-                if (response.data.video_url) setPreviewVideo(response.data.video_url);
-
             } catch (error) {
                 console.error("Failed to fetch product:", error);
                 alert("Failed to load product data");
@@ -68,7 +69,7 @@ const EditProduct: React.FC = () => {
         }));
     };
 
-    // --- HANDLE IMAGE/VIDEO CHANGE ---
+    // --- HANDLE IMAGE ---
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         setThumbnailImage(file);
@@ -76,17 +77,6 @@ const EditProduct: React.FC = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setPreviewImage(reader.result as string);
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0] || null;
-        setVideoFile(file);
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setPreviewVideo(reader.result as string);
             reader.readAsDataURL(file);
         }
     };
@@ -104,8 +94,6 @@ const EditProduct: React.FC = () => {
                 }
             });
             if (thumbnailImage) formData.append("thumbnail_image", thumbnailImage);
-            if (videoFile) formData.append("video_url", videoFile);
-
             await updateProductApi(id, formData);
             navigate("/product/list");
         } catch (error) {
@@ -216,16 +204,31 @@ const EditProduct: React.FC = () => {
                     </div>
                 </div>
 
-                {/* --- DESCRIPTION --- */}
+                {/* --- HIGHT LIGHT --- */}
                 <div className="form-section">
-                    <h3>Description</h3>
-                    <div>
-                        <label htmlFor="product_description">Product Description</label>
-                        <textarea id="product_description" name="product_description" value={productData.product_description} onChange={handleChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="short_description">Short Description</label>
-                        <textarea id="short_description" name="short_description" value={productData.short_description} onChange={handleChange} />
+                    <h3>Highlight</h3>
+                    <div
+                        className="highlight-options"
+                        style={{ marginTop: "10px", display: "flex", alignItems: "center", justifyContent: "flex-start", flexWrap: "nowrap", gap: "25px" }}  >
+                        <label style={{ display: "flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap", fontSize: "16px", fontWeight: "500" }} >
+                            <input type="radio" name="highlight_option" value="best_seller" onChange={handleChange} />
+                            Best Seller
+                        </label>
+
+                        <label style={{ display: "flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap", fontSize: "16px", fontWeight: "500" }} >
+                            <input type="radio" name="highlight_option" value="new_launched" onChange={handleChange} />
+                            New Launched
+                        </label>
+
+                        <label style={{ display: "flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap", fontSize: "16px", fontWeight: "500" }} >
+                            <input type="radio" name="highlight_option" value="top_discount_offer" onChange={handleChange} />
+                            Top Discount Offer
+                        </label>
+
+                        <label style={{ display: "flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap", fontSize: "16px", fontWeight: "500" }} >
+                            <input type="radio" name="highlight_option" value="trending_offer" onChange={handleChange} />
+                            Trending Offer
+                        </label>
                     </div>
                 </div>
 
@@ -237,23 +240,57 @@ const EditProduct: React.FC = () => {
                     </label>
                 </div>
 
+                {/* --- DESCRIPTION --- */}
+                <div className="form-section">
+                    <h3>Description</h3>
+                    <div className="description-row">
+                        <div className="description-box">
+                            <label htmlFor="product_description">Product Description</label>
+                            <textarea id="product_description" name="product_description" value={productData.product_description} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="short_description">Short Description</label>
+                            <textarea id="short_description" name="short_description" value={productData.short_description} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="how_to_use">How to use</label>
+                            <textarea id="how_to_use" name="how_to_use" value={productData.how_to_use} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="safety_instruction">Safety Instruction</label>
+                            <textarea id="safety_instruction" name="safety_instruction" value={productData.safety_instruction} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="ingredients">Ingredients</label>
+                            <textarea id="ingredients" name="ingredients" value={productData.ingredients} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="composition_information">Composition Information</label>
+                            <textarea id="composition_information" name="composition_information" value={productData.composition_information} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="additional_information">Additional Information</label>
+                            <textarea id="additional_information" name="additional_information" value={productData.additional_information} onChange={handleChange} />
+                        </div>
+
+                        <div className="description-box">
+                            <label htmlFor="long_description">Long Description</label>
+                            <textarea id="long_description" name="long_description" value={productData.long_description} onChange={handleChange} />
+                        </div>
+                    </div>
+                </div>
+
                 <div className="form-section">
                     <h3>Media</h3>
-
                     <div className="image-upload-box">
                         {previewImage ? <img src={previewImage} alt="Thumbnail Preview" className="preview-image" /> : <span>Click to upload thumbnail</span>}
                         <input type="file" accept="image/*" onChange={handleImageChange} />
-                    </div>
-
-                    <div className="video-upload-box">
-                        {previewVideo ? (
-                            <video controls width="250">
-                                <source src={previewVideo} type="video/mp4" />
-                            </video>
-                        ) : (
-                            <span>Upload Product Video</span>
-                        )}
-                        <input type="file" accept="video/*" onChange={handleVideoChange} />
                     </div>
                 </div>
 

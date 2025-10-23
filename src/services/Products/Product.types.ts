@@ -3,6 +3,13 @@ export interface ProductTypes {
     product_name: string;
     product_slug: string;
     product_description: string;
+    how_to_use: string;
+    safety_instruction: string;
+    ingredients: string;
+    composition_information: string;
+    additional_information: string;
+    long_description: string;
+    highlight: string;
     short_description: string;
     brand_name: string;
     category_name: string;
