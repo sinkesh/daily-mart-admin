@@ -136,8 +136,9 @@ const menuData = [
   },
 ];
 
-const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
+const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [hovered, setHovered] = useState(false);
   const location = useLocation();
 
   const toggleMenu = (name: string) => {
@@ -149,10 +150,24 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   };
 
   return (
-    <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+    <div
+      className={`sidebar ${collapsed ? "collapsed" : ""} ${hovered ? "expanded-hover" : ""}`}
+      onMouseEnter={() => {
+        if (collapsed) {
+          setHovered(true);
+          setCollapsed(false);
+        }
+      }}
+      onMouseLeave={() => {
+        if (hovered) {
+          setHovered(false);
+          setCollapsed(true);
+        }
+      }}
+    >
       {/* Sidebar Header */}
       <div className="sidebar-header">
-        {!collapsed ? (
+        {!collapsed || hovered ? (
           <>
             <img src={LogoImg} alt="Logo" className="sidebar-logo-img" />
             <span className="sidebar-logo-text">Daily Mart</span>
@@ -173,7 +188,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
             className={`menu-group ${isMenuOpen || isActiveParent ? "menu-active-group" : ""}`}
             key={menu.name}
           >
-            {/* Menu with submenu */}
             {menu.submenu ? (
               <>
                 <div
@@ -181,7 +195,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                   onClick={() => toggleMenu(menu.name)}
                 >
                   <span className="icon">{menu.icon}</span>
-                  {!collapsed && (
+
+                  {(!collapsed || hovered) && (
                     <>
                       <span className="menu-text">{menu.name}</span>
                       <span className="arrow">
@@ -195,15 +210,13 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                   )}
                 </div>
 
-                {isMenuOpen && !collapsed && (
+                {isMenuOpen && (!collapsed || hovered) && (
                   <div className="submenu submenu-open">
                     {menu.submenu.map((sub) => (
                       <NavLink
                         key={sub.name}
                         to={sub.path}
-                        className={({ isActive }) =>
-                          isActive ? "active-submenu" : ""
-                        }
+                        className={({ isActive }) => (isActive ? "active-submenu" : "")}
                       >
                         <span className="icon">{sub.icon}</span>
                         {sub.name}
@@ -213,17 +226,16 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                 )}
               </>
             ) : (
-              // Menu without submenu
               <NavLink
-                to={menu.path!}
-                onClick={handleDirectLinkClick} // Close other submenus
+                to={menu.path}
+                onClick={handleDirectLinkClick}
                 className={({ isActive }) =>
                   `menu-parent ${isActive ? "menu-parent-open" : ""}`
                 }
               >
                 <span className="icon">{menu.icon}</span>
-                {!collapsed && <span className="menu-text">{menu.name}</span>}
-                {!collapsed && <span className="arrow-placeholder" />}
+
+                {(!collapsed || hovered) && <span className="menu-text">{menu.name}</span>}
               </NavLink>
             )}
           </div>
