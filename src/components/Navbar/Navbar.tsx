@@ -10,6 +10,7 @@ import { FaFileAlt } from "@react-icons/all-files/fa/FaFileAlt";
 import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
 import { FaBoxOpen } from "@react-icons/all-files/fa/FaBoxOpen";
 
+
 const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
@@ -117,19 +118,22 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
       {/* Logout Confirmation Popup */}
       {showPopup && (
         <div className="popup-overlay">
-          <div className="popup-box">
-            <p>Are you sure you want to logout?</p>
+          <div className="popup-box animate-popup">
+            <h3 className="popup-title">Logout Confirmation</h3>
+            <p className="popup-message">Are you sure you want to logout?</p>
+
             <div className="popup-actions">
-              <button className="confirm-btn" onClick={handleLogout}>
+              <button className="popup-btn confirm" onClick={handleLogout}>
                 Yes
               </button>
-              <button className="cancel-btn" onClick={() => setShowPopup(false)}>
-                No
+              <button className="popup-btn cancel" onClick={() => setShowPopup(false)}>
+                Cancel
               </button>
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };

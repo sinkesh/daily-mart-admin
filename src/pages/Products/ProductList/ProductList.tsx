@@ -13,7 +13,6 @@ const ProductList: React.FC = () => {
   const itemsPerPage = 10;
   const navigate = useNavigate();
   const calledOnce = useRef(false);
-  console.log("selectedProduct", selectedProduct)
 
   // ✅ Load product from API
   const loadProduct = async () => {
@@ -76,6 +75,15 @@ const ProductList: React.FC = () => {
     calledOnce.current = true;
     loadProduct();
   }, []);
+
+  useEffect(() => {
+    if (selectedProduct) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  }, [selectedProduct]);
+  
 
   // ✅ Toggle Status
   const toggleStatus = async (product_id: number, currentStatus: string) => {
@@ -167,7 +175,7 @@ const ProductList: React.FC = () => {
   ];
 
   return (
-    <div className="category-container">
+    <div className="product-container">
       <div className="header-bar">
         <input
           type="text"
@@ -211,7 +219,7 @@ const ProductList: React.FC = () => {
       {selectedProduct && (
         <div className="modal-overlay" onClick={() => setSelectedProduct(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Category Details</h3>
+            <h3>Product Details</h3>
             <table className="details-table">
               <tbody>
                 <tr>
@@ -225,29 +233,6 @@ const ProductList: React.FC = () => {
                 <tr>
                   <td><strong>Category Name</strong></td>
                   <td>{selectedProduct.category_name}</td>
-                </tr>
-                <tr>
-                  <td><strong>Status</strong></td>
-                  <td>
-                    <span
-                      className="status-badge"
-                      style={{
-                        backgroundColor:
-                          selectedProduct.status === "active" ? "#d4f5d4" : "#f5d4d4",
-                        color:
-                          selectedProduct.status === "active" ? "green" : "red",
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>
-                        setSelectedProduct({
-                          ...selectedProduct,
-                          status: selectedProduct.status === "active" ? "inactive" : "active",
-                        })
-                      }
-                    >
-                      {selectedProduct.status === "active" ? "Active" : "Inactive"}
-                    </span>
-                  </td>
                 </tr>
                 <tr>
                   <td><strong>Image</strong></td>

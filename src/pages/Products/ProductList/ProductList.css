@@ -9,9 +9,11 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  backdrop-filter: blur(5px);
 }
 
 .modal-content {
+  /* background: white; */
   padding: 20px 30px;
   border-radius: 12px;
   text-align: center;
@@ -21,31 +23,26 @@
   color: #111;
 }
 
-/* Table ko compact banane ke liye */
-.category-container table {
+.product-container table {
   border-collapse: collapse;
   width: 100%;
 }
 
-.category-container th,
-.category-container td {
+.product-container th,
+.product-container td {
   padding: 6px 10px;
-  /* 👈 pehle zyada hota hai, ab kam */
   font-size: 14px;
-  /* 👈 font thoda chota */
   line-height: 1.2;
 }
 
-.category-container tr {
+.product-container tr {
   height: 36px;
-  /* 👈 row height kam kar di */
 }
 
-.category-container thead th {
+.product-container thead th {
   font-weight: 600;
 }
 
-/* Status badge ko bhi compact kar do */
 .status-badge {
   padding: 3px 8px;
   border-radius: 6px;
@@ -66,7 +63,6 @@
 .pagination {
   display: flex;
   justify-content: flex-end;
-  /* 👈 right align */
   align-items: center;
   margin-top: 15px;
   gap: 10px;
@@ -89,12 +85,9 @@
   font-weight: 500;
 }
 
-/* Table.css me add karein */
 .action-btn {
   display: inline-block;
-  /* Ensure inline */
   margin: 0 4px;
-  /* Thoda gap between buttons */
   padding: 4px 8px;
   border: none;
   border-radius: 4px;
@@ -109,4 +102,21 @@
 
 .action-btn.edit:hover {
   background-color: #0056b3;
+}
+
+/* Table border/underline remove */
+.product-container table,
+.product-container th,
+.product-container td {
+  border: none; /* कोई border नहीं */
+}
+
+.product-container tr {
+  border-bottom: none; /* row ke niche line remove */
+}
+
+/* Agar table me hover effect hai to bhi line remove kar do */
+.product-container tr:hover {
+  background: rgba(255,255,255,0.05); /* optional: hover effect only */
+  border-bottom: none;
 }
