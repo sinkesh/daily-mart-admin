@@ -1,5 +1,17 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 import "./Dashboard.css";
 
 const salesData = [
@@ -8,14 +20,31 @@ const salesData = [
   { month: "Mar", sales: 500, orders: 350 },
   { month: "Apr", sales: 700, orders: 420 },
   { month: "May", sales: 600, orders: 300 },
+  { month: "Jun", sales: 750, orders: 380 },
+  { month: "Jul", sales: 820, orders: 420 },
+  { month: "Aug", sales: 760, orders: 390 },
+  { month: "Sep", sales: 900, orders: 460 },
+  { month: "Oct", sales: 850, orders: 430 },
+  { month: "Nov", sales: 780, orders: 410 },
+  { month: "Dec", sales: 950, orders: 500 },
 ];
+
+
+const countrySessions = [
+  { name: "India", value: 55 },
+  { name: "USA", value: 20 },
+  { name: "UK", value: 10 },
+  { name: "Canada", value: 8 },
+  { name: "Germany", value: 7 },
+];
+
+const COLORS = ["#4f46e5", "#22c55e", "#f97316", "#06b6d4", "#ef4444"];
 
 const Dashboard: React.FC = () => {
   return (
     <div className="dashboard">
-      {/* Page Heading */}
 
-      {/* Top Cards */}
+      {/* Cards Section */}
       <div className="cards">
         <div className="card card-1">
           <h2>Total Users</h2>
@@ -35,7 +64,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Charts Section */}
+      {/* Charts Row 1 */}
       <div className="charts">
         <div className="chart-box">
           <h3>Sales Trend</h3>
@@ -59,6 +88,62 @@ const Dashboard: React.FC = () => {
               <Bar dataKey="orders" fill="#10b981" />
             </BarChart>
           </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Charts Row 3 */}
+      <div className="charts">
+
+        {/* Sessions by Country */}
+        <div className="chart-box">
+          <h3>Sessions by Country</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={countrySessions}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={90}
+                label
+              >
+                {countrySessions.map((entry, i) => (
+                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Top Pages */}
+        <div className="table-section">
+          <h3>Top Pages</h3>
+
+          <table className="top-pages">
+            <thead>
+              <tr>
+                <th>Page</th>
+                <th>Visits</th>
+                <th>Bounce Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>/home</td>
+                <td>12,500</td>
+                <td>34%</td>
+              </tr>
+              <tr>
+                <td>/products</td>
+                <td>9,600</td>
+                <td>28%</td>
+              </tr>
+              <tr>
+                <td>/contact</td>
+                <td>3,200</td>
+                <td>40%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 

@@ -26,7 +26,10 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
-        <h2>Admin Login</h2>
+
+        <h2>Welcome Back 👋</h2>
+        <p className="login-sub">Admin Panel Login</p>
+  
         <input
           type="email"
           placeholder="Email"
@@ -34,6 +37,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+  
         <input
           type="password"
           placeholder="Password"
@@ -41,10 +45,13 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+  
         <button type="submit">Login</button>
       </form>
     </div>
   );
+  
+  
 };
 
 export default Login;
