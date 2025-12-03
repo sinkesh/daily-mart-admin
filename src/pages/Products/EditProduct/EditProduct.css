@@ -1,177 +1,178 @@
+/* CONTAINER */
 .add-product-container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    font-family: "Segoe UI", sans-serif;
-    box-sizing: border-box; /* ✅ overflow fix */
-    overflow: hidden; /* ✅ content ko container ke andar rakhta hai */
-  }
-  
-  .add-product-container h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 28px;
-    color: #333;
-    font-weight: 600;
-  }
-  
-  .form-section {
-    margin-bottom: 30px;
-    padding: 15px 20px;
-    background: #f9fafb;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    box-sizing: border-box;
-    width: 100%;
-  }
-  
-  .form-section h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #444;
-    border-left: 4px solid #007bff;
-    padding-left: 8px;
-    font-weight: 500;
-  }
-  
+  width: 100%;
+  max-width: 1400px; /* large screen ke liye */
+  margin: 0 auto;
+  padding: 30px;
+  background: #1a2c38; /* dark background */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  color: #fff;
+}
+
+/* PAGE TITLE */
+.add-product-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* FORM SECTION */
+.form-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #0f212e; /* dark card section */
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #fff;
+  border-left: 4px solid #1e3a8a;
+  padding-left: 8px;
+  font-weight: 500;
+}
+
+/* GRID */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
   .form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* ✅ 3 fields per row */
-    gap: 18px;
-    box-sizing: border-box;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (max-width: 992px) {
-    .form-grid {
-      grid-template-columns: repeat(2, 1fr); /* ✅ Tablet view - 2 fields per row */
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .form-grid {
-      grid-template-columns: 1fr; /* ✅ Mobile view - single column */
-    }
-  }
-  
-  .add-product-form input,
-  .add-product-form textarea {
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: "Segoe UI", sans-serif; /* ✅ input jaise hi font */
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  }
-  
-  
-  .add-product-form input:focus,
-  .add-product-form textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-    outline: none;
-  }
-  
-  .add-product-form textarea {
-    min-height: 80px;
-    resize: vertical;
-    line-height: 1.5; /* ✅ text readable lage */
-  }
-  
-  .checkbox-label {
-    display: inline-flex; /* ✅ text ke saath line me */
-    align-items: center;
-    gap: 6px; /* ✅ checkbox aur text ke beech thoda gap */
-    font-size: 14px;
-    cursor: pointer;
-    user-select: none;
-  }
-  
-  .checkbox-label input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: #007bff; /* ✅ modern browsers me blue checkbox */
-    cursor: pointer;
-  }
-  
-  
-  .image-upload-box,
-  .video-upload-box {
-    margin: 15px 0;
-    padding: 20px;
-    border: 2px dashed #aaa;
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
-    box-sizing: border-box;
-    width: 100%;
-  }
-  
-  .image-upload-box:hover,
-  .video-upload-box:hover {
-    background: #f1f5f9;
-  }
-  
-  .preview-image {
-    max-width: 150px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .submit-btn {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
-  }
-  
-  .submit-btn:hover {
-    background: #0056b3;
-    transform: translateY(-1px);
-  }
-  
-  .submit-btn:active {
-    transform: translateY(1px);
-  }
-  
-  
-  .add-product-form label {
-    display: block;
-    font-size: 12px; /* chota font size */
-    font-weight: 500;
-    color: #555;
-    margin-bottom: 4px; /* thoda gap input ke upar */
-  }
-  
-  .checkbox-label {
-    font-size: 12px; /* chota font size */
-    gap: 6px;
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-  }
+}
 
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
+/* INPUTS & TEXTAREAS */
+.add-product-form input,
+.add-product-form textarea {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #444;
+  background: #0f212e;
+  color: #fff;
+  font-family: "Segoe UI", sans-serif;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.add-product-form input:focus,
+.add-product-form textarea:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+  outline: none;
+}
+
+.add-product-form textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* LABELS */
+.add-product-form label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #1e3a8a;
+  cursor: pointer;
+}
+
+/* IMAGE / VIDEO UPLOAD */
+.image-upload-box,
+.video-upload-box {
+  margin: 15px 0;
+  padding: 20px;
+  border: 2px dashed #555;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.image-upload-box:hover,
+.video-upload-box:hover {
+  background: #1a2c38;
+}
+
+.preview-image {
+  max-width: 150px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* BUTTONS */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  background: #1e3a8a;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.submit-btn:hover {
+  background: #1e40af;
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(1px);
+}
+
+/* DESCRIPTION BOXES */
 .description-row {
   display: flex;
   flex-wrap: wrap;
@@ -196,7 +197,9 @@
   height: 100px;
   padding: 8px;
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: 1px solid #444;
   border-radius: 6px;
+  background: #0f212e;
+  color: #fff;
   resize: vertical;
 }

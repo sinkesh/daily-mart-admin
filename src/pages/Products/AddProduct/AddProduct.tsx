@@ -107,7 +107,6 @@ const AddProduct: React.FC = () => {
 
     return (
         <form className="ap-card" onSubmit={handleSubmit}>
-            <h2 className="ap-title">Add New Product</h2>
 
             {/* BASIC DETAILS */}
             <section className="ap-section">

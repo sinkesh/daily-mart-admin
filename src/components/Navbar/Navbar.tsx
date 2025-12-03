@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { FaSignOutAlt } from "@react-icons/all-files/fa/FaSignOutAlt";
 import { FaBell } from "@react-icons/all-files/fa/FaBell";
+import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle"; // Profile icon
 import { useNavigate } from "react-router-dom";
 import './Navbar.css'
 import { FaEnvelope } from "@react-icons/all-files/fa/FaEnvelope";
@@ -9,12 +10,13 @@ import { FaUsers } from "@react-icons/all-files/fa/FaUsers";
 import { FaFileAlt } from "@react-icons/all-files/fa/FaFileAlt";
 import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
 import { FaBoxOpen } from "@react-icons/all-files/fa/FaBoxOpen";
-
+import { FaLock } from "@react-icons/all-files/fa/FaLock";
 
 const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
-  const [showPopup, setShowPopup] = useState(false);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
 
   const notifications = [
@@ -31,6 +33,9 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
       if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
         setShowNotifications(false);
       }
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setShowProfileDropdown(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -39,43 +44,33 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
     setIsAuthenticated(false);
-    setShowPopup(false);
+    setShowProfileDropdown(false);
     navigate("/login");
   };
 
   return (
     <div className={`navbar ${collapsed ? "collapsed-navbar" : ""}`}>
+
       {/* Left: Sidebar toggle */}
       <div className="navbar-left" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
         <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
           <FaBars />
         </button>
-        <a href="/" className="home-link">
-          Home
-        </a>
+        <a href="/" className="home-link">Home</a>
       </div>
 
       {/* Center: Search bar */}
       <div className="navbar-center">
-        <input
-          type="text"
-          className="navbar-search"
-          placeholder="Search..."
-        />
+        <input type="text" className="navbar-search" placeholder="Search..." />
       </div>
 
-      {/* Right: Notifications + Logout */}
+      {/* Right: Notifications + Profile */}
       <div className="navbar-right">
         {/* Notification Bell */}
         <div className="notification-wrapper" ref={notificationRef}>
-          <button
-            className="notification-btn"
-            onClick={() => setShowNotifications(!showNotifications)}
-          >
+          <button className="notification-btn" onClick={() => setShowNotifications(!showNotifications)}>
             <FaBell />
-            {notifications.length > 0 && (
-              <span className="notification-count">{notifications.length}</span>
-            )}
+            {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
           </button>
 
           {showNotifications && (
@@ -103,37 +98,45 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
           )}
         </div>
 
-        {/* Welcome Text */}
-        <span className="welcome-text" style={{ marginRight: "20px" }}>
-          Welcome to Admin
-        </span>
+        {/* Profile Dropdown */}
+        <div className="profile-wrapper" ref={profileRef}>
+          <button className="profile-btn" onClick={() => setShowProfileDropdown(!showProfileDropdown)}>
+            <FaUserCircle size={24} />
+          </button>
 
-        {/* Logout */}
-        <a href="#!" className="logout" onClick={() => setShowPopup(true)}>
-          <FaSignOutAlt />
-          Logout
-        </a>
-      </div>
+          {showProfileDropdown && (
+            <div className="profile-dropdown right-align">
+              <div className="profile-info">
+                <p><strong>John Doe</strong></p>
+                <p className="profile-email">john.doe@example.com</p>
+              </div>
 
-      {/* Logout Confirmation Popup */}
-      {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-box animate-popup">
-            <h3 className="popup-title">Logout Confirmation</h3>
-            <p className="popup-message">Are you sure you want to logout?</p>
+              <div className="profile-item" onClick={() => navigate("/profile")}>
+                <FaUsers style={{ marginRight: "8px" }} />
+                <span>Profile</span>
+              </div>
 
-            <div className="popup-actions">
-              <button className="popup-btn confirm" onClick={handleLogout}>
-                Yes
-              </button>
-              <button className="popup-btn cancel" onClick={() => setShowPopup(false)}>
-                Cancel
-              </button>
+              <div className="profile-item" onClick={() => navigate("/messages")}>
+                <FaEnvelope style={{ marginRight: "8px" }} />
+                <span>Messages</span>
+              </div>
+
+              <div className="profile-item" onClick={() => alert("Locking Screen...")}>
+                <FaLock style={{ marginRight: "8px" }} />
+                <span>Lock Screen</span>
+              </div>
+
+              <div className="profile-divider"></div>
+              <div className="profile-logout" onClick={handleLogout}>
+                <FaSignOutAlt style={{ marginRight: "8px" }} />
+                <span>Logout</span>
+
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
+        </div>
+      </div>
     </div>
   );
 };
