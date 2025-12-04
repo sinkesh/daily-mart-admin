@@ -24,6 +24,8 @@ const CategoryList: React.FC = () => {
         const mapped: Category[] = data.map((c: any) => ({
           id: c.category_id,
           name: c.category_name,
+          category_description: c.category_description,
+          category_code: c.category_code,
           image: c.category_image,
           status: c.status.toLowerCase() === "active" ? "active" : "inactive",
         }));
@@ -84,6 +86,7 @@ const CategoryList: React.FC = () => {
   const columns = [
     { key: "id", label: "#" },
     { key: "name", label: "Category Name" },
+    { key: "category_code", label: "Category Code" },
     {
       key: "image",
       label: "Image",

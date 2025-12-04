@@ -24,6 +24,8 @@ const SubCategoryList: React.FC = () => {
           id: c.sub_category_id,
           category_name: c.category_name,
           sub_category_name: c.sub_category_name,
+          sub_category_description: c.sub_category_description,
+          sub_category_code: c.sub_category_code,
           sub_category_image: c.sub_category_image,
           image: c.sub_category_image,
           status: c.status.toLowerCase() === "active" ? "active" : "inactive",
@@ -90,6 +92,7 @@ const SubCategoryList: React.FC = () => {
     { key: "id", label: "#" },
     { key: "category_name", label: "Category Name" },
     { key: "sub_category_name", label: "Sub Category Name" },
+    { key: "sub_category_code", label: "Sub Category Code" },
     {
       key: "sub_category_image",
       label: "Image",

@@ -60,9 +60,9 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
       </div>
 
       {/* Center: Search bar */}
-      <div className="navbar-center">
+      {/* <div className="navbar-center">
         <input type="text" className="navbar-search" placeholder="Search..." />
-      </div>
+      </div> */}
 
       {/* Right: Notifications + Profile */}
       <div className="navbar-right">

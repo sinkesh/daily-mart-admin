@@ -5,6 +5,7 @@ import { createCategory } from "../../../../services/Category/category.service";
 
 const AddCategory: React.FC = () => {
   const [categoryName, setCategoryName] = useState("");
+  const [categoryDescription, setcategoryDescription] = useState("");
   const [categoryImage, setCategoryImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -22,27 +23,34 @@ const AddCategory: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!categoryName.trim() || !categoryImage) return;
-
+  
     try {
-      await createCategory(categoryName, categoryImage); // ✅ API call
-      navigate("/category/list"); // redirect after success
+      await createCategory(categoryName, categoryImage, categoryDescription);
+      navigate("/category/list");
     } catch (error) {
       console.error("Error creating category:", error);
       alert("Failed to create category. Please try again.");
     }
   };
+  
 
   return (
     <div className="add-category-container">
-      <h2>Add Category</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Enter Category Name"
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
+        />
+        
+        <input
+          type="text"
+          placeholder="Enter Category Description"
+          value={categoryDescription}
+          onChange={(e) => setcategoryDescription(e.target.value)}
         />
 
         <div className="image-upload-box">

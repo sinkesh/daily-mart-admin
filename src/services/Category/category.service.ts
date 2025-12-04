@@ -10,10 +10,11 @@ export const getCategories = async (): Promise<{ data: any[] }> => {
 };
 
 // ✅ Add Category
-export const createCategory = async (name: string, imageFile: File): Promise<Category> => {
+export const createCategory = async (categoryName: string, categoryImage: File, categoryDescription: string): Promise<Category> => {
   const formData = new FormData();
-  formData.append("category_name", name);
-  formData.append("category_image", imageFile);
+  formData.append("category_name", categoryName);
+  formData.append("category_description", categoryDescription);
+  formData.append("category_image", categoryImage);
 
   const res = await axios.post(`${API_BASE}/Create_Category`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
@@ -35,6 +36,8 @@ export const getCategoryById = async (id: number): Promise<Category> => {
   return {
     id: data.category_id,
     name: data.category_name,
+    category_description: data.category_description,
+    category_code: data.category_code,
     image: data.category_image,
     status: data.status.toLowerCase() === "active" ? "active" : "inactive",
   };

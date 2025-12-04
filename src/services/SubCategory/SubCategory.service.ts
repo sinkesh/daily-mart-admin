@@ -25,6 +25,8 @@ export const getSubCategoryById = async (id: number): Promise<SubCategory> => {
     id: data.sub_category_id,
     category_name: data.category_name,
     sub_category_name: data.sub_category_name,
+    sub_category_description: data.sub_category_description,
+    sub_category_code: data.sub_category_code,
     sub_category_image: data.sub_category_image,
     status: data.status.toLowerCase() === "active" ? "active" : "inactive",
   };

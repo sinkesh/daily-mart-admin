@@ -7,7 +7,8 @@ const EditCategory: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null); // store actual file
+  const [categoryDescription, setcategoryDescription] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [status, setStatus] = useState("active");
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ const EditCategory: React.FC = () => {
       try {
         const data = await getCategoryById(parseInt(id));
         setCategoryName(data.name);
+        setcategoryDescription(data.category_description);
         setPreview(data.image || null);
         setStatus(data.status);
       } catch (error) {
@@ -49,6 +51,7 @@ const EditCategory: React.FC = () => {
     try {
       const formData = new FormData();
       formData.append("category_name", categoryName);
+      formData.append("category_description", categoryDescription);
       formData.append("status", status.toUpperCase());
       if (imageFile) formData.append("category_image", imageFile);
 
@@ -64,13 +67,19 @@ const EditCategory: React.FC = () => {
 
   return (
     <div className="add-category-container">
-      <h2>Edit Category</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
-          placeholder="Category Name"
+          placeholder="Enter Category Name"
+        />
+
+        <input
+          type="text"
+          placeholder="Enter Category Description"
+          value={categoryDescription}
+          onChange={(e) => setcategoryDescription(e.target.value)}
         />
 
         <div className="image-upload-box">
