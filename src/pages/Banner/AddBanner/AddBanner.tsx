@@ -36,7 +36,6 @@ const AddBanner: React.FC = () => {
 
   return (
     <div className="add-category-container">
-      <h2>Add Banner</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

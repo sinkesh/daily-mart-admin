@@ -3,16 +3,19 @@
   max-width: 400px;
   margin: 50px auto;
   padding: 30px;
-  background: #fff;
+  background: #0f212e;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Heading */
-.add-faq-container h2 {
+.add-category-container h2 {
   margin-bottom: 20px;
-  color: #333;
+  font-size: 24px;
+  color: #fff;
+  font-weight: 200;
 }
 
 /* Text Input */
@@ -26,16 +29,12 @@
   box-sizing: border-box;
   outline: none;
   transition: all 0.2s ease-in-out;
+  background: #0f212e;
 }
 
 .add-faq-container input[type="text"]::placeholder {
   color: #aaa;
-}
-
-.add-faq-container input[type="text"]:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
-  background-color: #fff;
+  font-size: 12px;
 }
 
 /* Image Upload Box */
@@ -116,9 +115,7 @@
 }
 
 .search-bar:focus {
-  /* border-color: #3b82f6; */
   box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
-  /* background-color: #fff; */
 }
 
 /* Add Button in Header */

@@ -29,7 +29,6 @@ const AddFaq: React.FC = () => {
 
   return (
     <div className="add-faq-container">
-      <h2>Add Faq</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
