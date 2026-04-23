@@ -37,7 +37,7 @@ const countrySessions = [
   { name: "Germany", value: 7 },
 ];
 
-const COLORS = ["#4f46e5", "#22c55e", "#f97316", "#06b6d4", "#ef4444"];
+const COLORS = ["#6366f1", "#22c55e", "#f59e0b", "#06b6d4", "#f43f5e"];
 
 const Dashboard: React.FC = () => {
   return (
@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="sales" stroke="#3b82f6" strokeWidth={3} />
+              <Line type="monotone" dataKey="sales" stroke="#4f46e5" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -84,7 +84,7 @@ const Dashboard: React.FC = () => {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="orders" fill="#10b981" />
+              <Bar dataKey="orders" fill="#06b6d4" />
             </BarChart>
           </ResponsiveContainer>
         </div>

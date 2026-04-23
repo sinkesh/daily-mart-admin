@@ -5,33 +5,37 @@
 @tailwind utilities;
 
 :root {
-  /* Premium Soft Light Theme - Very Eye Friendly */
-  --bg-main: #f8fafc; 
+  /* Premium Light Theme - Indigo & Cyan */
+  --bg-main: #f4f6f9;
   --bg-card: #ffffff;
   --bg-sidebar: #ffffff;
-  --bg-navbar: rgba(255, 255, 255, 0.85);
-  --text-main: #334155; /* Soft Slate 700 instead of 950 */
-  --text-muted: #64748b;
-  --border-color: rgba(15, 23, 42, 0.06);
-  --hover-bg: #f1f5f9;
-  --ring-color: rgba(14, 165, 233, 0.15);
-  --accent-primary: #0ea5e9;
-  --accent-secondary: #6366f1;
+  --bg-navbar: rgba(255, 255, 255, 0.82);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-color: rgba(15, 23, 42, 0.08);
+  --hover-bg: #eef2f7;
+  --ring-color: rgba(79, 70, 229, 0.15);
+  --accent-primary: #4f46e5;
+  --accent-secondary: #06b6d4;
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
 }
 
 [data-theme="dark"] {
-  /* Midnight Obsidian Dark Theme - Premium */
-  --bg-main: #0b0e14;
-  --bg-card: #151b23;
-  --bg-sidebar: #0b0e14;
-  --bg-navbar: rgba(11, 14, 20, 0.85);
-  --text-main: #e2e8f0;
+  /* Premium Midnight Dark Theme - Indigo & Cyan */
+  --bg-main: #090b11;
+  --bg-card: #121621;
+  --bg-sidebar: #090b11;
+  --bg-navbar: rgba(9, 11, 17, 0.82);
+  --text-main: #f1f5f9;
   --text-muted: #94a3b8;
   --border-color: rgba(255, 255, 255, 0.08);
-  --hover-bg: rgba(255, 255, 255, 0.04);
-  --ring-color: rgba(34, 211, 238, 0.15);
-  --accent-primary: #22d3ee;
-  --accent-secondary: #818cf8;
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --ring-color: rgba(129, 140, 248, 0.15);
+  --accent-primary: #818cf8;
+  --accent-secondary: #22d3ee;
+  --scrollbar-track: #0f172a;
+  --scrollbar-thumb: #334155;
 }
 
 @layer base {
@@ -71,21 +75,24 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-slate-950;
+    background-color: var(--scrollbar-track);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-slate-700;
+    background-color: var(--scrollbar-thumb);
+    border-radius: 9999px;
   }
 }
 
 @layer components {
   .layout {
-    @apply min-h-screen bg-slate-950;
+    @apply min-h-screen;
+    background-color: var(--bg-main);
   }
 
   .layout-main {
-    @apply min-h-screen bg-slate-950 pt-16 transition-[margin] duration-300 lg:ml-64;
+    @apply min-h-screen pt-16 transition-[margin] duration-300 lg:ml-64;
+    background-color: var(--bg-main);
   }
 
   .layout-main.collapsed {
@@ -97,11 +104,14 @@
   }
 
   .page-heading {
-    @apply sticky top-16 z-20 -mx-4 mb-6 border-b border-white/10 bg-slate-900/85 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8;
+    @apply sticky top-16 z-20 -mx-4 mb-6 border-b px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8;
+    background-color: var(--bg-navbar);
+    border-color: var(--border-color);
   }
 
   .page-heading h1 {
-    @apply m-0 text-lg font-semibold tracking-wide text-white;
+    @apply m-0 text-lg font-semibold tracking-wide;
+    color: var(--text-main);
   }
 
   .sidebar {
@@ -114,18 +124,10 @@
 
   .sidebar::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
-    @apply m-0 text-lg font-semibold tracking-wide;
-    color: var(--text-main);
   }
 
   .sidebar.collapsed {
     @apply -translate-x-full lg:translate-x-0 lg:w-20;
-  }
-
-  .sidebar {
-    background-color: var(--bg-sidebar);
-    border-right: 1px solid var(--border-color);
-    @apply fixed left-0 top-0 z-40 h-screen w-64 transition-[width] duration-300;
   }
 
   .sidebar-header {
@@ -134,7 +136,8 @@
   }
 
   .sidebar-logo-img {
-    @apply h-12 w-12 rounded-2xl object-cover ring-2 ring-cyan-400/50;
+    @apply h-12 w-12 rounded-2xl object-cover;
+    box-shadow: 0 0 0 2px var(--ring-color);
   }
 
   .sidebar-logo-text {
@@ -143,7 +146,8 @@
   }
 
   .sidebar-collapsed-text {
-    @apply mx-auto text-base tracking-[0.3em] text-cyan-300;
+    @apply mx-auto text-base tracking-[0.3em];
+    color: var(--accent-primary);
   }
 
   .menu-group {
@@ -151,7 +155,7 @@
   }
 
   .menu-active-group {
-    @apply bg-white/5;
+    background-color: var(--hover-bg);
   }
 
   .menu-parent {
@@ -184,7 +188,8 @@
   }
 
   .submenu {
-    @apply mb-2 ml-6 mt-2 flex flex-col gap-1 border-l border-white/5 pl-3;
+    @apply mb-2 ml-6 mt-2 flex flex-col gap-1 border-l pl-3;
+    border-color: var(--border-color);
   }
 
   .submenu a {
@@ -215,11 +220,24 @@
   }
 
   .collapse-btn {
-    @apply inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-cyan-400/30 hover:bg-cyan-500/10 hover:text-cyan-200;
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-2xl border transition;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+  }
+  .collapse-btn:hover {
+    background-color: var(--ring-color);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
   }
 
   .home-link {
-    @apply hidden rounded-xl px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white sm:inline-flex;
+    @apply hidden rounded-xl px-3 py-2 text-sm font-medium transition sm:inline-flex;
+    color: var(--text-muted);
+  }
+  .home-link:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
   }
 
   .navbar-right {
@@ -233,7 +251,16 @@
 
   .notification-btn,
   .profile-btn {
-    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-cyan-400/30 hover:bg-cyan-500/10 hover:text-cyan-200;
+    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border transition;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+  }
+  .notification-btn:hover,
+  .profile-btn:hover {
+    background-color: var(--ring-color);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
   }
 
   .notification-count {
@@ -243,16 +270,23 @@
   .notification-dropdown,
   .profile-dropdown {
     background-color: var(--bg-card);
-    @apply absolute right-0 top-[calc(100%+0.75rem)] w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-slate-950/20 backdrop-blur;
+    @apply absolute right-0 top-[calc(100%+0.75rem)] w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-3xl border shadow-2xl backdrop-blur;
+    border-color: var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 
   .notification-header {
-    @apply border-b border-white/5 px-5 py-4 text-sm font-semibold;
+    @apply border-b px-5 py-4 text-sm font-semibold;
+    border-color: var(--border-color);
     color: var(--text-main);
   }
 
   .notification-item {
-    @apply border-b border-white/5 px-5 py-4 last:border-b-0 hover:bg-white/5;
+    @apply border-b px-5 py-4 last:border-b-0 transition;
+    border-color: var(--border-color);
+  }
+  .notification-item:hover {
+    background-color: var(--hover-bg);
   }
 
   .notification-content {
@@ -270,15 +304,22 @@
   }
 
   .notification-time {
-    @apply shrink-0 text-xs text-slate-400;
+    @apply shrink-0 text-xs;
+    color: var(--text-muted);
   }
 
   .notification-footer {
-    @apply border-t border-white/10 bg-white/5 px-5 py-3 text-center;
+    @apply border-t px-5 py-3 text-center;
+    border-color: var(--border-color);
+    background-color: var(--hover-bg);
   }
 
   .see-all {
-    @apply text-sm font-semibold text-cyan-300 transition hover:text-cyan-200;
+    @apply text-sm font-semibold transition;
+    color: var(--accent-primary);
+  }
+  .see-all:hover {
+    color: var(--accent-secondary);
   }
 
   .profile-dropdown {
@@ -286,28 +327,41 @@
   }
 
   .profile-info {
-    @apply rounded-2xl bg-white/5 px-4 py-3;
+    @apply rounded-2xl px-4 py-3;
+    background-color: var(--hover-bg);
   }
 
   .profile-info p {
-    @apply m-0 text-sm text-white;
+    @apply m-0 text-sm;
+    color: var(--text-main);
   }
 
   .profile-email {
-    @apply mt-1 text-xs text-slate-400;
+    @apply mt-1 text-xs;
+    color: var(--text-muted);
   }
 
   .profile-item,
   .profile-logout {
-    @apply mt-1 flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-white/5;
+    @apply mt-1 flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 text-sm transition;
+    color: var(--text-muted);
+  }
+  .profile-item:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
   }
 
   .profile-divider {
-    @apply my-2 border-t border-white/10;
+    @apply my-2 border-t;
+    border-color: var(--border-color);
   }
 
   .profile-logout {
-    @apply text-rose-300 hover:bg-rose-500/10 hover:text-rose-200;
+    color: #f43f5e;
+  }
+  .profile-logout:hover {
+    background-color: rgba(244, 63, 94, 0.1);
+    color: #e11d48;
   }
 
   .header-bar {
@@ -335,12 +389,24 @@
     background-color: var(--bg-main);
     border-color: var(--border-color);
     color: var(--text-main);
-    focus-within: border-cyan-400/50;
     --tw-ring-color: var(--ring-color);
+  }
+  .search-bar:focus,
+  .user-search:focus,
+  .input-field:focus,
+  .add-faq-container input:focus,
+  .add-category-container input:focus,
+  .add-category-container select:focus,
+  .add-category-container textarea:focus,
+  .ap-card input:focus,
+  .ap-card textarea:focus,
+  .ap-card select:focus {
+    border-color: var(--accent-primary);
   }
 
   .form-label {
-    @apply mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400;
+    @apply mb-2 block text-xs font-bold uppercase tracking-wider;
+    color: var(--text-muted);
   }
 
   .form-group {
@@ -359,7 +425,7 @@
   .add-faq-container button[type="submit"],
   .add-category-container button[type="submit"],
   .login-form button {
-    @apply inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-900/20 transition hover:-translate-y-0.5 hover:from-cyan-400 hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-indigo-500 to-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:from-indigo-400 hover:to-cyan-400 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .header-bar .add-btn {
@@ -367,11 +433,18 @@
   }
 
   .pagination {
-    @apply mt-5 flex flex-col gap-3 text-sm text-slate-300 sm:flex-row sm:items-center sm:justify-end;
+    @apply mt-5 flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-end;
+    color: var(--text-muted);
   }
 
   .pagination button {
-    @apply inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 font-medium text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40;
+    @apply inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium transition disabled:cursor-not-allowed disabled:opacity-40;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+  .pagination button:hover {
+    background-color: var(--bg-card);
   }
 
   .product-container,
@@ -387,32 +460,44 @@
   .faq-container,
   .banner-container,
   .role-container {
-    @apply w-full rounded-[1.75rem] border border-white/10 bg-slate-950/30 p-4 sm:p-6 lg:p-8;
+    @apply w-full rounded-[1.75rem] border p-4 sm:p-6 lg:p-8;
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
   }
 
   .table-wrapper {
-    @apply w-full overflow-x-auto rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl shadow-slate-950/20;
+    @apply w-full overflow-x-auto rounded-3xl border shadow-2xl;
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
   }
 
   .common-table {
-    @apply w-full min-w-[800px] table-auto divide-y divide-white/10;
+    @apply w-full min-w-[800px] table-auto divide-y;
     width: 100% !important;
+    border-color: var(--border-color);
   }
 
   .common-table thead {
-    @apply bg-white/5;
+    background-color: var(--hover-bg);
   }
 
   .common-table th {
-    @apply whitespace-nowrap px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400;
+    @apply whitespace-nowrap px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em];
+    color: var(--text-muted);
   }
 
   .common-table td {
-    @apply whitespace-nowrap border-t border-white/5 px-4 py-4 align-middle text-sm text-slate-100;
+    @apply whitespace-nowrap border-t px-4 py-4 align-middle text-sm;
+    color: var(--text-main);
+    border-color: var(--border-color);
   }
 
   .common-table tbody tr {
-    @apply transition hover:bg-white/5;
+    @apply transition;
+  }
+  .common-table tbody tr:hover {
+    background-color: var(--hover-bg);
   }
 
   .compact-table th,
@@ -445,11 +530,15 @@
   }
 
   .table-thumb {
-    @apply h-10 w-10 rounded-xl border border-white/10 bg-white/5 object-contain p-1;
+    @apply h-10 w-10 rounded-xl border object-contain p-1;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
   }
 
   .modal-preview {
-    @apply h-24 w-24 rounded-2xl border border-white/10 bg-white/5 object-contain p-2;
+    @apply h-24 w-24 rounded-2xl border object-contain p-2;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
   }
 
   .details-table {
@@ -457,7 +546,9 @@
   }
 
   .details-table td {
-    @apply border-b border-white/10 px-3 py-3 align-top text-sm text-slate-200;
+    @apply border-b px-3 py-3 align-top text-sm;
+    border-color: var(--border-color);
+    color: var(--text-main);
   }
 
   .details-table tr:last-child td {
@@ -465,17 +556,22 @@
   }
 
   .modal-overlay {
-    @apply fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm;
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm;
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
   .modal-content,
   .modal {
-    @apply w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900 px-5 py-5 shadow-2xl shadow-slate-950/50 sm:px-6;
+    @apply w-full max-w-2xl overflow-hidden rounded-3xl border px-5 py-5 shadow-2xl sm:px-6;
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
   }
 
   .modal-content h3,
   .modal-header h2 {
-    @apply mb-4 text-xl font-semibold text-white;
+    @apply mb-4 text-xl font-semibold;
+    color: var(--text-main);
   }
 
   .modal-header {
@@ -483,18 +579,28 @@
   }
 
   .close-btn {
-    @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-rose-500/10 hover:text-rose-200;
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-full border transition;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+  }
+  .close-btn:hover {
+    background-color: rgba(244, 63, 94, 0.1);
+    color: #f43f5e;
   }
 
   .modal-body {
-    @apply text-slate-200;
+    color: var(--text-main);
   }
 
   .add-category-container,
   .add-faq-container,
   .ap-card,
   .change-password-container {
-    @apply mx-auto w-full rounded-[2rem] border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-slate-950/20 backdrop-blur sm:p-6 lg:p-8;
+    @apply mx-auto w-full rounded-[2rem] border p-5 shadow-2xl backdrop-blur sm:p-6 lg:p-8;
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
   }
 
   .add-category-container {
@@ -521,26 +627,34 @@
 
   .add-category-container form,
   .add-faq-container form {
-    @apply rounded-[1.5rem] border border-white/5 bg-white/5 p-4 sm:p-5;
+    @apply rounded-[1.5rem] border p-4 sm:p-5;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
   }
 
   .add-category-container h2,
   .add-faq-container h2,
   .ap-card h2,
   .change-password-container h2 {
-    @apply mb-6 text-2xl font-semibold text-white;
+    @apply mb-6 text-2xl font-semibold;
+    color: var(--text-main);
   }
 
   .change-password-container .form-container {
-    @apply rounded-[1.5rem] border border-white/5 bg-white/5 p-4 sm:p-5;
+    @apply rounded-[1.5rem] border p-4 sm:p-5;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
   }
 
   .ap-section {
-    @apply rounded-[1.75rem] border border-white/10 bg-white/5 p-4 sm:p-5;
+    @apply rounded-[1.75rem] border p-4 sm:p-5;
+    background-color: var(--hover-bg);
+    border-color: var(--border-color);
   }
 
   .ap-section h3 {
-    @apply mb-4 text-base font-semibold text-white;
+    @apply mb-4 text-base font-semibold;
+    color: var(--text-main);
   }
 
   .ap-grid {
@@ -615,12 +729,16 @@
 
   .chart-box,
   .table-section {
-    @apply overflow-x-auto rounded-[1.75rem] border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-slate-950/20;
+    @apply overflow-x-auto rounded-[1.75rem] border p-5 shadow-2xl;
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
   }
 
   .chart-box h3,
   .table-section h3 {
-    @apply mb-4 text-lg font-semibold text-white;
+    @apply mb-4 text-lg font-semibold;
+    color: var(--text-main);
   }
 
   .table-section table,
@@ -629,15 +747,18 @@
   }
 
   .table-section thead {
-    @apply bg-white/5;
+    background-color: var(--hover-bg);
   }
 
   .table-section th {
-    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400;
+    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em];
+    color: var(--text-muted);
   }
 
   .table-section td {
-    @apply border-t border-white/5 px-4 py-3 text-sm text-slate-100;
+    @apply border-t px-4 py-3 text-sm;
+    color: var(--text-main);
+    border-color: var(--border-color);
   }
 
   .status {
@@ -645,15 +766,15 @@
   }
 
   .status.success {
-    @apply bg-emerald-500/10 text-emerald-300;
+    @apply bg-emerald-500/10 text-emerald-600 dark:text-emerald-300;
   }
 
   .status.pending {
-    @apply bg-amber-500/10 text-amber-300;
+    @apply bg-amber-500/10 text-amber-600 dark:text-amber-300;
   }
 
   .status.cancelled {
-    @apply bg-rose-500/10 text-rose-300;
+    @apply bg-rose-500/10 text-rose-600 dark:text-rose-300;
   }
 
   .login-container {
@@ -678,11 +799,13 @@
   }
 
   .login-form h2 {
-    @apply mb-2 text-3xl font-semibold text-white;
+    @apply mb-2 text-3xl font-semibold;
+    color: var(--text-main);
   }
 
   .login-sub {
-    @apply mb-6 text-sm text-slate-400;
+    @apply mb-6 text-sm;
+    color: var(--text-muted);
   }
 
   .login-form input {
@@ -706,15 +829,22 @@
   }
 
   .label {
-    @apply inline-flex rounded-full bg-cyan-500/15 px-3 py-1 text-xs font-semibold text-cyan-600 dark:text-cyan-200;
+    @apply inline-flex rounded-full px-3 py-1 text-xs font-semibold;
+    background-color: var(--ring-color);
+    color: var(--accent-primary);
   }
 
   /* Theme Toggle Button Styles */
   .theme-btn {
-    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-cyan-400/30 hover:bg-cyan-500/10 hover:text-cyan-200;
+    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border transition;
     background-color: var(--hover-bg);
     border-color: var(--border-color);
     color: var(--text-main);
+  }
+  .theme-btn:hover {
+    background-color: var(--ring-color);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
   }
 
   .theme-icon {
@@ -841,7 +971,7 @@
 
 .recharts-cartesian-axis-tick-value,
 .recharts-legend-item-text {
-  fill: #cbd5e1 !important;
+  fill: var(--text-muted) !important;
 }
 
 .recharts-tooltip-wrapper {
