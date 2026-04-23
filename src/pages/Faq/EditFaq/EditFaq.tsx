@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditFaq.css";
 import { getByIdFaq, updateFaqApi } from "../../../services/Faq/Faq.service";
 
 const EditFaq: React.FC = () => {

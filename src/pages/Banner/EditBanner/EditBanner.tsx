@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditBanner.css";
 import { getBannerById, updateBannerApi } from "../../../services/Banner/Banner.service";
 
 const EditCategory: React.FC = () => {

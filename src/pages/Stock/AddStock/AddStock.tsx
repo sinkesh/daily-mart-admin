@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddStock.css";
 import { createStock } from "../../../services/Stock/Stock.service";
 
 const AddStock: React.FC = () => {

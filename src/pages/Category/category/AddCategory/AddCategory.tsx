@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddCategory.css";
 import { createCategory } from "../../../../services/Category/category.service";
 
 const AddCategory: React.FC = () => {

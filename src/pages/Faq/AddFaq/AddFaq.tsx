@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddFaq.css";
 import { createFaq } from "../../../services/Faq/Faq.service";
 
 const AddFaq: React.FC = () => {

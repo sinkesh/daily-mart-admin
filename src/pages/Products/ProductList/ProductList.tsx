@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./ProductList.css";
 import { getAllProduct, updateProductStatusApi } from "../../../services/Products/Product.service";
 import { ProductTypes } from "../../../services/Products/Product.types";
 
@@ -118,7 +117,7 @@ const ProductList: React.FC = () => {
     : [];
 
   // ✅ Pagination Logic
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -199,7 +198,7 @@ const ProductList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedProduct(row)}> View</button>
+            <button className="action-btn view" onClick={() => setSelectedProduct(row)}> View</button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/product/${row.product_id}`)}> Edit </button>
             {/* <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete</button> */}
           </>
@@ -241,7 +240,7 @@ const ProductList: React.FC = () => {
                       <img
                         src={selectedProduct.thumbnail_image}
                         alt={selectedProduct.thumbnail_image}
-                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                        className="modal-preview"
                       />
                     ) : (
                       "No Image"

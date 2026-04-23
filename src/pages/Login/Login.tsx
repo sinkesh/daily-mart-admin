@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './Login.css'
 
 interface LoginProps {
   setIsAuthenticated: (value: boolean) => void;

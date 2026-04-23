@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../../components/Table/Table";
-import "./SubCategoryList.css";
 import { getSubCategories, updateSubCategoryStatusApi } from "../../../../services/SubCategory/SubCategory.service";
 import { SubCategory } from "../../../../services/SubCategory/SubCategory.types";
 
@@ -82,7 +81,7 @@ const SubCategoryList: React.FC = () => {
   );
 
   // ✅ Pagination Logic
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -101,7 +100,7 @@ const SubCategoryList: React.FC = () => {
           <img
             src={value}
             alt="subCategory"
-            style={{ width: "30px", height: "30px", objectFit: "contain", borderRadius: "10px", border: "1px solid #ddd" }}
+            className="table-thumb"
           />
         ) : (
           "No Image"
@@ -148,7 +147,7 @@ const SubCategoryList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedCategory(row)}> View </button>
+            <button className="action-btn view" onClick={() => setSelectedCategory(row)}> View </button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/subcategory/${row.id}`)}> Edit </button>
             {/* <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete </button> */}
           </>
@@ -205,7 +204,7 @@ const SubCategoryList: React.FC = () => {
                       <img
                         src={selectedCategory.sub_category_image}
                         alt={selectedCategory.name}
-                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                        className="modal-preview"
                       />
                     ) : (
                       "No Image"

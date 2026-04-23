@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ChangePassword.css";
 
 const ChangePassword: React.FC = () => {
   const [oldPassword, setOldPassword] = useState("");

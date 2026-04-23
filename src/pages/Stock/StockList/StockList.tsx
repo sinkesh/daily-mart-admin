@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./StockList.css";
 import { getAllStock, updateStockStatusApi } from "../../../services/Stock/Stock.service";
 import { Stock } from "../../../services/Stock/Stock.types";
 
@@ -84,7 +83,7 @@ const StockList: React.FC = () => {
   );
 
   // ✅ Pagination
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -135,7 +134,7 @@ const StockList: React.FC = () => {
         data={paginatedData}
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedStock(row)}> View </button>
+            <button className="action-btn view" onClick={() => setSelectedStock(row)}> View </button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/stock/${row.stock_id}`)}> Edit </button>
             {/* <button className="action-btn delete" onClick={() => handleDeleteStock(row.stock_id)}> Delete </button> */}
           </>

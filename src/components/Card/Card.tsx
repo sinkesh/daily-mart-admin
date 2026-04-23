@@ -1,7 +1,6 @@
 export {};
 
 import React from 'react';
-import './Card.css';
 
 interface CardProps {
   title: string;

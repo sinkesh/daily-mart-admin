@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./BrandList.css";
 import { getAllBrandApi, updateBrandStatusApi } from "../../../services/Brands/brand.service";
 import { BrandTypes } from "../../../services/Brands/brand.types";
 
@@ -78,7 +77,7 @@ const CategoryList: React.FC = () => {
     : [];
 
   // ✅ Pagination Logic
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -213,7 +212,7 @@ const CategoryList: React.FC = () => {
                       <img
                         src={selectedBrand.brand_logo}
                         alt={selectedBrand.brand_name}
-                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                        className="modal-preview"
                       />
                     ) : (
                       "No Image"

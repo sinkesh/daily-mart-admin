@@ -1,7 +1,6 @@
 export {}; // <-- makes this a module
 
 import React from 'react';
-import './Button.css';
 
 interface ButtonProps {
   text: string;

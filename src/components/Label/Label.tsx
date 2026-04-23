@@ -1,7 +1,6 @@
 export {};
 
 import React from 'react';
-import './Label.css';
 
 interface LabelProps {
   text: string;

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../../components/Table/Table";
-import "./BulkNotificationList.css";
 import { getAllBanner, updateBannerStatusApi } from "../../../../services/Banner/Banner.service";
 import { BannerTypes } from "../../../../services/Banner/Banner.types";
 
@@ -77,7 +76,7 @@ const BannerList: React.FC = () => {
         : [];
 
     // ✅ Pagination Logic
-    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -148,7 +147,7 @@ const BannerList: React.FC = () => {
                 tableClassName="compact-table"
                 actions={(row) => (
                     <>
-                        <button className="action-btn edit" onClick={() => setSelectedBanner(row)}> View</button>
+                        <button className="action-btn view" onClick={() => setSelectedBanner(row)}> View</button>
                         <button className="action-btn edit" onClick={() => navigate(`/edit/banner/${row.banner_id}`)}> Edit </button>
                         {/* <button className="action-btn delete" onClick={() => handleDeleteBanner(row.id)}> Delete</button> */}
                     </>
@@ -209,7 +208,7 @@ const BannerList: React.FC = () => {
                                             <img
                                                 src={selectedBanner.banner_image}
                                                 alt={selectedBanner.banner_image}
-                                                style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                                                className="modal-preview"
                                             />
                                         ) : (
                                             "No Image"

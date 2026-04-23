@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../../components/Table/Table";
-import "./CategoryList.css";
 import { getCategories, updateCategoryStatusApi } from "../../../../services/Category/category.service";
 import { Category } from "../../../../services/Category/category.types";
 
@@ -79,7 +78,7 @@ const CategoryList: React.FC = () => {
     : [];
 
   // ✅ Pagination Logic
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -212,7 +211,7 @@ const CategoryList: React.FC = () => {
                       <img
                         src={selectedCategory.image}
                         alt={selectedCategory.name}
-                        style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                        className="modal-preview"
                       />
                     ) : (
                       "No Image"

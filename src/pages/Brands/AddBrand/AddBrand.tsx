@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddBrand.css";
 import { createBrandApi } from "../../../services/Brands/brand.service";
 
 const AddBrand: React.FC = () => {

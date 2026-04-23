@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditCategory.css";
 import { getCategoryById, updateCategoryApi } from "../../../../services/Category/category.service";
 
 const EditCategory: React.FC = () => {

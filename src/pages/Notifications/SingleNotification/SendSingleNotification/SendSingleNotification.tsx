@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SendSingleNotification.css";
 import { createBanner } from "../../../../services/Banner/Banner.service";
 
 const AddBanner: React.FC = () => {

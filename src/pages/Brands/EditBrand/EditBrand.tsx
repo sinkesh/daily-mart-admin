@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditBrand.css";
 import { getByIdBrandApi, updateBrandApi } from "../../../services/Brands/brand.service";
 
 const EditBrand: React.FC = () => {

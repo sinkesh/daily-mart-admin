@@ -41,7 +41,9 @@ import SendBulkNotification from "./pages/Notifications/BulkNotification/SendBul
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 1024 : false
+  );
 
   // ✅ Check auth on load
   useEffect(() => {
@@ -55,9 +57,30 @@ const App: React.FC = () => {
     console.log("✅ Backend API URL:", process.env.REACT_APP_API_URL);
   }, []);
 
+  useEffect(() => {
+    const syncSidebarWithViewport = () => {
+      setCollapsed((current) => {
+        if (window.innerWidth < 1024) {
+          return true;
+        }
+
+        if (window.innerWidth >= 1024 && current) {
+          return false;
+        }
+
+        return current;
+      });
+    };
+
+    syncSidebarWithViewport();
+    window.addEventListener("resize", syncSidebarWithViewport);
+
+    return () => window.removeEventListener("resize", syncSidebarWithViewport);
+  }, []);
+
   return (
     <Router>
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <div className="min-h-screen">
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
 

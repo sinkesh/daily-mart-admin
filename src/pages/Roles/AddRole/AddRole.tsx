@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddRole.css";
 import { createRole } from "../../../services/Role/Role.service";
 
 const AddRole: React.FC = () => {

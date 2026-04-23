@@ -1,5 +1,4 @@
 import React from "react";
-import "./Table.css";
 
 interface Column {
   key: string;
@@ -14,10 +13,10 @@ interface CommonTableProps {
   tableClassName?: string; 
 }
 
-const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actions }) => {
+const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actions, tableClassName }) => {
   return (
     <div className="table-wrapper">
-      <table className="common-table">
+      <table className={`common-table ${tableClassName || ""}`.trim()}>
         <thead>
           <tr>
             {columns.map((col) => (
@@ -38,7 +37,7 @@ const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actions }) => 
                     </td>
                   );
                 })}
-                {actions && <td>{actions(row)}</td>}
+                {actions && <td><div className="action-group">{actions(row)}</div></td>}
               </tr>
             ))
           ) : (

@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getSubCategoryById, updateSubCategoryApi } from "../../../../services/SubCategory/SubCategory.service";
 import { SubCategory } from "../../../../services/SubCategory/SubCategory.types";
 import { getCategories } from "../../../../services/Category/category.service";
-import "./EditSubCategory.css";
 
 interface CategoryType {
   category_id: number;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createSubCategory } from "../../../../services/SubCategory/SubCategory.service";
 import { getCategories } from "../../../../services/Category/category.service";
-import "./AddSubCategory.css";
 
 interface CategoryType {
   category_id: number;

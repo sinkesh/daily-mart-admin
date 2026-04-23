@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./RoleList.css";
 import { getAllRole, updateRoleStatusApi } from "../../../services/Role/Role.service";
 import { RoleTypes } from "../../../services/Role/Role.types";
 
@@ -76,7 +75,7 @@ const RoleList: React.FC = () => {
     : [];
 
   // ✅ Pagination Logic
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -127,7 +126,7 @@ const RoleList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedRole(row)}> View</button>
+            <button className="action-btn view" onClick={() => setSelectedRole(row)}> View</button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/role/${row.role_id}`)}> Edit </button>
             {/* <button className="action-btn delete" onClick={() => handleDeleteROle(row.role_id)}> Delete</button> */}
           </>

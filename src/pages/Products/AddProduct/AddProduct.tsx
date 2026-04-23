@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../../services/Products/Product.service";
-import "./AddProduct.css";
 
 const AddProduct: React.FC = () => {
     const [productData, setProductData] = useState({

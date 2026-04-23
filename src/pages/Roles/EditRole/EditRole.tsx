@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditRole.css";
 import { getByIdRole, updateRoleApi } from "../../../services/Role/Role.service";
 
 const EditRole: React.FC = () => {

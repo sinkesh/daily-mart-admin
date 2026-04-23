@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/Table/Table";
-import "./FaqList.css";
 import { getAllFaq, updateFaqStatusApi } from "../../../services/Faq/Faq.service";
 import { Faq } from "../../../services/Faq/Faq.types";
 
@@ -77,7 +76,7 @@ const FaqList: React.FC = () => {
     : [];
 
   // ✅ Pagination Logic
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -129,7 +128,7 @@ const FaqList: React.FC = () => {
         tableClassName="compact-table"
         actions={(row) => (
           <>
-            <button className="action-btn edit" onClick={() => setSelectedFaq(row)}> View</button>
+            <button className="action-btn view" onClick={() => setSelectedFaq(row)}> View</button>
             <button className="action-btn edit" onClick={() => navigate(`/edit/faq/${row.faq_id}`)}> Edit </button>
             {/* <button className="action-btn delete" onClick={() => handleDeleteFaq(row.faq_id)}> Delete</button> */}
           </>

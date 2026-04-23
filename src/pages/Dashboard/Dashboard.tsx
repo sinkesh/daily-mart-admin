@@ -12,7 +12,6 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import "./Dashboard.css";
 
 const salesData = [
   { month: "Jan", sales: 400, orders: 240 },

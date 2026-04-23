@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import CommonTable from "../../../components/Table/Table";
-import "./ActiveUsersList.css";
 import { getAllActiveUser, updateUserStatusApi } from "../../../services/Users/User.service";
 import { UserTypes } from "../../../services/Users/User.types";
 
@@ -92,7 +91,7 @@ const UserList: React.FC = () => {
         : [];
 
     // ✅ Pagination Logic
-    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -169,7 +168,7 @@ const UserList: React.FC = () => {
                 tableClassName="compact-table"
                 actions={(row) => (
                     <>
-                        <button className="action-btn edit" onClick={() => setSelectedUser(row)}> View</button>
+                        <button className="action-btn view" onClick={() => setSelectedUser(row)}> View</button>
                         {/* <button className="action-btn edit" onClick={() => navigate(`/edit/user/${row.user_id}`)}> Edit </button> */}
                         {/* <button className="action-btn delete" onClick={() => handleDeleteCategory(row.id)}> Delete</button> */}
                     </>
@@ -234,7 +233,7 @@ const UserList: React.FC = () => {
                                             <img
                                                 src={selectedUser.profile_image}
                                                 alt={selectedUser.profile_image}
-                                                style={{ width: "100px", height: "100px", objectFit: "contain" }}
+                                                className="modal-preview"
                                             />
                                         ) : (
                                             "No Image"

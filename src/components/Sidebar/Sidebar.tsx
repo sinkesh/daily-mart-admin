@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import "./Sidebar.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import LogoImg from "../../assets/icon3.jpeg";
 import { FaHome } from "@react-icons/all-files/fa/FaHome";
@@ -141,25 +140,38 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
   const [hovered, setHovered] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const activeParent = menuData.find((menu) =>
+      menu.submenu?.some((sub) => location.pathname.startsWith(sub.path))
+    );
+
+    if (activeParent?.name) {
+      setOpenMenu(activeParent.name);
+    }
+  }, [location.pathname]);
+
   const toggleMenu = (name: string) => {
     setOpenMenu(openMenu === name ? null : name);
   };
 
   const handleDirectLinkClick = () => {
     setOpenMenu(null);
+    if (window.innerWidth < 1024) {
+      setCollapsed(true);
+    }
   };
 
   return (
     <div
       className={`sidebar ${collapsed ? "collapsed" : ""} ${hovered ? "expanded-hover" : ""}`}
       onMouseEnter={() => {
-        if (collapsed) {
+        if (collapsed && window.innerWidth >= 1024) {
           setHovered(true);
           setCollapsed(false);
         }
       }}
       onMouseLeave={() => {
-        if (hovered) {
+        if (hovered && window.innerWidth >= 1024) {
           setHovered(false);
           setCollapsed(true);
         }
@@ -216,6 +228,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
                       <NavLink
                         key={sub.name}
                         to={sub.path}
+                        onClick={handleDirectLinkClick}
                         className={({ isActive }) => (isActive ? "active-submenu" : "")}
                       >
                         <span className="icon">{sub.icon}</span>

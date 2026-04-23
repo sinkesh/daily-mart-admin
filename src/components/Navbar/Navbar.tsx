@@ -2,18 +2,21 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { FaSignOutAlt } from "@react-icons/all-files/fa/FaSignOutAlt";
 import { FaBell } from "@react-icons/all-files/fa/FaBell";
-import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle"; // Profile icon
-import { useNavigate } from "react-router-dom";
-import './Navbar.css'
+import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope } from "@react-icons/all-files/fa/FaEnvelope";
 import { FaUsers } from "@react-icons/all-files/fa/FaUsers";
 import { FaFileAlt } from "@react-icons/all-files/fa/FaFileAlt";
 import { FaShoppingCart } from "@react-icons/all-files/fa/FaShoppingCart";
 import { FaBoxOpen } from "@react-icons/all-files/fa/FaBoxOpen";
 import { FaLock } from "@react-icons/all-files/fa/FaLock";
+import { FaSun } from "@react-icons/all-files/fa/FaSun";
+import { FaMoon } from "@react-icons/all-files/fa/FaMoon";
+import { useTheme } from "../../context/ThemeContext";
 
 const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -27,7 +30,6 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
     { id: 5, text: "Order #1025 is delayed", time: "10:25 AM", icon: <FaShoppingCart />, type: "alert" },
   ];
 
-  // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
@@ -50,23 +52,37 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
 
   return (
     <div className={`navbar ${collapsed ? "collapsed-navbar" : ""}`}>
-
-      {/* Left: Sidebar toggle */}
-      <div className="navbar-left" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+      <div className="navbar-left">
         <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
           <FaBars />
         </button>
-        <a href="/" className="home-link">Home</a>
+        <Link to="/dashboard" className="home-link">
+          Home
+        </Link>
       </div>
 
-      {/* Center: Search bar */}
-      {/* <div className="navbar-center">
-        <input type="text" className="navbar-search" placeholder="Search..." />
-      </div> */}
-
-      {/* Right: Notifications + Profile */}
       <div className="navbar-right">
-        {/* Notification Bell */}
+
+        {/* ─── Dark / Light Mode Toggle ─── */}
+        <button
+          id="theme-toggle-btn"
+          className="theme-toggle-btn"
+          onClick={toggleTheme}
+          title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          aria-label="Toggle theme"
+        >
+          <span className={`theme-toggle-track ${theme === "dark" ? "dark" : "light"}`}>
+            <span className="theme-toggle-thumb">
+              {theme === "dark" ? (
+                <FaMoon className="theme-icon moon" />
+              ) : (
+                <FaSun className="theme-icon sun" />
+              )}
+            </span>
+          </span>
+        </button>
+
+        {/* ─── Notifications ─── */}
         <div className="notification-wrapper" ref={notificationRef}>
           <button className="notification-btn" onClick={() => setShowNotifications(!showNotifications)}>
             <FaBell />
@@ -98,7 +114,7 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
           )}
         </div>
 
-        {/* Profile Dropdown */}
+        {/* ─── Profile ─── */}
         <div className="profile-wrapper" ref={profileRef}>
           <button className="profile-btn" onClick={() => setShowProfileDropdown(!showProfileDropdown)}>
             <FaUserCircle size={24} />
@@ -112,29 +128,27 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
               </div>
 
               <div className="profile-item" onClick={() => navigate("/profile")}>
-                <FaUsers style={{ marginRight: "8px" }} />
+                <FaUsers />
                 <span>Profile</span>
               </div>
 
               <div className="profile-item" onClick={() => navigate("/messages")}>
-                <FaEnvelope style={{ marginRight: "8px" }} />
+                <FaEnvelope />
                 <span>Messages</span>
               </div>
 
               <div className="profile-item" onClick={() => alert("Locking Screen...")}>
-                <FaLock style={{ marginRight: "8px" }} />
+                <FaLock />
                 <span>Lock Screen</span>
               </div>
 
               <div className="profile-divider"></div>
               <div className="profile-logout" onClick={handleLogout}>
-                <FaSignOutAlt style={{ marginRight: "8px" }} />
+                <FaSignOutAlt />
                 <span>Logout</span>
-
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>
