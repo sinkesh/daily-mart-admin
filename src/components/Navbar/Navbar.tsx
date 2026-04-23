@@ -66,20 +66,16 @@ const Navbar: React.FC<any> = ({ setIsAuthenticated, collapsed, setCollapsed }) 
         {/* ─── Dark / Light Mode Toggle ─── */}
         <button
           id="theme-toggle-btn"
-          className="theme-toggle-btn"
+          className="theme-btn"
           onClick={toggleTheme}
           title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
           aria-label="Toggle theme"
         >
-          <span className={`theme-toggle-track ${theme === "dark" ? "dark" : "light"}`}>
-            <span className="theme-toggle-thumb">
-              {theme === "dark" ? (
-                <FaMoon className="theme-icon moon" />
-              ) : (
-                <FaSun className="theme-icon sun" />
-              )}
-            </span>
-          </span>
+          {theme === "dark" ? (
+            <FaMoon className="theme-icon" />
+          ) : (
+            <FaSun className="theme-icon" />
+          )}
         </button>
 
         {/* ─── Notifications ─── */}

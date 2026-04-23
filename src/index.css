@@ -5,27 +5,33 @@
 @tailwind utilities;
 
 :root {
-  --bg-main: #f8fafc;
+  /* Premium Soft Light Theme - Very Eye Friendly */
+  --bg-main: #f8fafc; 
   --bg-card: #ffffff;
   --bg-sidebar: #ffffff;
-  --bg-navbar: rgba(255, 255, 255, 0.8);
-  --text-main: #0f172a;
+  --bg-navbar: rgba(255, 255, 255, 0.85);
+  --text-main: #334155; /* Soft Slate 700 instead of 950 */
   --text-muted: #64748b;
-  --border-color: rgba(0, 0, 0, 0.08);
-  --hover-bg: rgba(0, 0, 0, 0.04);
-  --ring-color: rgba(6, 182, 212, 0.2);
+  --border-color: rgba(15, 23, 42, 0.06);
+  --hover-bg: #f1f5f9;
+  --ring-color: rgba(14, 165, 233, 0.15);
+  --accent-primary: #0ea5e9;
+  --accent-secondary: #6366f1;
 }
 
 [data-theme="dark"] {
-  --bg-main: #020617;
-  --bg-card: #0f172a;
-  --bg-sidebar: #020617;
-  --bg-navbar: rgba(2, 6, 23, 0.85);
-  --text-main: #f1f5f9;
+  /* Midnight Obsidian Dark Theme - Premium */
+  --bg-main: #0b0e14;
+  --bg-card: #151b23;
+  --bg-sidebar: #0b0e14;
+  --bg-navbar: rgba(11, 14, 20, 0.85);
+  --text-main: #e2e8f0;
   --text-muted: #94a3b8;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --hover-bg: rgba(255, 255, 255, 0.05);
-  --ring-color: rgba(34, 211, 238, 0.1);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --hover-bg: rgba(255, 255, 255, 0.04);
+  --ring-color: rgba(34, 211, 238, 0.15);
+  --accent-primary: #22d3ee;
+  --accent-secondary: #818cf8;
 }
 
 @layer base {
@@ -108,14 +114,23 @@
 
   .sidebar::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
+    @apply m-0 text-lg font-semibold tracking-wide;
+    color: var(--text-main);
   }
 
   .sidebar.collapsed {
     @apply -translate-x-full lg:translate-x-0 lg:w-20;
   }
 
+  .sidebar {
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    @apply fixed left-0 top-0 z-40 h-screen w-64 transition-[width] duration-300;
+  }
+
   .sidebar-header {
-    @apply sticky top-0 flex items-center gap-3 border-b border-white/10 bg-slate-950/95 px-4 py-4;
+    @apply flex h-16 items-center gap-3 px-6;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .sidebar-logo-img {
@@ -123,7 +138,8 @@
   }
 
   .sidebar-logo-text {
-    @apply text-sm font-bold uppercase tracking-[0.18em] text-white;
+    @apply text-xl font-bold tracking-tight;
+    color: var(--text-main);
   }
 
   .sidebar-collapsed-text {
@@ -139,12 +155,20 @@
   }
 
   .menu-parent {
-    @apply flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white;
+    @apply mx-3 flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200;
+    color: var(--text-muted);
+  }
+
+  .menu-parent:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
   }
 
   .menu-parent-open,
   .sidebar .active {
-    @apply bg-cyan-500/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/20;
+    background-color: var(--hover-bg);
+    color: var(--accent-primary);
+    box-shadow: inset 0 0 0 1px var(--border-color);
   }
 
   .menu-text {
@@ -160,21 +184,30 @@
   }
 
   .submenu {
-    @apply mb-2 ml-6 mt-2 flex flex-col gap-1 border-l border-white/10 pl-3;
+    @apply mb-2 ml-6 mt-2 flex flex-col gap-1 border-l border-white/5 pl-3;
   }
 
   .submenu a {
-    @apply flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-medium text-slate-400 transition hover:bg-white/5 hover:text-white;
+    @apply flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-medium transition-all;
+    color: var(--text-muted);
+  }
+
+  .submenu a:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
   }
 
   .active-submenu {
-    @apply bg-cyan-500/10 text-cyan-300;
+    background-color: var(--hover-bg);
+    color: var(--accent-primary) !important;
   }
 
   .navbar {
     left: 0;
     width: 100%;
-    @apply fixed right-0 top-0 z-30 flex h-16 items-center justify-between border-b border-white/10 bg-slate-950/85 px-4 shadow-lg shadow-slate-950/30 backdrop-blur sm:px-6 lg:px-8;
+    background-color: var(--bg-navbar);
+    border-bottom: 1px solid var(--border-color);
+    @apply fixed right-0 top-0 z-30 flex h-16 items-center justify-between px-4 shadow-sm backdrop-blur sm:px-6 lg:px-8;
   }
 
   .navbar-left {
@@ -209,11 +242,13 @@
 
   .notification-dropdown,
   .profile-dropdown {
-    @apply absolute right-0 top-[calc(100%+0.75rem)] w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-3xl border border-white/10 bg-slate-900/95 shadow-2xl shadow-slate-950/40 backdrop-blur;
+    background-color: var(--bg-card);
+    @apply absolute right-0 top-[calc(100%+0.75rem)] w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-slate-950/20 backdrop-blur;
   }
 
   .notification-header {
-    @apply border-b border-white/10 bg-white/5 px-5 py-4 text-sm font-semibold text-white;
+    @apply border-b border-white/5 px-5 py-4 text-sm font-semibold;
+    color: var(--text-main);
   }
 
   .notification-item {
@@ -225,11 +260,13 @@
   }
 
   .notification-icon {
-    @apply mt-0.5 text-cyan-300;
+    @apply mt-0.5;
+    color: var(--accent-primary);
   }
 
   .notification-text {
-    @apply flex-1 text-sm text-slate-200;
+    @apply flex-1 text-sm;
+    color: var(--text-main);
   }
 
   .notification-time {
@@ -294,7 +331,20 @@
   .ap-card input,
   .ap-card textarea,
   .ap-card select {
-    @apply w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:ring-4 focus:ring-cyan-400/10;
+    @apply w-full rounded-2xl border px-4 py-3 text-sm outline-none transition duration-200 placeholder:text-slate-400 focus:ring-4;
+    background-color: var(--bg-main);
+    border-color: var(--border-color);
+    color: var(--text-main);
+    focus-within: border-cyan-400/50;
+    --tw-ring-color: var(--ring-color);
+  }
+
+  .form-label {
+    @apply mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400;
+  }
+
+  .form-group {
+    @apply flex flex-col gap-1;
   }
 
   .search-bar,
@@ -331,8 +381,13 @@
   }
 
   .product-container,
-  .category-container {
-    @apply rounded-[1.75rem] border border-white/10 bg-slate-950/30 p-4 sm:p-5;
+  .category-container,
+  .stock-container,
+  .brand-container,
+  .faq-container,
+  .banner-container,
+  .role-container {
+    @apply w-full rounded-[1.75rem] border border-white/10 bg-slate-950/30 p-4 sm:p-6 lg:p-8;
   }
 
   .table-wrapper {
@@ -340,7 +395,8 @@
   }
 
   .common-table {
-    @apply min-w-[720px] divide-y divide-white/10;
+    @apply w-full min-w-[800px] table-auto divide-y divide-white/10;
+    width: 100% !important;
   }
 
   .common-table thead {
@@ -488,7 +544,7 @@
   }
 
   .ap-grid {
-    @apply grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3;
+    @apply grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3;
   }
 
   .ap-section textarea {
@@ -497,7 +553,10 @@
 
   .ap-image-box,
   .image-upload-box {
-    @apply relative flex min-h-48 w-full items-center justify-center overflow-hidden rounded-[1.5rem] border border-dashed border-white/15 bg-slate-950/60 p-4 text-center text-sm text-slate-400;
+    @apply relative flex min-h-48 w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-[1.5rem] border-2 border-dashed transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-500/5;
+    background-color: var(--bg-main);
+    border-color: var(--border-color);
+    color: var(--text-muted);
   }
 
   .image-upload-box input[type="file"],
@@ -651,34 +710,22 @@
   }
 
   /* Theme Toggle Button Styles */
-  .theme-toggle-btn {
-    @apply relative flex h-10 w-16 cursor-pointer items-center rounded-full border border-white/10 bg-white/5 p-1 transition-all duration-300 hover:border-cyan-400/30 dark:bg-slate-900/50;
+  .theme-btn {
+    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-cyan-400/30 hover:bg-cyan-500/10 hover:text-cyan-200;
     background-color: var(--hover-bg);
     border-color: var(--border-color);
-  }
-
-  .theme-toggle-track {
-    @apply relative flex h-full w-full items-center rounded-full transition-all duration-500;
-  }
-
-  .theme-toggle-thumb {
-    @apply flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-lg transition-all duration-500 dark:bg-slate-800;
-    transform: translateX(0);
-  }
-
-  [data-theme="dark"] .theme-toggle-thumb {
-    transform: translateX(1.5rem);
+    color: var(--text-main);
   }
 
   .theme-icon {
     @apply text-lg transition-all duration-300;
   }
 
-  .theme-icon.sun {
+  [data-theme="light"] .theme-icon {
     @apply text-amber-500;
   }
 
-  .theme-icon.moon {
+  [data-theme="dark"] .theme-icon {
     @apply text-cyan-400;
   }
 

@@ -16,7 +16,7 @@ interface CommonTableProps {
 const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actions, tableClassName }) => {
   return (
     <div className="table-wrapper">
-      <table className={`common-table ${tableClassName || ""}`.trim()}>
+      <table className={`common-table w-full ${tableClassName || ""}`.trim()}>
         <thead>
           <tr>
             {columns.map((col) => (

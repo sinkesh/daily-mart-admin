@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../../../services/Products/Product.service";
+import { FaUpload } from "@react-icons/all-files/fa/FaUpload";
+import { FaChevronLeft } from "@react-icons/all-files/fa/FaChevronLeft";
+import { FaSave } from "@react-icons/all-files/fa/FaSave";
 
 const AddProduct: React.FC = () => {
     const [productData, setProductData] = useState({
@@ -37,6 +40,10 @@ const AddProduct: React.FC = () => {
         is_featured: false,
     });
 
+    const [thumbnailImage, setThumbnailImage] = useState<File | null>(null);
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const navigate = useNavigate();
+
     const isFormValid = () => {
         const requiredFields = [
             "product_name",
@@ -49,24 +56,20 @@ const AddProduct: React.FC = () => {
 
         return requiredFields.every((field) => {
             const value = productData[field as keyof typeof productData];
-            return value !== "" && value !== null && value !== undefined;
+            return value !== "" && value !== null && value !== undefined && value !== 0;
         });
     };
 
-
-    const [thumbnailImage, setThumbnailImage] = useState<File | null>(null);
-    const [previewImage, setPreviewImage] = useState<string | null>(null);
-    const navigate = useNavigate();
-
-    const handleChange = (e: any) => {
-        const { name, value, type, checked } = e.target;
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value, type } = e.target;
+        const checked = (e.target as HTMLInputElement).checked;
         setProductData((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value,
         }));
     };
 
-    const handleImageChange = (e: any) => {
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         setThumbnailImage(file);
 
@@ -77,7 +80,7 @@ const AddProduct: React.FC = () => {
         }
     };
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!isFormValid()) {
@@ -103,94 +106,174 @@ const AddProduct: React.FC = () => {
         }
     };
 
+    const renderInput = (label: string, name: string, type: string = "text", placeholder: string = "") => (
+        <div className="form-group">
+            <label className="form-label">{label}</label>
+            <input
+                type={type}
+                name={name}
+                placeholder={placeholder || label}
+                value={(productData as any)[name]}
+                onChange={handleChange}
+                className="input-field"
+            />
+        </div>
+    );
+
+    const renderTextarea = (label: string, name: string, placeholder: string = "") => (
+        <div className="form-group">
+            <label className="form-label">{label}</label>
+            <textarea
+                name={name}
+                placeholder={placeholder || label}
+                value={(productData as any)[name]}
+                onChange={handleChange}
+                className="input-field min-h-[100px]"
+            />
+        </div>
+    );
 
     return (
-        <form className="ap-card" onSubmit={handleSubmit}>
-
-            {/* BASIC DETAILS */}
-            <section className="ap-section">
-                <h3>Basic Details</h3>
-                <div className="ap-grid">
-                    <input placeholder="Product Name" name="product_name" value={productData.product_name} onChange={handleChange} />
-                    <input placeholder="Product Slug" name="product_slug" value={productData.product_slug} onChange={handleChange} />
-                    <input placeholder="Brand Name" name="brand_name" value={productData.brand_name} onChange={handleChange} />
-                    <input placeholder="Category Name" name="category_name" value={productData.category_name} onChange={handleChange} />
-                    <input placeholder="SKU" name="product_sku" value={productData.product_sku} onChange={handleChange} />
-                    <input placeholder="UOM" name="uom" value={productData.uom} onChange={handleChange} />
-                    <input placeholder="Offer Price" name="offer_price" value={productData.offer_price} onChange={handleChange} />
-                    <input placeholder="HSN Code" name="hsn_code" value={productData.hsn_code} onChange={handleChange} />
-                </div>
-            </section>
-
-            {/* PRICING */}
-            <section className="ap-section">
-                <h3>Pricing & Inventory</h3>
-                <div className="ap-grid">
-                    <input type="number" placeholder="Unit Price" name="unit_price" value={productData.unit_price} onChange={handleChange} />
-                    <input type="number" placeholder="Discount Price" name="discount_price" value={productData.discount_price} onChange={handleChange} />
-                    <input placeholder="Currency" name="currency" value={productData.currency} onChange={handleChange} />
-                    <input type="number" placeholder="Tax Rate (%)" name="tax_rate" value={productData.tax_rate} onChange={handleChange} />
-                    <input type="number" placeholder="Stock Quantity" name="stock_quantity" value={productData.stock_quantity} onChange={handleChange} />
-                    <input type="number" placeholder="Reorder Level" name="reorder_level" value={productData.reorder_level} onChange={handleChange} />
-                </div>
-            </section>
-
-            {/* EXTRA DETAILS */}
-            <section className="ap-section">
-                <h3>Extra Information</h3>
-                <div className="ap-grid">
-                    <input placeholder="Warehouse Location" name="warehouse_location" value={productData.warehouse_location} onChange={handleChange} />
-                    <input type="number" placeholder="Weight" name="weight" value={productData.weight} onChange={handleChange} />
-                    <input placeholder="Dimensions" name="dimensions" value={productData.dimensions} onChange={handleChange} />
-                    <input placeholder="Color" name="color" value={productData.color} onChange={handleChange} />
-                    <input placeholder="Size" name="size" value={productData.size} onChange={handleChange} />
-                    <input placeholder="Material" name="material" value={productData.material} onChange={handleChange} />
-                    <input placeholder="Tags" name="tags" value={productData.tags} onChange={handleChange} />
-                </div>
-            </section>
-
-            {/* TEXTAREAS */}
-            <section className="ap-section">
-                <h3>Descriptions</h3>
-                <textarea placeholder="Product Description" name="product_description" value={productData.product_description} onChange={handleChange} />
-                <textarea placeholder="Short Description" name="short_description" value={productData.short_description} onChange={handleChange} />
-                <textarea placeholder="How to Use" name="how_to_use" value={productData.how_to_use} onChange={handleChange} />
-                <textarea placeholder="Safety Instruction" name="safety_instruction" value={productData.safety_instruction} onChange={handleChange} />
-                <textarea placeholder="Ingredients" name="ingredients" value={productData.ingredients} onChange={handleChange} />
-                <textarea placeholder="Composition Information" name="composition_information" value={productData.composition_information} onChange={handleChange} />
-                <textarea placeholder="Additional Information" name="additional_information" value={productData.additional_information} onChange={handleChange} />
-                <textarea placeholder="Long Description" name="long_description" value={productData.long_description} onChange={handleChange} />
-            </section>
-
-            {/* IMAGE UPLOAD */}
-            <section className="ap-section">
-                <h3>Product Image</h3>
-                <div className="ap-image-box">
-                    {previewImage ? (
-                        <img src={previewImage} alt="preview" className="ap-preview" />
-                    ) : (
-                        <p>Drag or Click to Upload</p>
-                    )}
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
-                </div>
-            </section>
-
-            {/* SUBMIT */}
-            <div className="ap-submit-wrapper">
-                <button
-                    className="ap-submit"
-                    type="submit"
-                    disabled={!isFormValid()}
-                    style={{
-                        opacity: !isFormValid() ? 0.5 : 1,
-                        cursor: !isFormValid() ? "not-allowed" : "pointer"
-                    }}
-                >
-                    Save Product
+        <div className="product-container">
+            <div className="header-bar">
+                <button className="collapse-btn !w-auto px-4 gap-2" onClick={() => navigate("/product/list")}>
+                    <FaChevronLeft /> Back to List
                 </button>
             </div>
 
-        </form>
+            <form className="ap-card !max-w-full" onSubmit={handleSubmit}>
+                <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+                    <h2 className="!mb-0">Add New Product</h2>
+                    <div className="flex gap-3">
+                        <button 
+                            type="button" 
+                            className="btn !bg-slate-800 !from-slate-800 !to-slate-900"
+                            onClick={() => navigate("/product/list")}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className="ap-submit !py-2"
+                            type="submit"
+                            disabled={!isFormValid()}
+                        >
+                            <FaSave className="mr-2" /> Save Product
+                        </button>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* LEFT COLUMN: Main Info */}
+                    <div className="lg:col-span-2 space-y-8">
+                        <section className="ap-section">
+                            <h3 className="flex items-center gap-2 border-b border-white/5 pb-3 mb-5">
+                                <span className="h-2 w-2 rounded-full bg-cyan-400"></span>
+                                Basic Information
+                            </h3>
+                            <div className="ap-grid">
+                                {renderInput("Product Name *", "product_name")}
+                                {renderInput("Product Slug *", "product_slug")}
+                                {renderInput("Brand Name *", "brand_name")}
+                                {renderInput("Category Name *", "category_name")}
+                                {renderInput("SKU", "product_sku")}
+                                {renderInput("UOM", "uom", "text", "e.g. Kg, Pcs")}
+                            </div>
+                        </section>
+
+                        <section className="ap-section">
+                            <h3 className="flex items-center gap-2 border-b border-white/5 pb-3 mb-5">
+                                <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+                                Pricing & Inventory
+                            </h3>
+                            <div className="ap-grid">
+                                {renderInput("Unit Price *", "unit_price", "number")}
+                                {renderInput("Discount Price", "discount_price", "number")}
+                                {renderInput("Tax Rate (%)", "tax_rate", "number")}
+                                {renderInput("Stock Quantity *", "stock_quantity", "number")}
+                                {renderInput("Reorder Level", "reorder_level", "number")}
+                                {renderInput("HSN Code", "hsn_code")}
+                            </div>
+                        </section>
+
+                        <section className="ap-section">
+                            <h3 className="flex items-center gap-2 border-b border-white/5 pb-3 mb-5">
+                                <span className="h-2 w-2 rounded-full bg-amber-400"></span>
+                                Detailed Descriptions
+                            </h3>
+                            <div className="space-y-5">
+                                {renderTextarea("Short Description", "short_description")}
+                                {renderTextarea("Full Description", "product_description")}
+                                {renderTextarea("Ingredients", "ingredients")}
+                                {renderTextarea("How to Use", "how_to_use")}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* RIGHT COLUMN: Sidebar Info */}
+                    <div className="space-y-8">
+                        <section className="ap-section">
+                            <h3 className="flex items-center gap-2 border-b border-white/5 pb-3 mb-5">
+                                <span className="h-2 w-2 rounded-full bg-purple-400"></span>
+                                Product Media
+                            </h3>
+                            <div className="ap-image-box group">
+                                {previewImage ? (
+                                    <div className="relative w-full h-full">
+                                        <img src={previewImage} alt="preview" className="ap-preview h-48 w-full object-cover rounded-xl" />
+                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                                            <p className="text-white text-xs font-bold">Change Image</p>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center p-6 text-center">
+                                        <div className="h-12 w-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-3">
+                                            <FaUpload className="text-cyan-400" />
+                                        </div>
+                                        <p className="text-sm font-semibold">Upload Thumbnail</p>
+                                        <p className="text-xs text-slate-500 mt-1">PNG, JPG up to 5MB</p>
+                                    </div>
+                                )}
+                                <input type="file" accept="image/*" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" />
+                            </div>
+                        </section>
+
+                        <section className="ap-section">
+                            <h3 className="flex items-center gap-2 border-b border-white/5 pb-3 mb-5">
+                                <span className="h-2 w-2 rounded-full bg-rose-400"></span>
+                                Shipping & Logistics
+                            </h3>
+                            <div className="space-y-4">
+                                {renderInput("Weight (kg)", "weight", "number")}
+                                {renderInput("Dimensions", "dimensions", "text", "LxWxH")}
+                                {renderInput("Warehouse Location", "warehouse_location")}
+                            </div>
+                        </section>
+
+                        <section className="ap-section">
+                            <h3 className="flex items-center gap-2 border-b border-white/5 pb-3 mb-5">
+                                <span className="h-2 w-2 rounded-full bg-blue-400"></span>
+                                Attributes & Tags
+                            </h3>
+                            <div className="space-y-4">
+                                {renderInput("Color", "color")}
+                                {renderInput("Size", "size")}
+                                {renderInput("Tags", "tags", "text", "comma separated")}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div className="ap-submit-wrapper mt-8 pt-6 border-t border-white/5">
+                    <button
+                        className="ap-submit px-10 py-4 text-base"
+                        type="submit"
+                        disabled={!isFormValid()}
+                    >
+                        <FaSave className="mr-2" /> Save & Publish Product
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 
